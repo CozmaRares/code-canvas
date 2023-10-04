@@ -1,5 +1,11 @@
+import ThemeSwitch from "./components/ThemeSwitch";
+
 const App = () => {
-  return <div>Hello, world!</div>;
+  return (
+    <>
+      <ThemeSwitch />
+    </>
+  );
 };
 
 export default App;

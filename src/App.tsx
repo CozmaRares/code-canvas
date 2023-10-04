@@ -1,11 +1,11 @@
 import ThemeSwitch from "@/components/ThemeSwitch";
-import CodeBlock from "@/components/CodeBlock";
+import VariableAssignBlock from "./components/blocks/VariableAssignBlock";
 
 const App = () => {
   return (
     <>
-      <CodeBlock x={0} y={0} />
-      <CodeBlock x={0} y={68} />
+      <VariableAssignBlock x={0} y={0} />
+      <VariableAssignBlock x={0} y={68} />
       <ThemeSwitch />
     </>
   );

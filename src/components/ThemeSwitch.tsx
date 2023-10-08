@@ -35,7 +35,7 @@ const ThemeSwitch = () => {
     <Button
       key={theme}
       onClick={toggleTheme}
-      className="aspect-square bottom-5 right-5 h-fit p-[0.8rem] absolute rounded-full"
+      className="absolute bottom-5 right-5 aspect-square h-fit rounded-full p-[0.8rem]"
       variant="outline"
       aria-label="toggle color theme"
     >

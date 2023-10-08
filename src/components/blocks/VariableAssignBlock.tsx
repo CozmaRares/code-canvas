@@ -1,42 +1,28 @@
 import { useState } from "react";
-import CodeBlock from "./CodeBlock";
-import TypeLabel from "./TypeLabel";
-import { twMerge } from "tailwind-merge";
+import CodeBlock from "./utils/CodeBlock";
+import TypeLabel from "./utils/TypeLabel";
+import { variableAssignBlockColor } from "@/lib/block-colors";
 
-type Props = {
-    x: number;
-    y: number;
-    bg?: string;
-};
+const VariableAssignBlock = () => {
+  const [variableName, setVariableName] = useState("");
+  const [value, setValue] = useState("");
 
-const DEFAULT_BG = "bg-pink-300 dark:bg-pink-600";
-
-const VariableAssignBlock = ({ x, y, bg }: Props) => {
-    const [variableName, setVariableName] = useState("");
-    const [value, setValue] = useState("");
-
-    bg = twMerge(DEFAULT_BG, bg);
-
-    return (
-        <CodeBlock
-            x={x}
-            y={y}
-            bg={bg}
-        >
-            define variable
-            <TypeLabel
-                text={variableName}
-                setText={setVariableName}
-                placeholder="variable"
-            />
-            with value
-            <TypeLabel
-                text={value}
-                setText={setValue}
-                placeholder="value"
-            />
-        </CodeBlock>
-    );
+  return (
+    <CodeBlock bg={variableAssignBlockColor}>
+      let variable
+      <TypeLabel
+        text={variableName}
+        setText={setVariableName}
+        placeholder="variable"
+      />
+      be
+      <TypeLabel
+        text={value}
+        setText={setValue}
+        placeholder="value"
+      />
+    </CodeBlock>
+  );
 };
 
 export default VariableAssignBlock;

@@ -1,12 +1,25 @@
 import ThemeSwitch from "@/components/ThemeSwitch";
-import VariableAssignBlock from "./components/blocks/VariableAssignBlock";
+import Editor from "@/components/Editor";
+import SideBar from "@/components/SideBar";
+import { DndContext } from "@dnd-kit/core";
+import DragOverlayWrapper from "@/components/DragOverlayWrapper";
+import EditorBlocksContextProvider from "./components/context/editor-blocks";
 
 const App = () => {
   return (
     <>
-      <VariableAssignBlock x={0} y={0} />
-      <VariableAssignBlock x={0} y={68} />
-      <ThemeSwitch />
+      <EditorBlocksContextProvider>
+        <div className="flex flex-row">
+          <DndContext>
+            <SideBar />
+            <main className="flex w-full flex-col">
+              <Editor />
+            </main>
+            <DragOverlayWrapper />
+          </DndContext>
+        </div>
+        <ThemeSwitch />
+      </EditorBlocksContextProvider>
     </>
   );
 };

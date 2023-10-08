@@ -1,8 +1,8 @@
 import { createContext, useContext, useState } from "react";
-import { CodeBlockType } from "../blocks/blocks";
+import { CodeBlockType } from "../blocks/codeBlocks";
 type EditorBlocksContextType = {
   blocks: CodeBlockType[];
-  addBlock: (index: number, block: CodeBlockType) => void;
+  addBlock: (block: CodeBlockType, index?: number) => void;
 };
 
 const EditorBlocksContext = createContext<EditorBlocksContextType | null>(null);
@@ -14,10 +14,10 @@ type Props = {
 const EditorBlocksContextProvider = ({ children }: Props) => {
   const [blocks, setBlocks] = useState<CodeBlockType[]>([]);
 
-  const addBlock = (index: number, block: CodeBlockType) =>
+  const addBlock = (block: CodeBlockType, index?: number) =>
     setBlocks(prev => {
       const newBlocks = [...prev];
-      newBlocks.splice(index, 0, block);
+      newBlocks.splice(index ?? prev.length, 0, block);
       return newBlocks;
     });
 

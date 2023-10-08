@@ -1,6 +1,6 @@
 import { DragOverlay, useDndMonitor, type Active } from "@dnd-kit/core";
 import { useState } from "react";
-import blocks, { CodeBlockType } from "./blocks/blocks";
+import codeBlocks, { CodeBlockType } from "./blocks/codeBlocks";
 
 const DragOverlayWrapper = () => {
   const [draggedItem, setDraggedItem] = useState<Active | null>(null);
@@ -22,7 +22,7 @@ const DragOverlayWrapper = () => {
 
   if (isSideBarButton) {
     const type = draggedItem.data.current!.type as CodeBlockType;
-    node = blocks[type].preview();
+    node = codeBlocks[type].preview();
   }
 
   return <DragOverlay>{node}</DragOverlay>;

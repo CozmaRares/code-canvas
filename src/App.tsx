@@ -3,7 +3,7 @@ import Editor from "@/components/Editor";
 import SideBar from "@/components/SideBar";
 import { DndContext } from "@dnd-kit/core";
 import DragOverlayWrapper from "@/components/DragOverlayWrapper";
-import EditorBlocksContextProvider from "./components/context/editor-blocks";
+import EditorBlocksContextProvider from "@/context/editor-blocks";
 
 const App = () => {
   return (

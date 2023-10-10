@@ -1,6 +1,6 @@
 import { useDndMonitor, useDroppable } from "@dnd-kit/core";
 import { cn } from "@/lib/utils";
-import { useEditorBlocksContext } from "./context/editor-blocks";
+import { useEditorBlocksContext } from "@/context/editor-blocks";
 
 const Editor = () => {
   const { blocks, addBlock } = useEditorBlocksContext();
@@ -23,10 +23,10 @@ const Editor = () => {
   });
 
   return (
-    <div className="flex h-full w-full p-8">
+    <div className="flex h-full w-full p-8 bg-[url(/paper.svg)] dark:bg-[url(/paper-dark.svg)]">
       <ul
         ref={droppable.setNodeRef}
-        className={cn("space-y-[4px] rounded-md p-4", {
+        className={cn("space-y-[4px] rounded-md p-4 bg-background", {
           "ring-2 ring-primary/20": droppable.isOver,
         })}
       >

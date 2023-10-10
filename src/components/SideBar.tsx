@@ -1,18 +1,22 @@
-import codeBlocks from "@/components/blocks/codeBlocks";
-import { SideBarButton } from "./SideBarButton";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const SideBar = () => (
-  <aside className="min-h-screen max-w-[300px] border p-8">
-    <ul>
-      {Object.entries(codeBlocks).map(([key, { preview }]) => (
-        <li key={key}>
-          <SideBarButton
-            type={key}
-            blockPreview={preview}
-          />
-        </li>
-      ))}
-    </ul>
+  <aside className="min-h-screen w-[400px] border p-8">
+    <Accordion
+      type="single"
+      className="w-full"
+    >
+      <AccordionItem value="variables">
+        <AccordionTrigger>Variables</AccordionTrigger>
+        <AccordionContent>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   </aside>
 );
 

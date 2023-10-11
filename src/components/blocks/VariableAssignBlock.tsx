@@ -1,6 +1,6 @@
 import { variableAssignBlockColor } from "@/lib/block-colors";
 import CodeBlock from "./utils/CodeBlock";
-import TypeLabel from "./utils/TypeLabel";
+import BlockInput from "./utils/BlockInput";
 import { CodeBlockProps } from "./utils/code-block";
 
 export type VariableAssignProps = {
@@ -20,16 +20,18 @@ const VariableAssignBlock = ({ idx, setProps, getProp }: CodeBlockProps) => {
       bottomSlot
     >
       let
-      <TypeLabel
+      <BlockInput
         text={variable ?? ""}
         setText={variable => setProps(idx, { variable })}
         placeholder="variable"
+        className="w-[150px]"
       />
       be
-      <TypeLabel
+      <BlockInput
         text={value ?? ""}
         setText={value => setProps(idx, { value })}
         placeholder="value"
+        className="w-[150px]"
       />
     </CodeBlock>
   );

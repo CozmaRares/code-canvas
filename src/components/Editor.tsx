@@ -27,7 +27,7 @@ const Editor = () => {
     <main className="flex h-full w-full bg-[url(/paper.svg)] p-8 dark:bg-[url(/paper-dark.svg)]">
       <ul
         ref={droppable.setNodeRef}
-        className={cn("relative space-y-[4px] rounded-md bg-background p-4", {
+        className={cn("relative w-[350px] space-y-[4px] rounded-md bg-background p-4", {
           "ring-2 ring-primary/20": droppable.isOver,
         })}
       >

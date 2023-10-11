@@ -2,7 +2,10 @@ import { useDndMonitor, useDroppable } from "@dnd-kit/core";
 import { cn } from "@/lib/utils";
 import { useEditorBlocksContext } from "@/context/editor-blocks";
 import AnchorBlock from "@/components/blocks/utils/AnchorBlock";
-import { CodeBlockType, codeBlocks } from "@/components/blocks/utils/code-block";
+import {
+  type CodeBlockType,
+  codeBlocks,
+} from "@/components/blocks/utils/code-block";
 import EmptyCodeBlock from "@/components/blocks/utils/EmptyBlock";
 import { Fragment } from "react";
 

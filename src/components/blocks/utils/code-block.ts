@@ -1,6 +1,6 @@
-import { EditorBlocksContextType } from "@/context/editor-blocks";
+import type { EditorBlocksContextType } from "@/context/editor-blocks";
 import VariableAssignBlock, {
-  VariableAssignProps,
+  type VariableAssignProps,
 } from "@/components/blocks/VariableAssignBlock";
 import VariableAssignBlockPreview from "@/components/blocks/preview/VariableAssignBlockPreview";
 

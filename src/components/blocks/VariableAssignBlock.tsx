@@ -1,7 +1,7 @@
 import { variableAssignBlockColor } from "@/lib/block-colors";
 import CodeBlock from "@/components/blocks/utils/CodeBlock";
 import BlockInput from "@/components/blocks/utils/BlockInput";
-import { CodeBlockProps } from "@/components/blocks/utils/code-block";
+import type { CodeBlockProps } from "@/components/blocks/utils/code-block";
 
 export type VariableAssignProps = {
   variable: string;

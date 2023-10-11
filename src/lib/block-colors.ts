@@ -1,9 +1,9 @@
-export type Color = {
+export type BlockColor = {
   light: string;
   dark: string;
 };
 
-function makeColor(light: string, dark: string): Readonly<Color> {
+function makeColor(light: string, dark: string): Readonly<BlockColor> {
   return Object.freeze({ light, dark });
 }
 

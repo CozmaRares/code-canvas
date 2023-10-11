@@ -1,7 +1,7 @@
-import { Color } from "@/lib/block-colors";
+import type { BlockColor } from "@/lib/block-colors";
 
 type Props = {
-  bg?: Color;
+  bg?: BlockColor;
   children?: React.ReactNode;
   topSlot?: boolean;
   leftSlot?: boolean;

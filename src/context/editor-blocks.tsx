@@ -1,4 +1,4 @@
-import {
+import type {
   CodeBlockContextGenericType,
   CodeBlockType,
 } from "@/components/blocks/utils/code-block";

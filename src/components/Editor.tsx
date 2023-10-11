@@ -27,13 +27,13 @@ const Editor = () => {
     <div className="flex h-full w-full p-8 bg-[url(/paper.svg)] dark:bg-[url(/paper-dark.svg)]">
       <ul
         ref={droppable.setNodeRef}
-        className={cn("space-y-[4px] rounded-md p-4 bg-background", {
+        className={cn("space-y-[4px] rounded-md p-4 bg-background relative", {
           "ring-2 ring-primary/20": droppable.isOver,
         })}
       >
         <AnchorBlock text="Main Program" />
         {!droppable.isOver && blocks.length === 0 && (
-          <p className="mt-12 text-center text-xl text-muted-foreground">
+          <p className="mt-12 absolute top-1/2 left-0 right-0 text-center -translate-y-1/2 text-xl text-muted-foreground">
             Drop here
           </p>
         )}

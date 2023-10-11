@@ -2,9 +2,12 @@ import { useDndMonitor, useDroppable } from "@dnd-kit/core";
 import { cn } from "@/lib/utils";
 import { useEditorBlocksContext } from "@/context/editor-blocks";
 import AnchorBlock from "@/components/blocks/utils/AnchorBlock";
+import { CodeBlockType, codeBlocks } from "./blocks/utils/code-block";
+import EmptyCodeBlock from "./blocks/utils/EmptyBlock";
+import { Fragment } from "react";
 
 const Editor = () => {
-  const { blocks, addBlock } = useEditorBlocksContext();
+  const { blocks, addBlock, getProp, setProps } = useEditorBlocksContext();
 
   const droppable = useDroppable({
     id: "editor-drop-area",
@@ -20,6 +23,11 @@ const Editor = () => {
       if (!active || !over) return;
 
       const isSideBarButton = active.data.current?.isSideBarButton;
+
+      if (isSideBarButton) {
+        const type = active.data.current!.type as CodeBlockType;
+        addBlock(type);
+      }
     },
   });
 
@@ -27,12 +35,9 @@ const Editor = () => {
     <main className="flex h-full w-full bg-[url(/paper.svg)] p-8 dark:bg-[url(/paper-dark.svg)]">
       <ul
         ref={droppable.setNodeRef}
-        className={cn(
-          "relative w-[350px] space-y-[4px] rounded-md bg-background p-4",
-          {
-            "ring-2 ring-primary/20": droppable.isOver,
-          },
-        )}
+        className={cn("relative min-w-[350px] rounded-md bg-background p-4", {
+          "ring-2 ring-primary/20": droppable.isOver,
+        })}
       >
         <AnchorBlock text="Main Program" />
         {!droppable.isOver && blocks.length === 0 && (
@@ -40,6 +45,12 @@ const Editor = () => {
             Drop here
           </p>
         )}
+        {blocks.map(({ id, block }, idx) => (
+          <Fragment key={id}>
+            {codeBlocks[block.type].block({ idx, getProp, setProps })}
+          </Fragment>
+        ))}
+        {droppable.isOver && <EmptyCodeBlock />}
       </ul>
     </main>
   );

@@ -3,9 +3,9 @@ import SideBar from "@/components/SideBar";
 import { DndContext } from "@dnd-kit/core";
 import DragOverlayWrapper from "@/components/DragOverlayWrapper";
 import EditorBlocksContextProvider from "@/context/editor-blocks";
-import ImportButton from "./components/ImportButton";
-import ExportButton from "./components/ExportButton";
-import ThemeSwitch from "./components/ThemeSwitch";
+import ImportButton from "@/components/ImportButton";
+import ExportButton from "@/components/ExportButton";
+import ThemeSwitch from "@/components/ThemeSwitch";
 
 const App = () => {
   return (

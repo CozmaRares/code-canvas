@@ -20,7 +20,7 @@ const DragOverlayWrapper = () => {
   const isSideBarButton = draggedItem?.data.current?.isSideBarButton;
 
   if (isSideBarButton) {
-    node = <div></div>
+    node = <div></div>;
   }
 
   return <DragOverlay>{node}</DragOverlay>;

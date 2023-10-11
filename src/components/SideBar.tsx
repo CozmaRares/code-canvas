@@ -6,15 +6,14 @@ import {
 } from "@/components/ui/accordion";
 
 const SideBar = () => (
-  <aside className="min-h-screen w-[400px] p-8">
+  <aside className="w-[400px] p-8">
     <Accordion
       type="single"
       className="w-full"
     >
       <AccordionItem value="variables">
-        <AccordionTrigger>Variables</AccordionTrigger>
-        <AccordionContent>
-        </AccordionContent>
+        <AccordionTrigger className="font-normal">Variables</AccordionTrigger>
+        <AccordionContent></AccordionContent>
       </AccordionItem>
     </Accordion>
   </aside>

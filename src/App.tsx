@@ -1,24 +1,22 @@
-import ThemeSwitch from "@/components/ThemeSwitch";
 import Editor from "@/components/Editor";
 import SideBar from "@/components/SideBar";
 import { DndContext } from "@dnd-kit/core";
 import DragOverlayWrapper from "@/components/DragOverlayWrapper";
 import EditorBlocksContextProvider from "@/context/editor-blocks";
+import Header from "@/components/Header";
 
 const App = () => {
   return (
     <>
       <EditorBlocksContextProvider>
-        <div className="flex flex-row">
+        <div className="grid h-screen grid-cols-[auto,minmax(0,1fr)] grid-rows-[auto,minmax(0,1fr)]">
+          <Header />
           <DndContext>
             <SideBar />
-            <main className="flex w-full flex-col">
-              <Editor />
-            </main>
+            <Editor />
             <DragOverlayWrapper />
           </DndContext>
         </div>
-        <ThemeSwitch />
       </EditorBlocksContextProvider>
     </>
   );

@@ -4,7 +4,11 @@ import { Button } from "@/components/ui/button";
 
 type Theme = "light" | "dark";
 
-const ThemeSwitch = () => {
+type Props = {
+  className?: string;
+};
+
+const ThemeSwitch = ({ className }: Props) => {
   const [theme, setTheme] = useState<Theme>("light");
 
   const toggleTheme = () => {
@@ -33,9 +37,8 @@ const ThemeSwitch = () => {
 
   return (
     <Button
-      key={theme}
       onClick={toggleTheme}
-      className="absolute bottom-5 right-5 aspect-square h-fit rounded-full p-[0.8rem]"
+      className={className}
       variant="outline"
       aria-label="toggle color theme"
     >

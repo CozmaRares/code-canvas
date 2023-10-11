@@ -42,7 +42,9 @@ const CodeBlock = ({
           {!rightSlot && <div className="col-start-4 row-start-3" />}
           <div className="col-start-4 row-span-2 row-start-4" />
           {bottomSlot && <div className="absolute left-3 top-full h-3 w-6" />}
-          {leftSlot && <div className="absolute right-full top-1/2 -translate-y-1/2 h-6 w-3" />}
+          {leftSlot && (
+            <div className="absolute right-full top-1/2 h-6 w-3 -translate-y-1/2" />
+          )}
         </div>
         <div className="z-[1] flex flex-row items-center gap-2 whitespace-nowrap p-4">
           {children}

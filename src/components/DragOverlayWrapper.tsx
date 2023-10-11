@@ -1,6 +1,6 @@
 import { DragOverlay, useDndMonitor, type Active } from "@dnd-kit/core";
 import { useState } from "react";
-import { CodeBlockType, codeBlocks } from "./blocks/utils/code-block";
+import { CodeBlockType, codeBlocks } from "@/components/blocks/utils/code-block";
 
 const DragOverlayWrapper = () => {
   const [draggedItem, setDraggedItem] = useState<Active | null>(null);

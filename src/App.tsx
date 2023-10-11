@@ -6,7 +6,7 @@ import EditorBlocksContextProvider from "@/context/editor-blocks";
 import ImportButton from "@/components/ImportButton";
 import ExportButton from "@/components/ExportButton";
 import ThemeSwitch from "@/components/ThemeSwitch";
-import RunCodeButton from "./components/RunCodeButton";
+import RunCodeButton from "@/components/RunCodeButton";
 
 const App = () => {
   return (

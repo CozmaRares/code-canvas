@@ -1,4 +1,4 @@
-import CodeBlock from "../utils/CodeBlock";
+import CodeBlock from "@/components/blocks/utils/CodeBlock";
 import { variableAssignBlockColor } from "@/lib/block-colors";
 
 const VariableAssignBlock = () => (

@@ -1,5 +1,5 @@
 import { anchorBlockColor } from "@/lib/block-colors";
-import CodeBlock from "./CodeBlock";
+import CodeBlock from "@/components/blocks/utils/CodeBlock";
 
 type Props = {
   text: string;

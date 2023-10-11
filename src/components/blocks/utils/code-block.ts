@@ -1,8 +1,8 @@
 import { EditorBlocksContextType } from "@/context/editor-blocks";
 import VariableAssignBlock, {
   VariableAssignProps,
-} from "../VariableAssignBlock";
-import VariableAssignBlockPreview from "../preview/VariableAssignBlockPreview";
+} from "@/components/blocks/VariableAssignBlock";
+import VariableAssignBlockPreview from "@/components/blocks/preview/VariableAssignBlockPreview";
 
 export type CodeBlockProps = {
   idx: number;

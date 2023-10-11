@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { SideBarButton } from "./SideBarButton";
+import { SideBarButton } from "@/components/SideBarButton";
 import { codeBlocks } from "@/components/blocks/utils/code-block";
 
 const SideBar = () => (

@@ -1,5 +1,5 @@
 import { useDraggable } from "@dnd-kit/core";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CodeBlockType } from "@/components/blocks/utils/code-block";
 

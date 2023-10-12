@@ -8,7 +8,7 @@ export type VariableAssignProps = {
   value: string;
 };
 
-const VariableAssignBlock = ({ idx, setProps, getProp }: CodeBlockProps) => {
+const VariableAssignBlock = ({ idx, setProps, getProp, blockProps }: CodeBlockProps) => {
   const variable = getProp(idx, "variable") as string | null;
   const value = getProp(idx, "value") as string | null;
 
@@ -18,6 +18,7 @@ const VariableAssignBlock = ({ idx, setProps, getProp }: CodeBlockProps) => {
       bg={variableAssignBlockColor}
       topSlot
       bottomSlot
+      {...blockProps}
     >
       let
       <BlockInput

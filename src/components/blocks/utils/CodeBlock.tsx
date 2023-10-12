@@ -1,6 +1,6 @@
 import type { BlockColor } from "@/lib/block-colors";
 
-type Props = {
+export type BaseCodeBlockProps = {
   bg?: BlockColor;
   children?: React.ReactNode;
   topSlot?: boolean;
@@ -16,7 +16,7 @@ const CodeBlock = ({
   leftSlot,
   bottomSlot,
   rightSlot,
-}: Props) => {
+}: BaseCodeBlockProps) => {
   return (
     <div className="relative isolate w-fit min-w-[150px] rounded-lg">
       <div className="grid [&>*]:col-span-full [&>*]:row-span-full">

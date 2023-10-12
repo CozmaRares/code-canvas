@@ -3,11 +3,13 @@ import VariableAssignBlock, {
   type VariableAssignProps,
 } from "@/components/blocks/VariableAssignBlock";
 import VariableAssignBlockPreview from "@/components/blocks/preview/VariableAssignBlockPreview";
+import { BaseCodeBlockProps } from "./CodeBlock";
 
 export type CodeBlockProps = {
   idx: number;
   setProps: EditorBlocksContextType["setProps"];
   getProp: EditorBlocksContextType["getProp"];
+  blockProps?: BaseCodeBlockProps;
 };
 
 export type CodeBlockContextType = {
@@ -29,5 +31,8 @@ export const codeBlocks = Object.freeze({
   },
 } satisfies Record<
   CodeBlockType,
-  { block: (props: CodeBlockProps) => JSX.Element; preview: () => JSX.Element }
+  {
+    block: (props: CodeBlockProps) => JSX.Element;
+    preview: (props: BaseCodeBlockProps) => JSX.Element;
+  }
 >);

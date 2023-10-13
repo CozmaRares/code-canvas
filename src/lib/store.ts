@@ -7,7 +7,7 @@ import { nanoid } from "nanoid/non-secure";
 
 type Blocks = VariableAssignBlockModel;
 
-export class Store {
+class Store {
   blocks: Blocks[] = [];
   rerender: () => void = () => {};
 

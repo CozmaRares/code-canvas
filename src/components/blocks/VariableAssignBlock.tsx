@@ -5,12 +5,12 @@ import type { CodeBlockProps } from "@/components/blocks/utils/code-block";
 import store from "@/lib/store";
 
 export const variableAssignBlockType = "variable assign" as const;
-export type VariableAssignBlockProps = { variable:string; value:string;}
+export type VariableAssignBlockProps = { variable: string; value: string };
 
 export class VariableAssignBlockModel {
   id: string;
   type = variableAssignBlockType;
-  props:VariableAssignBlockProps;
+  props: VariableAssignBlockProps;
 
   constructor(id: VariableAssignBlockModel["id"]) {
     this.id = id;

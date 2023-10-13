@@ -23,7 +23,7 @@ const Editor = () => {
     store.rerender = () => setRender(prev => !prev);
 
     return () => {
-      store.rerender = () => { };
+      store.rerender = () => {};
     };
   }, [setRender]);
 
@@ -43,29 +43,25 @@ const Editor = () => {
   });
 
   return (
-    <main className="flex h-full w-full bg-[url(/paper.svg)] p-8 dark:bg-[url(/paper-dark.svg)]">
-      <ul
-        ref={droppable.setNodeRef}
-        className={cn("relative min-w-[350px] rounded-md bg-background p-4", {
-          "ring-2 ring-primary/20": droppable.isOver,
-        })}
-      >
-        <AnchorBlock text="Main Program" />
-        {!droppable.isOver && store.blocks.length === 0 && (
-          <p className="absolute left-0 right-0 top-1/2 mt-12 -translate-y-1/2 text-center text-xl text-muted-foreground">
-            Drop here
-          </p>
-        )}
-        {store.blocks.map(({ id, type }, idx) => {
-          console.log(codeBlocks, type, codeBlocks[type].block);
+    <ul
+      ref={droppable.setNodeRef}
+      className={cn("relative min-w-[350px] rounded-md bg-background p-4", {
+        "ring-2 ring-primary/40": droppable.isOver,
+      })}
+    >
+      <AnchorBlock text="Main Program" />
+      {!droppable.isOver && store.blocks.length === 0 && (
+        <p className="absolute left-0 right-0 top-1/2 mt-12 -translate-y-1/2 text-center text-xl text-muted-foreground">
+          Drop here
+        </p>
+      )}
+      {store.blocks.map(({ id, type }, idx) => {
+        console.log(codeBlocks, type, codeBlocks[type].block);
 
-          return (
-            <Fragment key={id}>{codeBlocks[type].block({ idx })}</Fragment>
-          );
-        })}
-        {droppable.isOver && <EmptyCodeBlock />}
-      </ul>
-    </main>
+        return <Fragment key={id}>{codeBlocks[type].block({ idx })}</Fragment>;
+      })}
+      {droppable.isOver && <EmptyCodeBlock />}
+    </ul>
   );
 };
 

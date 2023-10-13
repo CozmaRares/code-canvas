@@ -1,38 +1,36 @@
-import type { EditorBlocksContextType } from "@/context/editor-blocks";
 import VariableAssignBlock, {
-  type VariableAssignProps,
+  VariableAssignBlockModel,
+  variableAssignBlockType,
 } from "@/components/blocks/VariableAssignBlock";
 import VariableAssignBlockPreview from "@/components/blocks/preview/VariableAssignBlockPreview";
 import { BaseCodeBlockProps } from "./CodeBlock";
 
 export type CodeBlockProps = {
   idx: number;
-  setProps: EditorBlocksContextType["setProps"];
-  getProp: EditorBlocksContextType["getProp"];
   blockProps?: BaseCodeBlockProps;
 };
 
-export type CodeBlockContextType = {
-  type: "variable assign";
-  props: VariableAssignProps;
-};
-
-export type CodeBlockType = CodeBlockContextType["type"];
-
-export type CodeBlockContextGenericType = {
-  type: CodeBlockType;
+export interface GenericCodeBlockModel {
+  id: string;
+  type: string;
   props: Record<string, unknown>;
-};
+}
+
+export type Model = typeof VariableAssignBlockModel;
 
 export const codeBlocks = Object.freeze({
-  "variable assign": {
+  [variableAssignBlockType]: {
     block: VariableAssignBlock,
     preview: VariableAssignBlockPreview,
+    model: VariableAssignBlockModel,
   },
 } satisfies Record<
-  CodeBlockType,
+  string,
   {
     block: (props: CodeBlockProps) => JSX.Element;
-    preview: (props: BaseCodeBlockProps) => JSX.Element;
+    preview: (props?: BaseCodeBlockProps) => JSX.Element;
+    model: Model;
   }
 >);
+
+export type CodeBlockType = keyof typeof codeBlocks;

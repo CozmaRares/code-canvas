@@ -3,7 +3,7 @@ import CodeBlock, {
 } from "@/components/blocks/utils/CodeBlock";
 import { variableAssignBlockColor } from "@/lib/block-colors";
 
-const VariableAssignBlock = (props: BaseCodeBlockProps) => (
+const VariableAssignBlockPreview = (props?: BaseCodeBlockProps) => (
   <CodeBlock
     bg={variableAssignBlockColor}
     topSlot
@@ -14,4 +14,4 @@ const VariableAssignBlock = (props: BaseCodeBlockProps) => (
   </CodeBlock>
 );
 
-export default VariableAssignBlock;
+export default VariableAssignBlockPreview;

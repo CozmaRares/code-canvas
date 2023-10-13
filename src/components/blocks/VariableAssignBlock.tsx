@@ -2,15 +2,25 @@ import { variableAssignBlockColor } from "@/lib/block-colors";
 import CodeBlock from "@/components/blocks/utils/CodeBlock";
 import BlockInput from "@/components/blocks/utils/BlockInput";
 import type { CodeBlockProps } from "@/components/blocks/utils/code-block";
+import store from "@/lib/store";
 
-export type VariableAssignProps = {
-  variable: string;
-  value: string;
-};
+export const variableAssignBlockType = "variable assign" as const;
 
-const VariableAssignBlock = ({ idx, setProps, getProp, blockProps }: CodeBlockProps) => {
-  const variable = getProp(idx, "variable") as string | null;
-  const value = getProp(idx, "value") as string | null;
+export class VariableAssignBlockModel {
+  id: string;
+  type = variableAssignBlockType;
+  props: { variable: string; value: string };
+
+  constructor(id: VariableAssignBlockModel["id"]) {
+    this.id = id;
+    this.props = { variable: "", value: "" };
+  }
+}
+
+const VariableAssignBlock = ({ idx, blockProps }: CodeBlockProps) => {
+  const model = store.getModel(idx);
+  const variable = model.props["variable"];
+  const value = model.props["value"];
 
   return (
     <CodeBlock
@@ -23,14 +33,14 @@ const VariableAssignBlock = ({ idx, setProps, getProp, blockProps }: CodeBlockPr
       let
       <BlockInput
         text={variable ?? ""}
-        setText={variable => setProps(idx, { variable })}
+        setText={variable => store.setProps(idx, { variable })}
         placeholder="variable"
         className="w-[150px]"
       />
       be
       <BlockInput
         text={value ?? ""}
-        setText={value => setProps(idx, { value })}
+        setText={value => store.setProps(idx, { value })}
         placeholder="value"
         className="w-[150px]"
       />

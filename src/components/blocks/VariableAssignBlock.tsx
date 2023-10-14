@@ -42,7 +42,7 @@ const VariableAssignBlock = ({ id, blockProps }: CodeBlockProps) => {
         setText={variable => store.setProps(id, { variable })}
         placeholder="variable"
         pattern="identifier"
-        className="w-[20ch]"
+        className="w-[15ch]"
       />
       be
       <BlockInput

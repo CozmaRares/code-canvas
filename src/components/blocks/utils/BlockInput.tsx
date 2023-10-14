@@ -32,7 +32,7 @@ const BlockInput = ({
       placeholder={placeholder}
       value={text}
       onChange={onChange}
-      className={cn("h-[2.5em]", className)}
+      className={cn("h-[2.5em] font-mono", className)}
     />
   );
 };

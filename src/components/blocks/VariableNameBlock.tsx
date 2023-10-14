@@ -40,7 +40,7 @@ const VariableNameBlock = ({ id, blockProps }: CodeBlockProps) => {
         setText={variable => store.setProps(id, { variable })}
         placeholder="variable"
         pattern="identifier"
-        className="mr-3 w-[20ch]"
+        className="mr-3 w-[15ch]"
       />
     </CodeBlock>
   );

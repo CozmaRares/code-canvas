@@ -4,14 +4,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { SideBarButton } from "@/components/SideBarButton";
-import { codeBlocks } from "@/components/blocks/utils/code-block";
+import SideBarButton from "@/components/SideBarButton";
 
 const SideBar = () => (
   <aside className="w-[400px] p-8">
     <Accordion
       type="single"
-      className="w-full"
+      className="w-full [&_ul]:space-y-2 [&_ul]:p-0.5"
     >
       <AccordionItem value="variables">
         <AccordionTrigger className="font-normal">
@@ -20,10 +19,10 @@ const SideBar = () => (
         <AccordionContent>
           <ul className="p-0.5">
             <li>
-              <SideBarButton
-                type="variable assign"
-                blockPreview={codeBlocks["variable assign"].preview}
-              />
+              <SideBarButton type="variable assign" />
+            </li>
+            <li>
+              <SideBarButton type="variable name" />
             </li>
           </ul>
         </AccordionContent>

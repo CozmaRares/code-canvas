@@ -6,12 +6,12 @@ import { variableAssignBlockColor } from "@/lib/block-colors";
 const VariableAssignBlockPreview = (props?: BaseCodeBlockProps) => (
   <CodeBlock
     bg={variableAssignBlockColor}
-    topSlot
-    bottomSlot
+    leftSlot
+    rightSlot
     isPreview
     {...props}
   >
-    let variable
+    variable
   </CodeBlock>
 );
 

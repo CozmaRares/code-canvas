@@ -1,6 +1,8 @@
 import { VariableAssignBlockProps } from "@/components/blocks/VariableAssignBlock";
 import store from "./store";
 
+// class Parser{}
+
 export default class Interpreter {
   private addConsoleText: (text: string) => void = () => {};
 

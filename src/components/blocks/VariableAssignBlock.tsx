@@ -24,7 +24,7 @@ export class VariableAssignBlockModel
 }
 
 const VariableAssignBlock = ({ id, blockProps }: CodeBlockProps) => {
-  const model = store.getModel(id);
+  const model = store.getModel(id) as VariableAssignBlockModel;
   const variable = model.props["variable"];
   const value = model.props["value"];
 

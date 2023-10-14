@@ -1,15 +1,13 @@
-import { type VariableAssignBlockModel } from "@/components/blocks/VariableAssignBlock";
 import {
   type CodeBlockType,
   codeBlocks,
+  ConcreteModel,
 } from "@/components/blocks/utils/code-block";
 import { nanoid } from "nanoid/non-secure";
 
-type Block = VariableAssignBlockModel;
-
 class Store {
-  blockMap: Map<string, Block> = new Map();
-  blocks: Block[] = [];
+  blockMap: Map<string, ConcreteModel> = new Map();
+  blocks: ConcreteModel[] = [];
   rerender: () => void = () => {};
 
   addBlock(type: CodeBlockType, index?: number) {

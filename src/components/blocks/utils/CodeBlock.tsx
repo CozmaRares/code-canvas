@@ -1,4 +1,5 @@
 import type { BlockColor } from "@/lib/block-colors";
+import { cn } from "@/lib/utils";
 
 export type BaseCodeBlockProps = {
   bg?: BlockColor;
@@ -7,6 +8,7 @@ export type BaseCodeBlockProps = {
   leftSlot?: boolean;
   bottomSlot?: boolean;
   rightSlot?: boolean;
+  isPreview?: boolean;
 };
 
 const CodeBlock = ({
@@ -16,9 +18,15 @@ const CodeBlock = ({
   leftSlot,
   bottomSlot,
   rightSlot,
+  isPreview,
 }: BaseCodeBlockProps) => {
   return (
-    <div className="relative isolate w-fit min-w-[150px] rounded-lg">
+    <div
+      className={cn("relative isolate w-fit min-w-[150px] rounded-lg", {
+        "mb-3": isPreview && bottomSlot,
+        "ml-3": isPreview && leftSlot,
+      })}
+    >
       <div className="grid [&>*]:col-span-full [&>*]:row-span-full">
         <div
           className="[&>*]:bg-block grid min-h-[60px] 

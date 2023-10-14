@@ -2,13 +2,13 @@ import { useDraggable } from "@dnd-kit/core";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { CodeBlockType } from "@/components/blocks/utils/code-block";
+import { codeBlocks } from "@/components/blocks/utils/code-block";
 
 type Props = {
   type: CodeBlockType;
-  blockPreview: () => JSX.Element;
 };
 
-const SideBarButton = ({ type, blockPreview }: Props) => {
+const SideBarButton = ({ type }: Props) => {
   const draggable = useDraggable({
     id: `code-block-${type}`,
     data: {
@@ -21,29 +21,17 @@ const SideBarButton = ({ type, blockPreview }: Props) => {
     <Button
       ref={draggable.setNodeRef}
       variant="outline"
-      className={cn(
-        "h-fit w-fit cursor-grab border-none p-2 pb-5 transition-none",
-        {
-          "ring-2 ring-primary": draggable.isDragging,
-        },
-      )}
+      className={cn("h-fit w-fit cursor-grab border-none p-2 transition-none", {
+        "ring-2 ring-primary": draggable.isDragging,
+      })}
       {...draggable.listeners}
       {...draggable.attributes}
     >
-      <div className={cn({ "opacity-0": draggable.isDragging })}>
-        {blockPreview()}
+      <div className={cn("", { "opacity-0": draggable.isDragging })}>
+        {codeBlocks[type].preview()}
       </div>
     </Button>
   );
 };
 
-const SideBarButtonDragOverlay = ({ blockPreview }: Props) => (
-  <Button
-    variant="outline"
-    className="cursor-grab"
-  >
-    {blockPreview()}
-  </Button>
-);
-
-export { SideBarButton, SideBarButtonDragOverlay };
+export default SideBarButton;

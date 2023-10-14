@@ -6,14 +6,15 @@ import VariableAssignBlockPreview from "@/components/blocks/preview/VariableAssi
 import { BaseCodeBlockProps } from "./CodeBlock";
 
 export type CodeBlockProps = {
-  idx: number;
+  id: string;
   blockProps?: BaseCodeBlockProps;
 };
 
-export interface GenericCodeBlockModel {
+export interface GenericCodeBlockModel<T> {
   id: string;
   type: string;
-  props: Record<string, unknown>;
+  props: T;
+  childrenIDs?: string[];
 }
 
 export type Model = typeof VariableAssignBlockModel;

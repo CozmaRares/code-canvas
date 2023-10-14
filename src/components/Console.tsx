@@ -9,8 +9,8 @@ const Console = () => {
         Console
       </span>
       <ul>
-        {output.map(text => (
-          <li>{text}</li>
+        {output.map((text, idx) => (
+          <li key={idx}>{text}</li>
         ))}
       </ul>
     </div>

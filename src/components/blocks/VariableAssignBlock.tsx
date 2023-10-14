@@ -1,31 +1,36 @@
 import { variableAssignBlockColor } from "@/lib/block-colors";
 import CodeBlock from "@/components/blocks/utils/CodeBlock";
 import BlockInput from "@/components/blocks/utils/BlockInput";
-import type { CodeBlockProps } from "@/components/blocks/utils/code-block";
+import type {
+  CodeBlockProps,
+  GenericCodeBlockModel,
+} from "@/components/blocks/utils/code-block";
 import store from "@/lib/store";
 
 export const variableAssignBlockType = "variable assign" as const;
 export type VariableAssignBlockProps = { variable: string; value: string };
 
-export class VariableAssignBlockModel {
+export class VariableAssignBlockModel
+  implements GenericCodeBlockModel<VariableAssignBlockProps>
+{
   id: string;
   type = variableAssignBlockType;
   props: VariableAssignBlockProps;
 
-  constructor(id: VariableAssignBlockModel["id"]) {
+  constructor(id: string) {
     this.id = id;
     this.props = { variable: "", value: "" };
   }
 }
 
-const VariableAssignBlock = ({ idx, blockProps }: CodeBlockProps) => {
-  const model = store.getModel(idx);
+const VariableAssignBlock = ({ id, blockProps }: CodeBlockProps) => {
+  const model = store.getModel(id);
   const variable = model.props["variable"];
   const value = model.props["value"];
 
   return (
     <CodeBlock
-      key={idx}
+      key={id}
       bg={variableAssignBlockColor}
       topSlot
       bottomSlot
@@ -34,14 +39,14 @@ const VariableAssignBlock = ({ idx, blockProps }: CodeBlockProps) => {
       let
       <BlockInput
         text={variable ?? ""}
-        setText={variable => store.setProps(idx, { variable })}
+        setText={variable => store.setProps(id, { variable })}
         placeholder="variable"
         className="w-[150px]"
       />
       be
       <BlockInput
         text={value ?? ""}
-        setText={value => store.setProps(idx, { value })}
+        setText={value => store.setProps(id, { value })}
         placeholder="value"
         className="w-[150px]"
       />

@@ -58,10 +58,8 @@ const Editor = () => {
           Drop here
         </p>
       )}
-      {store.blocks.map(({ id, type }, idx) => {
-        console.log(codeBlocks, type, codeBlocks[type].block);
-
-        return <Fragment key={id}>{codeBlocks[type].block({ idx })}</Fragment>;
+      {store.blocks.map(({ id, type }) => {
+        return <Fragment key={id}>{codeBlocks[type].block({ id })}</Fragment>;
       })}
       {droppable.isOver && <EmptyCodeBlock />}
     </ul>

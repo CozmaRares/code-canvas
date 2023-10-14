@@ -19,8 +19,6 @@ export default class Interpreter {
           this.handleVariableAssign(block.props);
       }
     });
-
-    console.log(this.variables);
   }
 
   private handleVariableAssign(props: VariableAssignBlockProps) {

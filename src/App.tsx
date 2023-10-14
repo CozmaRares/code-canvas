@@ -22,7 +22,7 @@ const App = () => {
         </nav>
         <DndContext>
           <SideBar />
-          <main className="flex h-full w-full justify-between bg-[url(/paper.svg)] p-8 dark:bg-[url(/paper-dark.svg)]">
+          <main className="flex h-full w-full justify-between overflow-y-auto bg-[url(/paper.svg)] p-8 dark:bg-[url(/paper-dark.svg)]">
             <Editor />
             <Console />
           </main>

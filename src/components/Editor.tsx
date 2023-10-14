@@ -46,7 +46,7 @@ const Editor = () => {
     <ul
       ref={droppable.setNodeRef}
       className={cn(
-        "relative min-w-[350px] rounded-md bg-background p-4 [--shadow-col:#02061780] [box-shadow:_0px_0px_20px_10px_var(--shadow-col)] dark:[--shadow-col:#f8fafc3d]",
+        "relative h-fit min-h-full min-w-[350px] rounded-md bg-background p-4 pb-8 [--shadow-col:#02061780] [box-shadow:_0px_0px_20px_10px_var(--shadow-col)] dark:[--shadow-col:#f8fafc3d]",
         {
           "ring-2 ring-primary/40": droppable.isOver,
         },

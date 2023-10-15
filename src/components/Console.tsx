@@ -24,15 +24,21 @@ const Console = () => {
           ))}
         </ul>
       ) : (
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-[1.75] opacity-60">
-          <div className="relative aspect-square w-[38px]">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="relative mx-auto mb-6 aspect-square w-[38px] scale-[1.75] opacity-60">
             <div className="absolute right-0 top-0">
-              <Cog className="animate-spin direction-reverse " />
+              <Cog className="animate-spin duration-1000 direction-reverse" />
             </div>
             <div className="absolute bottom-0 left-0 rotate-[15deg]">
-              <Cog className="animate-spin" />
+              <Cog className="animate-spin duration-1000" />
             </div>
           </div>
+          <p className="text-2xl">
+            Loading
+            <span className="inline-block animate-bounce">.</span>
+            <span className="inline-block animate-bounce delay-100">.</span>
+            <span className="inline-block animate-bounce delay-200">.</span>
+          </p>
         </div>
       )}
     </div>

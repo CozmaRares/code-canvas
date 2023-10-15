@@ -1,4 +1,9 @@
-import { useDndMonitor, useDroppable } from "@dnd-kit/core";
+import {
+  type Active,
+  useDndMonitor,
+  useDroppable,
+  type Over,
+} from "@dnd-kit/core";
 import { cn } from "@/lib/utils";
 import AnchorBlock from "@/components/blocks/utils/AnchorBlock";
 import {
@@ -11,11 +16,13 @@ import store from "@/lib/store";
 
 const Editor = () => {
   const [, setRender] = useState(false);
+  const [active, setActive] = useState<Active | null>(null);
+  const [over, setOver] = useState<Over | null>(null);
 
   const droppable = useDroppable({
     id: "editor-drop-area",
     data: {
-      isDropArea: true,
+      isEditor: true,
     },
   });
 
@@ -27,19 +34,30 @@ const Editor = () => {
     };
   }, [setRender]);
 
-  useDndMonitor({
-    onDragEnd: e => {
-      const { active, over } = e;
+  const resetDragElements = () => {
+    setActive(null);
+    setOver(null);
+  };
 
-      if (!active || !over) return;
+  useDndMonitor({
+    onDragStart: e => setActive(e.active),
+    onDragMove: e => setOver(e.over),
+    onDragEnd: () => {
+      if (!active || !over) return resetDragElements();
 
       const isSideBarButton = active.data.current?.isSideBarButton;
+      const isVertical = active.data.current?.orientation == "vertical";
+      const isEditor = over.data.current?.isEditor;
 
-      if (isSideBarButton) {
+      // vertical block from sidebar over editor
+      if (isEditor && isVertical && isSideBarButton) {
         const type = active.data.current!.type as CodeBlockType;
         store.addBlock(type);
       }
+
+      resetDragElements();
     },
+    onDragCancel: resetDragElements,
   });
 
   return (
@@ -61,7 +79,12 @@ const Editor = () => {
       {store.blocks.map(({ id, type }) => {
         return <Fragment key={id}>{codeBlocks[type].block({ id })}</Fragment>;
       })}
-      {droppable.isOver && <EmptyCodeBlock />}
+      {droppable.isOver && active?.data.current?.orientation == "vertical" && (
+        <EmptyCodeBlock
+          topSlot
+          bottomSlot
+        />
+      )}
     </ul>
   );
 };

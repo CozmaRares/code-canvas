@@ -14,6 +14,7 @@ const SideBarButton = ({ type }: Props) => {
     data: {
       type,
       isSideBarButton: true,
+      orientation: codeBlocks[type].orientation,
     },
   });
 
@@ -27,7 +28,7 @@ const SideBarButton = ({ type }: Props) => {
       {...draggable.listeners}
       {...draggable.attributes}
     >
-      <div className={cn("", { "opacity-0": draggable.isDragging })}>
+      <div className={cn({ "opacity-0": draggable.isDragging })}>
         {codeBlocks[type].preview()}
       </div>
     </Button>

@@ -33,11 +33,13 @@ export const codeBlocks = Object.freeze({
     block: VariableAssignBlock,
     preview: VariableAssignBlockPreview,
     model: VariableAssignBlockModel,
+    orientation: "vertical",
   },
   [variableNameBlockType]: {
     block: VariableNameBlock,
     preview: VariableNameBlockPreview,
     model: VariableNameBlockModel,
+    orientation: "horizontal",
   },
 } satisfies Record<
   string,
@@ -45,6 +47,7 @@ export const codeBlocks = Object.freeze({
     block: (props: CodeBlockProps) => JSX.Element;
     preview: (props?: BaseCodeBlockProps) => JSX.Element;
     model: Model;
+    orientation: "horizontal" | "vertical";
   }
 >);
 

@@ -10,9 +10,17 @@ const Console = () => {
         Console
       </span>
       {displayOutput ? (
-        <ul>
+        <ul className="grid grid-cols-[auto,minmax(0,1fr)] items-center">
           {output.map((text, idx) => (
-            <li key={idx}>{text}</li>
+            <li
+              key={idx}
+              className="contents"
+            >
+              <Row
+                line={idx + 1}
+                text={text}
+              />
+            </li>
           ))}
         </ul>
       ) : (
@@ -30,5 +38,19 @@ const Console = () => {
     </div>
   );
 };
+
+type RowProps = {
+  line: number;
+  text: string;
+};
+
+const Row = ({ line, text }: RowProps) => (
+  <>
+    <span className="mr-4 border-r border-black py-1 pr-2 opacity-60 dark:border-white">
+      {line}
+    </span>
+    <span>{text}</span>
+  </>
+);
 
 export default Console;

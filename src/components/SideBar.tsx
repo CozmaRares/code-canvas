@@ -7,7 +7,7 @@ import {
 import SideBarButton from "@/components/SideBarButton";
 
 const SideBar = () => (
-  <aside className="w-[400px] p-8">
+  <aside className="w-[300px] border-r border-black p-8 dark:border-white">
     <Accordion
       type="single"
       className="w-full [&_ul]:space-y-2 [&_ul]:p-0.5"

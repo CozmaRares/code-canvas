@@ -10,14 +10,14 @@ const SideBar = () => (
   <aside className="w-[300px] border-r border-black p-8 dark:border-white">
     <Accordion
       type="single"
-      className="w-full [&_ul]:space-y-2 [&_ul]:p-0.5"
+      className="w-full [&_ul]:space-y-2 [&_ul]:p-1"
     >
-      <AccordionItem value="variables">
+      <AccordionItem value="variables & values">
         <AccordionTrigger className="font-normal">
           Variables & Values
         </AccordionTrigger>
         <AccordionContent>
-          <ul className="p-0.5">
+          <ul>
             <li>
               <SideBarButton type="variable assign" />
             </li>

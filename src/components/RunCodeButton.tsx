@@ -8,12 +8,20 @@ type Props = {
   className?: string;
 };
 
-const RunCodeButton = ({ className }: Props) => {
-  const { addOutputText, resetOutput } = useOutputContext();
+// TODO: remove me
+async function sleep(s: number) {
+  return new Promise(resolve => setTimeout(resolve, s * 1000));
+}
 
-  const onClick = () => {
+const RunCodeButton = ({ className }: Props) => {
+  const { addOutputText, resetOutput, setDisplayOuput } = useOutputContext();
+
+  const onClick = async () => {
+    setDisplayOuput(false);
     resetOutput();
-    new Interpreter().start(addOutputText);
+    await sleep(1);
+    await new Interpreter().start(addOutputText);
+    setDisplayOuput(true);
   };
 
   return (

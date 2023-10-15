@@ -4,6 +4,8 @@ type ContextType = {
   output: string[];
   addOutputText: (text: string) => void;
   resetOutput: () => void;
+  displayOutput: boolean;
+  setDisplayOuput: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const OutputContext = createContext<ContextType | null>(null);
@@ -14,12 +16,21 @@ type Props = {
 
 const OutputContextProvider = ({ children }: Props) => {
   const [output, setOutput] = useState<string[]>([]);
+  const [displayOutput, setDisplayOuput] = useState(true);
 
   const addOutputText = (text: string) => setOutput(prev => [...prev, text]);
   const resetOutput = () => setOutput([]);
 
   return (
-    <OutputContext.Provider value={{ output, addOutputText, resetOutput }}>
+    <OutputContext.Provider
+      value={{
+        output,
+        addOutputText,
+        resetOutput,
+        displayOutput,
+        setDisplayOuput,
+      }}
+    >
       {children}
     </OutputContext.Provider>
   );

@@ -30,4 +30,8 @@
 
 ## Testing
 
+<!-- TODO: cypress -->
+<!-- TODO: vitest -> python translater -->
+<!-- TODO: vitest -> interpreter -->
+
 ## Conclusions

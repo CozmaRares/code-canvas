@@ -8,7 +8,7 @@ export default class Interpreter {
 
   private variables: Map<string, string | number> = new Map();
 
-  start(
+  async start(
     addConsoleText: (text: string) => void,
     // getInput: (identifier: string) => void,
   ) {

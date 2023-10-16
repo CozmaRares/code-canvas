@@ -9,6 +9,7 @@ import VariableNameBlock, {
 } from "../VariableNameBlock";
 import { CodeBlockPreviewProps } from "../CodeBlockPreview";
 import { variableAssignBlockColor } from "@/lib/block-colors";
+import NumberBlock, { NumberBlockModel, numberBlockType } from "../NumberBlock";
 
 export type CodeBlockProps = {
   id: string;
@@ -24,7 +25,8 @@ export interface GenericCodeBlockModel<T> {
 
 export type Model =
   | typeof VariableAssignBlockModel
-  | typeof VariableNameBlockModel;
+  | typeof VariableNameBlockModel
+  | typeof NumberBlockModel;
 
 export type ConcreteModel = Model["prototype"];
 
@@ -44,6 +46,14 @@ export const codeBlocks = Object.freeze({
       text: "variable",
     },
     model: VariableNameBlockModel,
+    orientation: "horizontal",
+  },
+  [numberBlockType]: {
+    block: NumberBlock,
+    previewProps: {
+      text: "number",
+    },
+    model: NumberBlockModel,
     orientation: "horizontal",
   },
 } satisfies Record<

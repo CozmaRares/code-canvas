@@ -2,13 +2,13 @@ import VariableAssignBlock, {
   VariableAssignBlockModel,
   variableAssignBlockType,
 } from "@/components/blocks/VariableAssignBlock";
-import VariableAssignBlockPreview from "@/components/blocks/preview/VariableAssignBlockPreview";
 import { BaseCodeBlockProps } from "./CodeBlock";
 import VariableNameBlock, {
   VariableNameBlockModel,
   variableNameBlockType,
 } from "../VariableNameBlock";
-import VariableNameBlockPreview from "../preview/VariableNameBlockPreview";
+import { CodeBlockPreviewProps } from "../CodeBlockPreview";
+import { variableAssignBlockColor } from "@/lib/block-colors";
 
 export type CodeBlockProps = {
   id: string;
@@ -31,13 +31,18 @@ export type ConcreteModel = Model["prototype"];
 export const codeBlocks = Object.freeze({
   [variableAssignBlockType]: {
     block: VariableAssignBlock,
-    preview: VariableAssignBlockPreview,
+    previewProps: {
+      text: "let variable",
+      bg: variableAssignBlockColor,
+    },
     model: VariableAssignBlockModel,
     orientation: "vertical",
   },
   [variableNameBlockType]: {
     block: VariableNameBlock,
-    preview: VariableNameBlockPreview,
+    previewProps: {
+      text: "variable",
+    },
     model: VariableNameBlockModel,
     orientation: "horizontal",
   },
@@ -45,10 +50,18 @@ export const codeBlocks = Object.freeze({
   string,
   {
     block: (props: CodeBlockProps) => JSX.Element;
-    preview: (props?: BaseCodeBlockProps) => JSX.Element;
+    previewProps: CodeBlockPreviewProps;
     model: Model;
     orientation: "horizontal" | "vertical";
   }
 >);
 
 export type CodeBlockType = keyof typeof codeBlocks;
+
+export function computePreviewProps(type: CodeBlockType) {
+  const slots =
+    codeBlocks[type].orientation == "horizontal"
+      ? { leftSlot: true, rightSlot: true }
+      : { topSlot: true, bottomSlot: true };
+  return { ...codeBlocks[type].previewProps, ...slots };
+}

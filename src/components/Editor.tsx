@@ -13,11 +13,13 @@ import {
 import EmptyCodeBlock from "@/components/blocks/utils/EmptyBlock";
 import { Fragment, useEffect, useState } from "react";
 import store from "@/lib/store";
+import { useToast } from "@/components/ui/use-toast";
 
 const Editor = () => {
   const [, setRender] = useState(false);
   const [active, setActive] = useState<Active | null>(null);
   const [over, setOver] = useState<Over | null>(null);
+  const { toast } = useToast();
 
   const droppable = useDroppable({
     id: "editor-drop-area",
@@ -50,10 +52,17 @@ const Editor = () => {
       const isEditor = over.data.current?.isEditor;
 
       // vertical block from sidebar over editor
-      if (isEditor && isVertical && isSideBarButton) {
-        const type = active.data.current!.type as CodeBlockType;
-        store.addBlock(type);
-      }
+      if (isEditor && isSideBarButton)
+        if (isVertical) {
+          const type = active.data.current!.type as CodeBlockType;
+          store.addBlock(type);
+          return;
+        } else
+          return toast({
+            title: "Editor error",
+            description: "Cannot drop horizontal blocks in Editor",
+            variant: "destructive",
+          });
 
       resetDragElements();
     },

@@ -22,13 +22,16 @@ export default class Interpreter {
           this.handleVariableAssign(block);
       }
     });
+
+    console.log(this.variables);
   }
 
   private handleVariableAssign(model: VariableAssignBlockModel) {
     const variable = model.props.variable;
     // FIXME: integrate parser
-    const number = (store.getModel(model.children[0].id) as NumberBlockModel)
-      .props.number;
+    const number = parseInt(
+      (store.getModel(model.children[0].id) as NumberBlockModel).props.number,
+    );
 
     this.variables.set(variable, number);
     // TODO: Python converter output

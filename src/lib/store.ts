@@ -41,8 +41,6 @@ class Store {
       parentID,
     ) as GenericCodeBlockModelWithChildren<unknown>;
 
-    console.log(type, parentModel.childrenTypes);
-
     if (parentModel.childrenTypes.indexOf(type) == -1) return false;
 
     const childBlock = this.createBlock(type);

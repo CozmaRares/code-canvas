@@ -8,7 +8,7 @@ import type {
 import store from "@/lib/store";
 
 export const numberBlockType = "number" as const;
-export type NumberBlockProps = { number: number };
+export type NumberBlockProps = { number: string };
 
 export class NumberBlockModel
   implements GenericCodeBlockModel<NumberBlockProps>
@@ -19,7 +19,7 @@ export class NumberBlockModel
 
   constructor(id: string) {
     this.id = id;
-    this.props = { number: 0 };
+    this.props = { number: "" };
   }
 }
 
@@ -27,7 +27,6 @@ const VariableNameBlock = ({ id, blockProps }: CodeBlockProps) => {
   const model = store.getModel(id) as NumberBlockModel;
   const number = model.props.number;
 
-  // FIXME: NaN when deleting all digits
   return (
     <CodeBlock
       bg={valueBlockColor}
@@ -37,7 +36,7 @@ const VariableNameBlock = ({ id, blockProps }: CodeBlockProps) => {
     >
       <BlockInput
         text={`${number}`}
-        setText={number => store.setProps(id, { number: parseInt(number) })}
+        setText={number => store.setProps(id, { number })}
         placeholder="number"
         pattern="number"
         className=""

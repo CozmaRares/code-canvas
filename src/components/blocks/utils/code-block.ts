@@ -8,7 +8,7 @@ import VariableNameBlock, {
   variableNameBlockType,
 } from "../VariableNameBlock";
 import { CodeBlockPreviewProps } from "../CodeBlockPreview";
-import { variableAssignBlockColor } from "@/lib/block-colors";
+import { valueBlockColor, variableAssignBlockColor } from "@/lib/block-colors";
 import NumberBlock, { NumberBlockModel, numberBlockType } from "../NumberBlock";
 
 export type CodeBlockProps = {
@@ -49,6 +49,7 @@ export const codeBlocks = Object.freeze({
     block: VariableNameBlock,
     previewProps: {
       text: "variable",
+      bg: valueBlockColor,
     },
     model: VariableNameBlockModel,
     orientation: "horizontal",
@@ -57,6 +58,7 @@ export const codeBlocks = Object.freeze({
     block: NumberBlock,
     previewProps: {
       text: "number",
+      bg: valueBlockColor,
     },
     model: NumberBlockModel,
     orientation: "horizontal",

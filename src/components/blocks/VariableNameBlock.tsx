@@ -1,4 +1,4 @@
-import { variableAssignBlockColor } from "@/lib/block-colors";
+import { valueBlockColor } from "@/lib/block-colors";
 import CodeBlock from "@/components/blocks/utils/CodeBlock";
 import BlockInput from "@/components/blocks/utils/BlockInput";
 import type {
@@ -29,8 +29,7 @@ const VariableNameBlock = ({ id, blockProps }: CodeBlockProps) => {
 
   return (
     <CodeBlock
-      key={id}
-      bg={variableAssignBlockColor}
+      bg={valueBlockColor}
       leftSlot
       rightSlot
       {...blockProps}
@@ -40,7 +39,7 @@ const VariableNameBlock = ({ id, blockProps }: CodeBlockProps) => {
         setText={variable => store.setProps(id, { variable })}
         placeholder="variable"
         pattern="identifier"
-        className="mr-3 w-[15ch]"
+        className="w-[15ch]"
       />
     </CodeBlock>
   );

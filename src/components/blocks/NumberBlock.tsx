@@ -1,4 +1,4 @@
-import { variableAssignBlockColor } from "@/lib/block-colors";
+import { valueBlockColor } from "@/lib/block-colors";
 import CodeBlock from "@/components/blocks/utils/CodeBlock";
 import BlockInput from "@/components/blocks/utils/BlockInput";
 import type {
@@ -27,10 +27,10 @@ const VariableNameBlock = ({ id, blockProps }: CodeBlockProps) => {
   const model = store.getModel(id) as NumberBlockModel;
   const number = model.props.number;
 
+  // FIXME: NaN when deleting all digits
   return (
     <CodeBlock
-      key={id}
-      bg={variableAssignBlockColor}
+      bg={valueBlockColor}
       leftSlot
       rightSlot
       {...blockProps}

@@ -2,6 +2,7 @@ import {
   type CodeBlockType,
   codeBlocks,
   ConcreteModel,
+  GenericCodeBlockModelWithChildren,
 } from "@/components/blocks/utils/code-block";
 import { nanoid } from "nanoid/non-secure";
 
@@ -10,10 +11,15 @@ class Store {
   blocks: ConcreteModel[] = [];
   rerender: () => void = () => {};
 
-  addBlock(type: CodeBlockType, index?: number) {
+  private createBlock(type: CodeBlockType) {
     const id = nanoid();
-    const newBlock = new codeBlocks[type].model(id);
-    this.blockMap.set(id, newBlock);
+    const block = new codeBlocks[type].model(id);
+    this.blockMap.set(id, block);
+    return block;
+  }
+
+  addBlock(type: CodeBlockType, index?: number) {
+    const newBlock = this.createBlock(type);
     this.blocks.splice(index ?? this.blocks.length, 0, newBlock);
     this.rerender();
   }
@@ -28,6 +34,20 @@ class Store {
 
   getModel(id: string) {
     return this.blockMap.get(id)!;
+  }
+
+  addChild(parentID: string, type: CodeBlockType) {
+    const parentModel = this.getModel(
+      parentID,
+    ) as GenericCodeBlockModelWithChildren<unknown>;
+
+    console.log(type, parentModel.childrenTypes);
+
+    if (parentModel.childrenTypes.indexOf(type) == -1) return false;
+
+    const childBlock = this.createBlock(type);
+
+    parentModel.children.push({ id: childBlock.id, type });
   }
 }
 

@@ -8,10 +8,11 @@ import { cn } from "@/lib/utils";
 import AnchorBlock from "@/components/blocks/utils/AnchorBlock";
 import {
   type CodeBlockType,
+  CodeBlockInfo,
   codeBlocks,
 } from "@/components/blocks/utils/code-block";
 import EmptyCodeBlock from "@/components/blocks/utils/EmptyBlock";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import store from "@/lib/store";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -55,14 +56,31 @@ const Editor = () => {
       if (isEditor && isSideBarButton)
         if (isVertical) {
           const type = active.data.current!.type as CodeBlockType;
-          store.addBlock(type);
-          return;
+          return store.addBlock(type);
         } else
           return toast({
             title: "Editor error",
             description: "Cannot drop horizontal blocks in Editor",
             variant: "destructive",
           });
+
+      const isCodeBlock = over.data.current?.isCodeBlock;
+      const isRightDrop = over.data.current?.isRightDrop;
+
+      console.log({ isCodeBlock, isRightDrop });
+
+      // block from sidebar over block with children
+      if (isCodeBlock && isRightDrop) {
+        const type = active.data.current!.type as CodeBlockType;
+        const parentID = over.data.current!.id as string;
+
+        if (store.addChild(parentID, type) == false)
+          return toast({
+            title: "Editor erorr",
+            description: "Could not add child",
+            variant: "destructive",
+          });
+      }
 
       resetDragElements();
     },
@@ -74,9 +92,7 @@ const Editor = () => {
       ref={droppable.setNodeRef}
       className={cn(
         "relative h-fit min-h-full min-w-[350px] rounded-md bg-background p-4 pb-8 [--shadow-col:#02061780] [box-shadow:_0px_0px_20px_10px_var(--shadow-col)] dark:[--shadow-col:#f8fafc3d]",
-        {
-          "ring-2 ring-primary/40": droppable.isOver,
-        },
+        droppable.isOver && "ring-2 ring-primary/40",
       )}
     >
       <AnchorBlock text="Main Program" />
@@ -85,17 +101,48 @@ const Editor = () => {
           Drop here
         </p>
       )}
-      {store.blocks.map(({ id, type }) => {
-        return <Fragment key={id}>{codeBlocks[type].block({ id })}</Fragment>;
-      })}
-      {droppable.isOver && active?.data.current?.orientation == "vertical" && (
-        <EmptyCodeBlock
-          topSlot
-          bottomSlot
+      {store.blocks.map(block => (
+        <CodeBlockWrapper
+          key={block.id}
+          id={block.id}
+          type={block.type}
         />
+      ))}
+      {droppable.isOver && active?.data.current?.orientation == "vertical" && (
+        <EmptyCodeBlock />
       )}
     </ul>
   );
 };
 
 export default Editor;
+
+const CodeBlockWrapper = ({ id, type }: CodeBlockInfo) => {
+  const rightDrop = useDroppable({
+    id: id + "-right",
+    data: {
+      type: type,
+      id: id,
+      isCodeBlock: true,
+      isRightDrop: true,
+    },
+  });
+
+  const CodeBlock = codeBlocks[type].block;
+
+  return (
+    <div className="relative w-fit">
+      <div className="absolute bottom-0 left-0 top-0 z-10 w-4"> </div>
+      <div className="absolute left-0 right-0 top-0 z-10 h-4"> </div>
+      <div className="absolute bottom-0 left-0 right-0 z-10 h-4"> </div>
+      <div
+        ref={rightDrop.setNodeRef}
+        className={cn(
+          "absolute bottom-0 right-0 top-0 z-10 w-4",
+          rightDrop.isOver && "outline",
+        )}
+      ></div>
+      <CodeBlock id={id} />
+    </div>
+  );
+};

@@ -1,5 +1,6 @@
-import { VariableAssignBlockProps } from "@/components/blocks/VariableAssignBlock";
+import { VariableAssignBlockModel } from "@/components/blocks/VariableAssignBlock";
 import store from "./store";
+import { NumberBlockModel } from "@/components/blocks/NumberBlock";
 
 // class Parser{}
 
@@ -18,18 +19,19 @@ export default class Interpreter {
     store.blocks.forEach(block => {
       switch (block.type) {
         case "variable assign":
-          this.handleVariableAssign(block.props);
+          this.handleVariableAssign(block);
       }
     });
   }
 
-  private handleVariableAssign(props: VariableAssignBlockProps) {
-    const variable = props.variable;
-    // FIXME: assumes value can only be a number
-    const value: string = props.value;
+  private handleVariableAssign(model: VariableAssignBlockModel) {
+    const variable = model.props.variable;
+    // FIXME: integrate parser
+    const number = (store.getModel(model.children[0].id) as NumberBlockModel)
+      .props.number;
 
-    this.variables.set(variable, parseInt(value));
+    this.variables.set(variable, number);
     // TODO: Python converter output
-    this.addConsoleText(`> ${variable} = ${value}`);
+    this.addConsoleText(`> ${variable} = ${number}`);
   }
 }

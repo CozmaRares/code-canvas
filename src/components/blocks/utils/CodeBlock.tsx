@@ -54,7 +54,12 @@ const CodeBlock = ({
             <div className="absolute right-full top-1/2 h-6 w-3 -translate-y-1/2" />
           )}
         </div>
-        <div className="z-[1] flex flex-row items-center gap-2 whitespace-nowrap p-4">
+        <div
+          className={
+            "z-[1] flex flex-row items-center gap-2 whitespace-nowrap p-4" +
+            (rightSlot ? " mr-3" : "")
+          }
+        >
           {children}
         </div>
       </div>

@@ -20,7 +20,12 @@ export interface GenericCodeBlockModel<T> {
   id: string;
   type: string;
   props: T;
-  childrenIDs?: string[];
+}
+
+export interface GenericCodeBlockModelWithChildren<T>
+  extends GenericCodeBlockModel<T> {
+  children: Array<{ id: string; type: CodeBlockType }>;
+  childrenTypes: Readonly<CodeBlockType[]>;
 }
 
 export type Model =
@@ -75,3 +80,8 @@ export function computePreviewProps(type: CodeBlockType) {
       : { topSlot: true, bottomSlot: true };
   return { ...codeBlocks[type].previewProps, ...slots };
 }
+
+export type CodeBlockInfo = {
+  id: string;
+  type: CodeBlockType;
+};

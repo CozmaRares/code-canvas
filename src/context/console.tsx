@@ -1,49 +1,58 @@
-import { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 type ContextType = {
   output: string[];
   addOutputText: (text: string) => void;
   resetOutput: () => void;
+
   displayOutput: boolean;
   setDisplayOuput: React.Dispatch<React.SetStateAction<boolean>>;
+
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const OutputContext = createContext<ContextType | null>(null);
+const ConsoleContext = createContext<ContextType | null>(null);
 
 type Props = {
   children: React.ReactNode;
 };
 
-const OutputContextProvider = ({ children }: Props) => {
+const ConsoleContextProvider = ({ children }: Props) => {
   const [output, setOutput] = useState<string[]>([]);
   const [displayOutput, setDisplayOuput] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const addOutputText = (text: string) => setOutput(prev => [...prev, text]);
   const resetOutput = () => setOutput([]);
 
   return (
-    <OutputContext.Provider
+    <ConsoleContext.Provider
       value={{
         output,
         addOutputText,
         resetOutput,
+
         displayOutput,
         setDisplayOuput,
+
+        isOpen,
+        setIsOpen,
       }}
     >
       {children}
-    </OutputContext.Provider>
+    </ConsoleContext.Provider>
   );
 };
 
-export default OutputContextProvider;
+export default ConsoleContextProvider;
 
-export function useOutputContext() {
-  const context = useContext(OutputContext);
+export function useConsoleContext() {
+  const context = useContext(ConsoleContext);
 
   if (context == null)
     throw new Error(
-      "useOutputContext must be used within an OutputContextProvider",
+      "useConsoleContext must be used within an ConsoleContextProvider",
     );
 
   return context;

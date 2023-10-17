@@ -1,7 +1,7 @@
 import { Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useOutputContext } from "@/context/output";
+import { useConsoleContext } from "@/context/console";
 import Interpreter from "@/lib/Interpreter";
 
 type Props = {
@@ -14,9 +14,11 @@ async function sleep(s: number) {
 }
 
 const RunCodeButton = ({ className }: Props) => {
-  const { addOutputText, resetOutput, setDisplayOuput } = useOutputContext();
+  const { addOutputText, resetOutput, setDisplayOuput, setIsOpen } =
+    useConsoleContext();
 
   const onClick = async () => {
+    setIsOpen(true);
     setDisplayOuput(false);
     resetOutput();
     await sleep(1);
@@ -35,5 +37,4 @@ const RunCodeButton = ({ className }: Props) => {
     </Button>
   );
 };
-
 export default RunCodeButton;

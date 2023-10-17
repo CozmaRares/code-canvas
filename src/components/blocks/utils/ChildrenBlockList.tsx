@@ -6,12 +6,11 @@ type Props = {
 
 const ChildrenBlockList = ({ list }: Props) => (
   <ul className="contents">
-    {list.map(({ id, type }, idx) => (
+    {list.map(({ id, type }) => (
       <li key={id}>
         <ChildBlock
           id={id}
           type={type}
-          last={idx == list.length - 1}
         />
       </li>
     ))}
@@ -20,12 +19,7 @@ const ChildrenBlockList = ({ list }: Props) => (
 
 export default ChildrenBlockList;
 
-const ChildBlock = ({ id, type, last }: CodeBlockInfo & { last: boolean }) => {
+const ChildBlock = ({ id, type }: CodeBlockInfo) => {
   const CodeBlock = codeBlocks[type].block;
-  return (
-    <CodeBlock
-      id={id}
-      blockProps={{ rightSlot: !last }}
-    />
-  );
+  return <CodeBlock id={id} />;
 };

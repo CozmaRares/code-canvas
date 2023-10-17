@@ -26,7 +26,11 @@ const DragOverlayWrapper = () => {
 
   if (isSideBarButton) {
     const type = draggedItem.data.current!.type as CodeBlockType;
-    node = <CodeBlockPreview {...computePreviewProps(type)} />;
+    node = (
+      <div className="cursor-grabbing opacity-50">
+        <CodeBlockPreview {...computePreviewProps(type)} />;
+      </div>
+    );
   }
 
   return <DragOverlay>{node}</DragOverlay>;

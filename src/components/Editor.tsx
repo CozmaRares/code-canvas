@@ -37,16 +37,11 @@ const Editor = () => {
     };
   }, [setRender]);
 
-  const resetDragElements = () => {
-    setActive(null);
-    setOver(null);
-  };
-
   useDndMonitor({
     onDragStart: e => setActive(e.active),
     onDragMove: e => setOver(e.over),
     onDragEnd: () => {
-      if (!active || !over) return resetDragElements();
+      if (!active || !over) return;
 
       const isSideBarButton = active.data.current?.isSideBarButton;
       const isVertical = active.data.current?.orientation == "vertical";
@@ -81,10 +76,7 @@ const Editor = () => {
             variant: "destructive",
           });
       }
-
-      resetDragElements();
     },
-    onDragCancel: resetDragElements,
   });
 
   return (
@@ -138,8 +130,8 @@ const CodeBlockWrapper = ({ id, type }: CodeBlockInfo) => {
       <div
         ref={rightDrop.setNodeRef}
         className={cn(
-          "absolute bottom-0 right-0 top-0 z-10 w-4",
-          rightDrop.isOver && "outline",
+          "absolute bottom-0 right-0 top-0 z-10 w-4 rounded-r-lg",
+          rightDrop.isOver && "bg-black/30",
         )}
       ></div>
       <CodeBlock id={id} />

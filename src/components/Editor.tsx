@@ -62,8 +62,6 @@ const Editor = () => {
       const isCodeBlock = over.data.current?.isCodeBlock;
       const isRightDrop = over.data.current?.isRightDrop;
 
-      console.log({ isCodeBlock, isRightDrop });
-
       // block from sidebar over block with children
       if (isCodeBlock && isRightDrop) {
         const type = active.data.current!.type as CodeBlockType;
@@ -76,6 +74,9 @@ const Editor = () => {
             variant: "destructive",
           });
       }
+
+      // TODO: drop from sidebar over top & bottom parts
+      // TODO: drag blocks in editor
     },
   });
 
@@ -110,6 +111,26 @@ const Editor = () => {
 export default Editor;
 
 const CodeBlockWrapper = ({ id, type }: CodeBlockInfo) => {
+  const topDrop = useDroppable({
+    id: id + "-top",
+    data: {
+      type: type,
+      id: id,
+      isCodeBlock: true,
+      isTopDrop: true,
+    },
+  });
+
+  const bottomDrop = useDroppable({
+    id: id + "-bottom",
+    data: {
+      type: type,
+      id: id,
+      isCodeBlock: true,
+      isBottomDrop: true,
+    },
+  });
+
   const rightDrop = useDroppable({
     id: id + "-right",
     data: {
@@ -122,18 +143,31 @@ const CodeBlockWrapper = ({ id, type }: CodeBlockInfo) => {
 
   const CodeBlock = codeBlocks[type].block;
 
+  // FIXME: move dnd inside block
+  // also add remove button
   return (
     <div className="relative w-fit">
-      <div className="absolute bottom-0 left-0 top-0 z-10 w-4"> </div>
-      <div className="absolute left-0 right-0 top-0 z-10 h-4"> </div>
-      <div className="absolute bottom-0 left-0 right-0 z-10 h-4"> </div>
+      <div
+        ref={topDrop.setNodeRef}
+        className={cn(
+          "absolute left-0 right-0 top-0 z-10 h-4 rounded-t-lg",
+          topDrop.isOver && "bg-black/30",
+        )}
+      />
+      <div
+        ref={bottomDrop.setNodeRef}
+        className={cn(
+          "absolute bottom-0 left-0 right-0 z-10 h-4 rounded-b-lg",
+          bottomDrop.isOver && "bg-black/30",
+        )}
+      />
       <div
         ref={rightDrop.setNodeRef}
         className={cn(
           "absolute bottom-0 right-0 top-0 z-10 w-4 rounded-r-lg",
           rightDrop.isOver && "bg-black/30",
         )}
-      ></div>
+      />
       <CodeBlock id={id} />
     </div>
   );

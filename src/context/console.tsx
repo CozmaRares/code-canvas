@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState } from "react";
 type ContextType = {
   output: string[];
   addOutputText: (text: string) => void;
-  resetOutput: () => void;
+  clearOutput: () => void;
 
   displayOutput: boolean;
   setDisplayOuput: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,14 +24,14 @@ const ConsoleContextProvider = ({ children }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const addOutputText = (text: string) => setOutput(prev => [...prev, text]);
-  const resetOutput = () => setOutput([]);
+  const clearOutput = () => setOutput([]);
 
   return (
     <ConsoleContext.Provider
       value={{
         output,
         addOutputText,
-        resetOutput,
+        clearOutput,
 
         displayOutput,
         setDisplayOuput,

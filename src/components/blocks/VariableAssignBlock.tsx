@@ -3,18 +3,23 @@ import CodeBlock from "@/components/blocks/utils/CodeBlock";
 import BlockInput from "@/components/blocks/utils/BlockInput";
 import {
   type CodeBlockProps,
-  CodeBlockType,
   GenericCodeBlockModelWithChildren,
 } from "@/components/blocks/utils/code-block";
 import store from "@/lib/store";
 import { numberBlockType } from "./NumberBlock";
 import { variableNameBlockType } from "./VariableNameBlock";
 import ChildrenBlockList from "./utils/ChildrenBlockList";
+import { operatorBlockType } from "./OperatorBlock";
 
 export const variableAssignBlockType = "variable assign" as const;
 export type VariableAssignBlockProps = {
   variable: string;
 };
+
+type ChildrenTypes =
+  | typeof numberBlockType
+  | typeof variableNameBlockType
+  | typeof operatorBlockType;
 
 export class VariableAssignBlockModel
   implements GenericCodeBlockModelWithChildren<VariableAssignBlockProps>
@@ -22,8 +27,15 @@ export class VariableAssignBlockModel
   id: string;
   type = variableAssignBlockType;
   props: VariableAssignBlockProps;
-  children: Array<{ id: string; type: CodeBlockType }> = [];
-  childrenTypes = Object.freeze([numberBlockType, variableNameBlockType]);
+  childrenTypes = Object.freeze([
+    numberBlockType,
+    variableNameBlockType,
+    operatorBlockType,
+  ] satisfies ChildrenTypes[]);
+  children: Array<{
+    id: string;
+    type: ChildrenTypes;
+  }> = [];
 
   constructor(id: string) {
     this.id = id;

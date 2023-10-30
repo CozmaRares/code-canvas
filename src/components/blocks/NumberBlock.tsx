@@ -23,7 +23,7 @@ export class NumberBlockModel
   }
 }
 
-const VariableNameBlock = ({ id, blockProps }: CodeBlockProps) => {
+const NumberBlock = ({ id, blockProps }: CodeBlockProps) => {
   const model = store.getModel(id) as NumberBlockModel;
   const number = model.props.number;
 
@@ -35,14 +35,14 @@ const VariableNameBlock = ({ id, blockProps }: CodeBlockProps) => {
       {...blockProps}
     >
       <BlockInput
-        text={`${number}`}
+        text={number}
         setText={number => store.setProps(id, { number })}
         placeholder="number"
         pattern="number"
-        className=""
+        className="text-center"
       />
     </CodeBlock>
   );
 };
 
-export default VariableNameBlock;
+export default NumberBlock;

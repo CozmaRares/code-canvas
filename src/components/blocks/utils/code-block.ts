@@ -10,6 +10,10 @@ import VariableNameBlock, {
 import { CodeBlockPreviewProps } from "../CodeBlockPreview";
 import { valueBlockColor, variableAssignBlockColor } from "@/lib/block-colors";
 import NumberBlock, { NumberBlockModel, numberBlockType } from "../NumberBlock";
+import OperatorBlock, {
+  OperatorBlockModel,
+  operatorBlockType,
+} from "../OperatorBlock";
 
 export type CodeBlockProps = {
   id: string;
@@ -31,7 +35,8 @@ export interface GenericCodeBlockModelWithChildren<T>
 export type Model =
   | typeof VariableAssignBlockModel
   | typeof VariableNameBlockModel
-  | typeof NumberBlockModel;
+  | typeof NumberBlockModel
+  | typeof OperatorBlockModel;
 
 export type ConcreteModel = Model["prototype"];
 
@@ -63,6 +68,15 @@ export const codeBlocks = Object.freeze({
     model: NumberBlockModel,
     orientation: "horizontal",
   },
+  [operatorBlockType]: {
+    block: OperatorBlock,
+    previewProps: {
+      text: "operator",
+      bg: valueBlockColor,
+    },
+    model: OperatorBlockModel,
+    orientation: "horizontal",
+  },
 } satisfies Record<
   string,
   {
@@ -87,3 +101,8 @@ export type CodeBlockInfo = {
   id: string;
   type: CodeBlockType;
 };
+
+export const SUPPORTED_OPERATORS = Object.freeze({
+  mathematical: ["+", "-", "/", "*", "^"],
+  conditional: ["=", "<", ">", "<=", ">=", "!="],
+} as const);

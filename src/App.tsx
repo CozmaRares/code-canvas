@@ -1,6 +1,6 @@
 import Editor from "@/components/Editor";
 import SideBar from "@/components/SideBar";
-import { DndContext } from "@dnd-kit/core";
+import { DndContext, closestCenter } from "@dnd-kit/core";
 import DragOverlayWrapper from "@/components/DragOverlayWrapper";
 import ImportButton from "@/components/ImportButton";
 import ExportButton from "@/components/ExportButton";
@@ -24,7 +24,7 @@ const App = () => {
             <ExportButton />
             <ThemeSwitch />
           </nav>
-          <DndContext>
+          <DndContext collisionDetection={closestCenter}>
             <SideBar />
             <main className="flex h-full w-full justify-between overflow-y-auto bg-[url(/paper.svg)] p-8 dark:bg-[url(/paper-dark.svg)]">
               <Editor />

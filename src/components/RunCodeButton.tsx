@@ -14,15 +14,15 @@ async function sleep(s: number) {
 }
 
 const RunCodeButton = ({ className }: Props) => {
-  const { addOutputText, resetOutput, setDisplayOuput, setIsOpen } =
+  const { addOutputText, clearOutput, setDisplayOuput, setIsOpen } =
     useConsoleContext();
 
   const onClick = async () => {
     setIsOpen(true);
     setDisplayOuput(false);
-    resetOutput();
+    clearOutput();
     await sleep(1);
-    await new Interpreter().start(addOutputText);
+    await new Interpreter().start(addOutputText, clearOutput);
     setDisplayOuput(true);
   };
 

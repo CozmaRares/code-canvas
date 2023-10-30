@@ -16,7 +16,7 @@ const Console = () => {
         Console
       </span>
       {displayOutput ? (
-        <ul className="grid grid-cols-[auto,minmax(0,1fr)] items-center">
+        <ul className="grid grid-cols-[auto,minmax(0,1fr)] items-center pt-3">
           {output.map((text, idx) => (
             <li
               key={idx}

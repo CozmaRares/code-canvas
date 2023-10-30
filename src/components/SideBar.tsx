@@ -10,7 +10,12 @@ import { CodeBlockType } from "./blocks/utils/code-block";
 type AccordionProps = Record<string, CodeBlockType[]>;
 
 const accordionProps: AccordionProps = {
-  "variables & values": ["variable assign", "variable name", "number"],
+  "variables & values": [
+    "variable assign",
+    "variable name",
+    "number",
+    "operator",
+  ],
 };
 
 const SideBar = () => (

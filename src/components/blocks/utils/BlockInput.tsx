@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 const patterns = Object.freeze({
   identifier: /^([_a-zA-Z][_a-zA-Z0-9]{0,9}){0,1}$/,
   number: /^\d*$/,
+  operator: /^(\+|-|\*|\/|\^|<|>|=|<=|>=|!=){0,1}$/,
 } satisfies Record<string, RegExp>);
 
 type Props = {

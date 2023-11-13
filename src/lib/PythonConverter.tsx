@@ -6,7 +6,11 @@ import store from "@/lib/store";
 
 export default class PythonConverter {
   // TODO:
-  static fromPython = class {};
+  static fromPython = class {
+    static load(input: string | ArrayBuffer | null) {
+      console.log(input);
+    }
+  };
 
   static toPython = class {
     static program() {

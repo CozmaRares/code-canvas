@@ -16,20 +16,24 @@ const Console = () => {
         Console
       </span>
       {displayText ? (
-        <ul className="grid grid-cols-[auto,auto,minmax(0,1fr)] items-center pt-3 font-mono">
-          {consoleText.map(({ type, text }, idx) => (
-            <li
-              key={idx}
-              className="contents"
-            >
-              <Row
-                line={idx + 1}
-                type={type}
-                text={text}
-              />
-            </li>
-          ))}
-        </ul>
+        consoleText.length > 0 ? (
+          <ul className="grid grid-cols-[auto,auto,minmax(0,1fr)] items-center pt-3 font-mono">
+            {consoleText.map(({ type, text }, idx) => (
+              <li
+                key={idx}
+                className="contents"
+              >
+                <Row
+                  line={idx + 1}
+                  type={type}
+                  text={text}
+                />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="p-2 text-lg">No output.</p>
+        )
       ) : (
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           <div className="relative mx-auto mb-6 aspect-square w-[38px] scale-[1.75] opacity-60">

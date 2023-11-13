@@ -11,12 +11,12 @@ function parseAssignment(
   variables: VariableMap,
 ) {
   if (model.children.length < 1)
-    return { error: "Parsing error: Could not compute value." };
+    return { error: "Error: Could not compute value." };
 
   const getNumber = (model: NumberBlockModel) => {
     const value = parseInt(model.props.number);
     return isNaN(value)
-      ? { error: "Parsing error: Value is not a number." }
+      ? { error: "Error: Value is not a number." }
       : { value };
   };
 
@@ -24,7 +24,7 @@ function parseAssignment(
     const value = variables.get(model.props.variable);
     return value === undefined
       ? {
-          error: `Parsing error: Variable '${model.props.variable}' does not exist.`,
+          error: `Error: Variable '${model.props.variable}' does not exist.`,
         }
       : { value };
   };
@@ -35,8 +35,7 @@ function parseAssignment(
       : model.type == "variable name"
       ? getVariableValue(model as VariableNameBlockModel)
       : {
-          error:
-            "Parsing error: Assignment must begin with a number of variable.",
+          error: "Error: Assignment must begin with a number of variable.",
         };
 
   const children = model.children.map(child => store.getModel(child.id));
@@ -51,7 +50,7 @@ function parseAssignment(
   for (const child of children) {
     if (operator == null)
       if (child.type != "operator")
-        return { error: "Pasring error: Was expecting an operator." };
+        return { error: "Error: Was expecting an operator." };
       else {
         operator = child.props.operator;
 
@@ -61,7 +60,7 @@ function parseAssignment(
           )
         )
           return {
-            error: `Parsing error: Operator '${operator}' is not mathematical.`,
+            error: `Error: Operator '${operator}' is not mathematical.`,
           };
 
         continue;
@@ -116,7 +115,7 @@ export default class Interpreter {
           result = this.handleVariableAssign(block);
           break;
         default:
-          throw new Error("Interpreter error: unreachable");
+          throw new Error("UNREACHABLE CODE IN Interpreter.start()");
       }
 
       if (result !== false) {
@@ -133,7 +132,7 @@ export default class Interpreter {
     const variable = model.props.variable;
 
     if (variable.length < 1)
-      return "Parsing error: Cannot assign anything to an empty variable.";
+      return "Error: Cannot assign anything to an empty variable.";
 
     const { error, value } = parseAssignment(model, this.variables);
     if (error !== undefined) return error;

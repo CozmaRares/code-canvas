@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { Cog } from "lucide-react";
 
 const Console = () => {
-  const { output, displayOutput, isOpen } = useConsoleContext();
+  const { consoleText, displayText, isOpen } = useConsoleContext();
 
   return (
     <div
@@ -15,15 +15,16 @@ const Console = () => {
       <span className="absolute right-5 top-0 -translate-y-1/2 rounded-sm bg-slate-800 px-2 py-1.5 text-white dark:bg-slate-50 dark:text-black">
         Console
       </span>
-      {displayOutput ? (
-        <ul className="grid grid-cols-[auto,minmax(0,1fr)] items-center pt-3">
-          {output.map((text, idx) => (
+      {displayText ? (
+        <ul className="grid grid-cols-[auto,auto,minmax(0,1fr)] items-center pt-3 font-mono">
+          {consoleText.map(({ type, text }, idx) => (
             <li
               key={idx}
               className="contents"
             >
               <Row
                 line={idx + 1}
+                type={type}
                 text={text}
               />
             </li>
@@ -53,16 +54,28 @@ const Console = () => {
 
 type RowProps = {
   line: number;
+  type: "in" | "out" | "err";
   text: string;
 };
 
-const Row = ({ line, text }: RowProps) => (
-  <>
-    <span className="mr-4 border-r border-black py-1 pr-2 opacity-60 dark:border-white">
-      {line}
-    </span>
+const Row = ({ line, type, text }: RowProps) => (
+  <div className={cn("contents", type == "err" && "font-bold text-red-600")}>
+    {type != "err" && (
+      <>
+        <span className="mr-3 border-r border-black py-1 pr-2 opacity-60 dark:border-white">
+          {line}
+        </span>
+        {type == "in" ? (
+          <span className="mr-3 font-bold text-sky-400">{">"}</span>
+        ) : (
+          <span className="mr-3 font-bold text-indigo-600 dark:text-purple-400">
+            {"<"}
+          </span>
+        )}
+      </>
+    )}
     <span>{text}</span>
-  </>
+  </div>
 );
 
 export default Console;

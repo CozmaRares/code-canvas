@@ -37,6 +37,7 @@ export default class PythonConverter {
     }
 
     // FIXME: assumes assignment is syntactically correct
+    // mabye add a flag to disable checking
     static assignment(model: VariableAssignBlockModel) {
       const output = [`${model.props.variable}=`];
 

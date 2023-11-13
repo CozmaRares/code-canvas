@@ -99,11 +99,12 @@ function parseAssignment(
 }
 
 export default class Interpreter {
-  private addConsoleText: (text: string) => void = () => {};
   private variables: VariableMap = new Map();
+  private addConsoleText: (type: "in" | "out" | "err", text: string) => void =
+    () => {};
 
   async start(
-    addConsoleText: (text: string) => void,
+    addConsoleText: (type: "in" | "out" | "err", text: string) => void,
     clearConsole: () => void,
     // getInput: (identifier: string) => void,
   ) {
@@ -123,7 +124,7 @@ export default class Interpreter {
 
       if (result !== false) {
         clearConsole();
-        addConsoleText(result);
+        addConsoleText("err", result);
         return;
       }
     }
@@ -141,10 +142,10 @@ export default class Interpreter {
     if (error !== undefined) return error;
 
     this.variables.set(variable, value);
-    this.addConsoleText(`> ${PythonConverter.toPython.assignment(model)}`);
+    this.addConsoleText("in", PythonConverter.toPython.assignment(model));
 
     // TODO: add read and print statements (only for variables)
-    this.addConsoleText(`< ${variable} = ${value}`);
+    this.addConsoleText("out", `${variable}=${value}`);
 
     return false;
   }

@@ -1,12 +1,15 @@
 import React, { createContext, useContext, useState } from "react";
 
+// TODO: REFACTOR console text type in its own type
+// mabye expose context type
 type ContextType = {
-  output: string[];
-  addOutputText: (text: string) => void;
-  clearOutput: () => void;
+  consoleText: Array<{ type: "in" | "out" | "err"; text: string }>;
 
-  displayOutput: boolean;
-  setDisplayOuput: React.Dispatch<React.SetStateAction<boolean>>;
+  addConsoleText: (type: "in" | "out" | "err", text: string) => void;
+  clearConsole: () => void;
+
+  displayText: boolean;
+  setDisplayText: React.Dispatch<React.SetStateAction<boolean>>;
 
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,22 +22,25 @@ type Props = {
 };
 
 const ConsoleContextProvider = ({ children }: Props) => {
-  const [output, setOutput] = useState<string[]>([]);
-  const [displayOutput, setDisplayOuput] = useState(true);
+  const [consoleText, setConsoleText] = useState<
+    Array<{ type: "in" | "out" | "err"; text: string }>
+  >([]);
+  const [displayText, setDisplayText] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
-  const addOutputText = (text: string) => setOutput(prev => [...prev, text]);
-  const clearOutput = () => setOutput([]);
+  const addConsoleText = (type: "in" | "out" | "err", text: string) =>
+    setConsoleText(prev => [...prev, { type, text }]);
+  const clearConsole = () => setConsoleText([]);
 
   return (
     <ConsoleContext.Provider
       value={{
-        output,
-        addOutputText,
-        clearOutput,
+        consoleText,
+        addConsoleText,
+        clearConsole,
 
-        displayOutput,
-        setDisplayOuput,
+        displayText,
+        setDisplayText,
 
         isOpen,
         setIsOpen,

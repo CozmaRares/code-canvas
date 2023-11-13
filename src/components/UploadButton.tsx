@@ -7,14 +7,14 @@ type Props = {
 };
 
 // TODO:
-const ImportButton = ({ className }: Props) => (
+const UploadButton = ({ className }: Props) => (
   <Button
     variant="outline"
     className={cn("flex items-center gap-3", className)}
   >
-    Import Code
+    Upload Code
     <HardDriveUpload className="scale-[0.8]" />
   </Button>
 );
 
-export default ImportButton;
+export default UploadButton;

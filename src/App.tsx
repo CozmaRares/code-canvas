@@ -2,8 +2,8 @@ import Editor from "@/components/Editor";
 import SideBar from "@/components/SideBar";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import DragOverlayWrapper from "@/components/DragOverlayWrapper";
-import ImportButton from "@/components/ImportButton";
-import ExportButton from "@/components/ExportButton";
+import DownloadButton from "@/components/DownloadButton";
+import UploadButton from "@/components/UploadButton";
 import ThemeSwitch from "@/components/ThemeSwitch";
 import RunCodeButton from "@/components/RunCodeButton";
 import Console from "@/components/Console";
@@ -20,8 +20,8 @@ const App = () => {
             <h1 className="mr-auto text-2xl font-semibold">Code Canvas</h1>
             <ToggleConsoleButton />
             <RunCodeButton />
-            <ImportButton />
-            <ExportButton />
+            <UploadButton />
+            <DownloadButton />
             <ThemeSwitch />
           </nav>
           <DndContext collisionDetection={closestCenter}>
@@ -40,3 +40,5 @@ const App = () => {
 };
 
 export default App;
+
+// TODO: properly check code for naming inconsistencies

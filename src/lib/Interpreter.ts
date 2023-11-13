@@ -3,6 +3,7 @@ import store from "./store";
 import { NumberBlockModel } from "@/components/blocks/NumberBlock";
 import { VariableNameBlockModel } from "@/components/blocks/VariableNameBlock";
 import { SUPPORTED_OPERATORS } from "@/components/blocks/utils/code-block";
+import PythonConverter from "./PythonConverter";
 
 type VariableMap = Map<string, number>;
 
@@ -29,6 +30,7 @@ function parseAssignment(
       : { value };
   };
 
+  // HACK: used type of children array before definition
   const getValue = (model: (typeof children)[number]) =>
     model.type == "number"
       ? getNumber(model)
@@ -110,6 +112,7 @@ export default class Interpreter {
 
     for (const block of store.blocks) {
       let result: string | false;
+
       switch (block.type) {
         case "variable assign":
           result = this.handleVariableAssign(block);
@@ -138,9 +141,10 @@ export default class Interpreter {
     if (error !== undefined) return error;
 
     this.variables.set(variable, value);
+    this.addConsoleText(`> ${PythonConverter.toPython.assignment(model)}`);
 
-    // TODO: Python converter output
-    this.addConsoleText(`> ${variable} = ${value}`);
+    // TODO: add read and print statements (only for variables)
+    this.addConsoleText(`< ${variable} = ${value}`);
 
     return false;
   }

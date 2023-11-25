@@ -36,6 +36,7 @@ export class VariableAssignBlockModel
     id: string;
     type: ChildrenTypes;
   }> = [];
+  maxChildrenLength = 3;
 
   constructor(id: string) {
     this.id = id;
@@ -67,7 +68,10 @@ const VariableAssignBlock = ({ id, blockProps }: CodeBlockProps) => {
         />
         be
       </CodeBlock>
-      <ChildrenBlockList list={children} />
+      <ChildrenBlockList
+        parent={model}
+        list={children}
+      />
     </div>
   );
 };

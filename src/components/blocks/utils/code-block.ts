@@ -29,6 +29,7 @@ export interface GenericCodeBlockModel<T> {
 export interface GenericCodeBlockModelWithChildren<T>
   extends GenericCodeBlockModel<T> {
   children: Array<{ id: string; type: CodeBlockType }>;
+  maxChildrenLength: number;
   childrenTypes: Readonly<CodeBlockType[]>;
 }
 
@@ -102,7 +103,16 @@ export type CodeBlockInfo = {
   type: CodeBlockType;
 };
 
-export const SUPPORTED_OPERATORS = Object.freeze({
-  mathematical: ["+", "-", "/", "*", "^"],
-  conditional: ["=", "<", ">", "<=", ">=", "!="],
-} as const);
+export const SUPPORTED_OPERATORS = Object.freeze([
+  "+",
+  "-",
+  "/",
+  "*",
+  "^",
+  "=",
+  "<",
+  ">",
+  "<=",
+  ">=",
+  "!=",
+] as const);

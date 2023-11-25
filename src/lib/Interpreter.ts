@@ -5,9 +5,44 @@ import { VariableNameBlockModel } from "@/components/blocks/VariableNameBlock";
 import { SUPPORTED_OPERATORS } from "@/components/blocks/utils/code-block";
 import PythonConverter from "./PythonConverter";
 
+type Operator = (typeof SUPPORTED_OPERATORS)[number];
+
+function executeOperation(
+  left: number,
+  right: number,
+  operator: Operator,
+): number {
+  switch (operator) {
+    case "+":
+      return left + right;
+    case "-":
+      return left - right;
+    case "*":
+      return left * right;
+    case "/":
+      return left / right;
+    case "^":
+      return left ** right;
+    case "=":
+      return Number(left == right);
+    case "<":
+      return Number(left < right);
+    case ">":
+      return Number(left > right);
+    case "<=":
+      return Number(left <= right);
+    case ">=":
+      return Number(left >= right);
+    case "!=":
+      return Number(left >= right);
+    default:
+      throw new Error("Unknown operator: " + operator);
+  }
+}
+
 type VariableMap = Map<string, number>;
 
-function parseAssignment(
+function parseExpression(
   model: VariableAssignBlockModel,
   variables: VariableMap,
 ) {
@@ -47,20 +82,17 @@ function parseAssignment(
   if (result.error !== undefined) return { error: result.error };
 
   let value = result.value;
-  let operator: string | null = null;
+
+  let operator: Operator | null = null;
 
   for (const child of children) {
     if (operator == null)
       if (child.type != "operator")
         return { error: "Error: Was expecting an operator." };
       else {
-        operator = child.props.operator;
+        operator = child.props.operator as Operator;
 
-        if (
-          !(SUPPORTED_OPERATORS.mathematical as readonly string[]).includes(
-            operator,
-          )
-        )
+        if (!SUPPORTED_OPERATORS.includes(operator))
           return {
             error: `Error: Operator '${operator}' is not mathematical.`,
           };
@@ -71,25 +103,7 @@ function parseAssignment(
       result = getValue(child);
       if (result.error !== undefined) return { error: result.error };
 
-      const rightValue = result.value;
-
-      switch (operator) {
-        case "+":
-          value += rightValue;
-          break;
-        case "-":
-          value -= rightValue;
-          break;
-        case "*":
-          value *= rightValue;
-          break;
-        case "/":
-          value = value / rightValue;
-          break;
-        case "^":
-          value = value ** rightValue;
-          break;
-      }
+      value = executeOperation(value, result.value, operator);
 
       operator = null;
     }
@@ -106,7 +120,6 @@ export default class Interpreter {
   async start(
     addConsoleText: (type: "in" | "out" | "err", text: string) => void,
     clearConsole: () => void,
-    // getInput: (identifier: string) => void,
   ) {
     this.addConsoleText = addConsoleText;
     this.variables = new Map();
@@ -138,7 +151,7 @@ export default class Interpreter {
     if (variable.length < 1)
       return "Error: Cannot assign anything to an empty variable.";
 
-    const { error, value } = parseAssignment(model, this.variables);
+    const { error, value } = parseExpression(model, this.variables);
     if (error !== undefined) return error;
 
     this.variables.set(variable, value);

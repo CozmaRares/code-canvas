@@ -6,6 +6,8 @@ const items: CodeBlockType[] = [
   "variable name",
   "number",
   "operator",
+  "if",
+  "while",
 ];
 
 const SideBar = () => (

@@ -31,7 +31,7 @@
 ## Testing
 
 <!-- TODO: cypress -->
-<!-- TODO: vitest -> python translater -->
+<!-- TODO: vitest -> python converter -->
 <!-- TODO: vitest -> interpreter -->
 
 ## Conclusions

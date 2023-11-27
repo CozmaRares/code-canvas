@@ -9,6 +9,7 @@ export type BaseCodeBlockProps = {
   bottomSlot?: boolean;
   rightSlot?: boolean;
   isPreview?: boolean;
+  minHeight?: number;
 };
 
 const CodeBlock = ({
@@ -19,6 +20,7 @@ const CodeBlock = ({
   bottomSlot,
   rightSlot,
   isPreview,
+  minHeight,
 }: BaseCodeBlockProps) => {
   return (
     <div
@@ -27,20 +29,22 @@ const CodeBlock = ({
         "ml-3": isPreview && leftSlot,
       })}
     >
-      <div className="grid [&>*]:col-span-full [&>*]:row-span-full">
+      <div className="grid h-full [&>*]:col-span-full [&>*]:row-span-full">
         <div
           className="[&>*]:bg-block grid min-h-[60px] 
                     grid-cols-[0.75rem,1.5rem,minmax(0,1fr),0.75rem] 
                     grid-rows-[0.75rem,minmax(0,1fr),1.5rem,minmax(0,1fr),0.75rem]
                     overflow-hidden 
                     rounded-lg"
-          style={
-            bg &&
-            ({
-              "--bg-light": bg.light,
-              "--bg-dark": bg.dark,
-            } as React.CSSProperties)
-          }
+          style={{
+            ...(bg
+              ? ({
+                  "--bg-light": bg.light,
+                  "--bg-dark": bg.dark,
+                } as React.CSSProperties)
+              : {}),
+            ...(minHeight ? { minHeight:`${minHeight}px` } : {}),
+          }}
         >
           <div className="col-start-1 row-span-full" />
           {!topSlot && <div className="col-start-2 row-start-1" />}

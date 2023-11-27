@@ -47,6 +47,8 @@ const Editor = () => {
       const isVertical = active.data.current?.orientation == "vertical";
       const isEditor = over.data.current?.isEditor;
 
+      // TODO: REFACTOR: delete isVertical, have store check that
+
       // vertical block from sidebar over editor
       if (isEditor && isSideBarButton)
         if (isVertical) {
@@ -60,7 +62,36 @@ const Editor = () => {
           });
 
       const isCodeBlock = over.data.current?.isCodeBlock;
+      const isTopDrop = over.data.current?.isTopDrop;
+      const isBottomDrop = over.data.current?.isBottomDrop;
       const isRightDrop = over.data.current?.isRightDrop;
+      const isInnerDrop = over.data.current?.isInnerDrop;
+
+      // block from sidebar above dropped block
+      if (isCodeBlock && isTopDrop && isVertical)
+        if (isVertical) {
+          const dropIdx = store.indexOf(over.data.current!.id);
+          const type = active.data.current!.type as CodeBlockType;
+          return store.addBlock(type, dropIdx);
+        } else
+          return toast({
+            title: "Editor error",
+            description: "Cannot drop horizontal blocks in Editor",
+            variant: "destructive",
+          });
+
+      // block from sidebar below dropped block
+      if (isCodeBlock && isBottomDrop)
+        if (isVertical) {
+          const dropIdx = store.indexOf(over.data.current!.id);
+          const type = active.data.current!.type as CodeBlockType;
+          return store.addBlock(type, dropIdx + 1);
+        } else
+          return toast({
+            title: "Editor error",
+            description: "Cannot drop horizontal blocks in Editor",
+            variant: "destructive",
+          });
 
       // block from sidebar over block with children
       if (isCodeBlock && isRightDrop) {
@@ -75,8 +106,18 @@ const Editor = () => {
           });
       }
 
-      // TODO: drop from sidebar over top & bottom parts
-      // TODO: drag blocks in editor
+      // block from sidebar over block with statements
+      if (isCodeBlock && isInnerDrop) {
+        const type = active.data.current!.type as CodeBlockType;
+        const parentID = over.data.current!.id as string;
+
+        if (store.addStatement(parentID, type) == false)
+          return toast({
+            title: "Editor erorr",
+            description: "Could not add statement",
+            variant: "destructive",
+          });
+      }
     },
   });
 
@@ -131,20 +172,9 @@ const CodeBlockWrapper = ({ id, type }: CodeBlockInfo) => {
     },
   });
 
-  const rightDrop = useDroppable({
-    id: id + "-right",
-    data: {
-      type: type,
-      id: id,
-      isCodeBlock: true,
-      isRightDrop: true,
-    },
-  });
-
   const CodeBlock = codeBlocks[type].block;
 
-  // FIXME: move dnd inside block
-  // also add remove button
+  // TODO: also add remove button
   return (
     <div className="relative w-fit">
       <div
@@ -159,13 +189,6 @@ const CodeBlockWrapper = ({ id, type }: CodeBlockInfo) => {
         className={cn(
           "absolute bottom-0 left-0 right-0 z-10 h-4 rounded-b-lg",
           bottomDrop.isOver && "bg-black/30",
-        )}
-      />
-      <div
-        ref={rightDrop.setNodeRef}
-        className={cn(
-          "absolute bottom-0 right-0 top-0 z-10 w-4 rounded-r-lg",
-          rightDrop.isOver && "bg-black/30",
         )}
       />
       <CodeBlock id={id} />

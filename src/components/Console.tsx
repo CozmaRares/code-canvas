@@ -5,6 +5,8 @@ import { Cog } from "lucide-react";
 const Console = () => {
   const { consoleText, displayText, isOpen } = useConsoleContext();
 
+  let inRows = 0;
+
   return (
     <div
       className={cn(
@@ -24,7 +26,7 @@ const Console = () => {
                 className="contents"
               >
                 <Row
-                  line={idx + 1}
+                  line={type == "in" ? ++inRows : 0}
                   type={type}
                   text={text}
                 />
@@ -66,15 +68,25 @@ const Row = ({ line, type, text }: RowProps) => (
   <div className={cn("contents", type == "err" && "font-bold text-red-600")}>
     {type != "err" && (
       <>
-        <span className="mr-3 border-r border-black py-1 pr-2 opacity-60 dark:border-white">
-          {line}
-        </span>
         {type == "in" ? (
-          <span className="mr-3 font-bold text-sky-400">{">"}</span>
+          <>
+            <span className="mr-3 border-r border-black py-1 pr-2 opacity-60 dark:border-white">
+              {line}
+            </span>
+            <span className="mr-3 font-bold text-sky-400">{">"}</span>
+          </>
         ) : (
-          <span className="mr-3 font-bold text-indigo-600 dark:text-purple-400">
-            {"<"}
-          </span>
+          <>
+            <span
+              aria-hidden
+              className="mr-3 border-r border-black pointer-events-none py-1 pr-2 opacity-60 dark:border-white"
+            >
+              <span className="opacity-0">{line}</span>
+            </span>
+            <span className="mr-3 font-bold text-indigo-600 dark:text-purple-400">
+              {"<"}
+            </span>
+          </>
         )}
       </>
     )}

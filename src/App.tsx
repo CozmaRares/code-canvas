@@ -41,4 +41,4 @@ const App = () => {
 
 export default App;
 
-// TODO: properly check code for naming inconsistencies
+// TODO: properly check code for naming inconsistencies and use a block's type constant instead of literal

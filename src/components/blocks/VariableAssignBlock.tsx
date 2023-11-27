@@ -10,6 +10,8 @@ import { numberBlockType } from "./NumberBlock";
 import { variableNameBlockType } from "./VariableNameBlock";
 import ChildrenBlockList from "./utils/ChildrenBlockList";
 import { operatorBlockType } from "./OperatorBlock";
+import { useDroppable } from "@dnd-kit/core";
+import { cn } from "@/lib/utils";
 
 export const variableAssignBlockType = "variable assign" as const;
 export type VariableAssignBlockProps = {
@@ -49,8 +51,25 @@ const VariableAssignBlock = ({ id, blockProps }: CodeBlockProps) => {
   const variable = model.props.variable;
   const children = model.children;
 
+  const rightDrop = useDroppable({
+    id: id + "-right",
+    data: {
+      type: variableAssignBlockType,
+      id: id,
+      isCodeBlock: true,
+      isRightDrop: true,
+    },
+  });
+
   return (
     <div className="flex flex-row">
+      <div
+        ref={rightDrop.setNodeRef}
+        className={cn(
+          "absolute bottom-0 right-0 top-0 z-10 w-4 rounded-r-lg",
+          rightDrop.isOver && "bg-black/30",
+        )}
+      />
       <CodeBlock
         bg={variableAssignBlockColor}
         topSlot

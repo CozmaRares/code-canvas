@@ -28,7 +28,6 @@ function download() {
   window.URL.revokeObjectURL(url);
 }
 
-// TODO:
 const DownloadButton = ({ className }: Props) => (
   <Button
     variant="outline"

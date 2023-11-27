@@ -14,6 +14,8 @@ import OperatorBlock, {
   OperatorBlockModel,
   operatorBlockType,
 } from "../OperatorBlock";
+import IfBlock, { IfBlockModel, ifBlockType } from "../IfBlock";
+import WhileBlock, { WhileBlockModel, whileBlockType } from "../WhileBlock";
 
 export type CodeBlockProps = {
   id: string;
@@ -33,11 +35,18 @@ export interface GenericCodeBlockModelWithChildren<T>
   childrenTypes: Readonly<CodeBlockType[]>;
 }
 
+export interface GenericCodeBlockModelWithStatements<T>
+  extends GenericCodeBlockModelWithChildren<T> {
+  statements: Array<{ id: string; type: CodeBlockType }>;
+}
+
 export type Model =
   | typeof VariableAssignBlockModel
   | typeof VariableNameBlockModel
   | typeof NumberBlockModel
-  | typeof OperatorBlockModel;
+  | typeof OperatorBlockModel
+  | typeof IfBlockModel
+  | typeof WhileBlockModel;
 
 export type ConcreteModel = Model["prototype"];
 
@@ -77,6 +86,24 @@ export const codeBlocks = Object.freeze({
     },
     model: OperatorBlockModel,
     orientation: "horizontal",
+  },
+  [ifBlockType]: {
+    block: IfBlock,
+    previewProps: {
+      text: "if",
+      bg: valueBlockColor,
+    },
+    model: IfBlockModel,
+    orientation: "vertical",
+  },
+  [whileBlockType]: {
+    block: WhileBlock,
+    previewProps: {
+      text: "while",
+      bg: valueBlockColor,
+    },
+    model: WhileBlockModel,
+    orientation: "vertical",
   },
 } satisfies Record<
   string,

@@ -3,6 +3,7 @@ import {
   codeBlocks,
   ConcreteModel,
   GenericCodeBlockModelWithChildren,
+  GenericCodeBlockModelWithStatements,
 } from "@/components/blocks/utils/code-block";
 import { nanoid } from "nanoid/non-secure";
 
@@ -22,6 +23,10 @@ class Store {
     const newBlock = this.createBlock(type);
     this.blocks.splice(index ?? this.blocks.length, 0, newBlock);
     this.rerender();
+  }
+
+  indexOf(id: string) {
+    return this.blocks.map(block => block.id).indexOf(id);
   }
 
   setProps(id: string, props: Record<string, unknown>) {
@@ -48,6 +53,18 @@ class Store {
     const childBlock = this.createBlock(type);
 
     parentModel.children.push({ id: childBlock.id, type });
+  }
+
+  addStatement(parentID: string, type: CodeBlockType) {
+    if (codeBlocks[type].orientation != "vertical") return false;
+
+    const parentModel = this.getModel(
+      parentID,
+    ) as GenericCodeBlockModelWithStatements<unknown>;
+
+    const childBlock = this.createBlock(type);
+
+    parentModel.statements.push({ id: childBlock.id, type });
   }
 }
 

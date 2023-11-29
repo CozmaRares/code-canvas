@@ -8,9 +8,8 @@ import {
 import store from "@/lib/store";
 import { variableNameBlockType } from "./VariableNameBlock";
 import ChildrenBlockList from "./utils/ChildrenBlockList";
-import { useDroppable } from "@dnd-kit/core";
-import { cn } from "@/lib/utils";
 import StatementList from "./utils/StatementList";
+import DropArea from "../DropArea";
 
 export const ifBlockType = "if" as const;
 export type IfBlockProps = Record<string, unknown>;
@@ -47,35 +46,18 @@ const IfBlock = ({ id, blockProps }: CodeBlockProps) => {
   const children = model.children;
   const statements = model.statements;
 
-  const rightDrop = useDroppable({
-    id: id + "-right",
-    data: {
-      type: ifBlockType,
-      id: id,
-      isCodeBlock: true,
-      isRightDrop: true,
-    },
-  });
-
-  const innerDrop = useDroppable({
-    id: id + "-inner",
-    data: {
-      type: ifBlockType,
-      id: id,
-      isCodeBlock: true,
-      isInnerDrop: true,
-    },
-  });
-
   return (
     <div className="grid auto-rows-auto grid-cols-[auto,minmax(0,1fr)] gap-x-2 gap-y-1">
-      <div className="relative col-span-full flex flex-row">
-        <div
-          ref={rightDrop.setNodeRef}
-          className={cn(
-            "absolute bottom-0 right-0 top-0 z-10 w-4 rounded-r-lg",
-            rightDrop.isOver && "bg-black/30",
-          )}
+      <div className="relative col-span-full flex w-fit flex-row">
+        <DropArea
+          id={`${id}-right`}
+          data={{
+            type: ifBlockType,
+            id: id,
+            isCodeBlock: true,
+            isRightDrop: true,
+          }}
+          className="bottom-0 right-0 top-0 w-4 rounded-r-lg"
         />
         <CodeBlock
           bg={variableAssignBlockColor}
@@ -98,15 +80,19 @@ const IfBlock = ({ id, blockProps }: CodeBlockProps) => {
             "--bg-dark": variableAssignBlockColor.dark,
           } as React.CSSProperties
         }
-      />
-      <div className="relative min-h-[60px]">
-        <div
-          ref={innerDrop.setNodeRef}
-          className={cn(
-            "absolute inset-0 z-10 w-4 rounded-r-lg",
-            innerDrop.isOver && "bg-black/30",
-          )}
+      >
+        <DropArea
+          id={`${id}-inner`}
+          data={{
+            type: ifBlockType,
+            id: id,
+            isCodeBlock: true,
+            isInnerDrop: true,
+          }}
+          className="inset-0 w-4 rounded-lg"
         />
+      </div>
+      <div className="relative min-h-[60px] w-full">
         <StatementList statements={statements} />
       </div>
       <div className="col-span-full">

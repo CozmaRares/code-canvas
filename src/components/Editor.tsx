@@ -15,6 +15,7 @@ import EmptyCodeBlock from "@/components/blocks/utils/EmptyBlock";
 import { useEffect, useState } from "react";
 import store from "@/lib/store";
 import { useToast } from "@/components/ui/use-toast";
+import DropArea from "./DropArea";
 
 const Editor = () => {
   const [, setRender] = useState(false);
@@ -151,44 +152,32 @@ const Editor = () => {
 
 export default Editor;
 
+// TODO: refactor code blocks, remove puzzle pieces
+
 const CodeBlockWrapper = ({ id, type }: CodeBlockInfo) => {
-  const topDrop = useDroppable({
-    id: id + "-top",
-    data: {
-      type: type,
-      id: id,
-      isCodeBlock: true,
-      isTopDrop: true,
-    },
-  });
-
-  const bottomDrop = useDroppable({
-    id: id + "-bottom",
-    data: {
-      type: type,
-      id: id,
-      isCodeBlock: true,
-      isBottomDrop: true,
-    },
-  });
-
   const CodeBlock = codeBlocks[type].block;
 
   return (
     <div className="relative w-fit">
-      <div
-        ref={topDrop.setNodeRef}
-        className={cn(
-          "absolute left-0 right-0 top-0 z-10 h-4 rounded-t-lg",
-          topDrop.isOver && "bg-black/30",
-        )}
+      <DropArea
+        id={`${id}-top`}
+        data={{
+          type: type,
+          id: id,
+          isCodeBlock: true,
+          isTopDrop: true,
+        }}
+        className="left-0 right-0 top-0 h-4 rounded-t-lg"
       />
-      <div
-        ref={bottomDrop.setNodeRef}
-        className={cn(
-          "absolute bottom-0 left-0 right-0 z-10 h-4 rounded-b-lg",
-          bottomDrop.isOver && "bg-black/30",
-        )}
+      <DropArea
+        id={`${id}-bottom`}
+        data={{
+          type: type,
+          id: id,
+          isCodeBlock: true,
+          isBottomDrop: true,
+        }}
+        className="bottom-0 left-0 right-0 h-4 rounded-b-lg"
       />
       <CodeBlock id={id} />
     </div>

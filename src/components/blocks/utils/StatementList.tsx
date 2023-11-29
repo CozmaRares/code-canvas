@@ -5,7 +5,7 @@ type Props = {
 };
 
 const StatementList = ({ statements }: Props) => (
-  <ul>
+  <ul className="space-y-1">
     {statements.map(({ id, type }) => (
       <li key={id}>
         <StatementBlock

@@ -43,7 +43,7 @@ const CodeBlock = ({
                   "--bg-dark": bg.dark,
                 } as React.CSSProperties)
               : {}),
-            ...(minHeight ? { minHeight:`${minHeight}px` } : {}),
+            ...(minHeight ? { minHeight: `${minHeight}px` } : {}),
           }}
         >
           <div className="col-start-1 row-span-full" />

@@ -19,7 +19,7 @@ const Console = () => {
       </span>
       {displayText ? (
         consoleText.length > 0 ? (
-          <ul className="grid grid-cols-[auto,auto,minmax(0,1fr)] items-center pt-3 font-mono">
+          <ul className="grid max-h-full grid-cols-[auto,auto,minmax(0,1fr)] items-center overflow-auto pt-3 font-mono">
             {consoleText.map(({ type, text }, idx) => (
               <li
                 key={idx}
@@ -79,7 +79,7 @@ const Row = ({ line, type, text }: RowProps) => (
           <>
             <span
               aria-hidden
-              className="mr-3 border-r border-black pointer-events-none py-1 pr-2 opacity-60 dark:border-white"
+              className="pointer-events-none mr-3 border-r border-black py-1 pr-2 opacity-60 dark:border-white"
             >
               <span className="opacity-0">{line}</span>
             </span>

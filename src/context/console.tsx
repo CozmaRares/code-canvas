@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useState } from "react";
 
-// TODO: REFACTOR console text type in its own type
-// mabye expose context type
-type ContextType = {
-  consoleText: Array<{ type: "in" | "out" | "err"; text: string }>;
+export type ConsoleText = { type: "in" | "out" | "err"; text: string };
 
-  addConsoleText: (type: "in" | "out" | "err", text: string) => void;
+type ContextType = {
+  consoleText: ConsoleText[];
+
+  addConsoleText: (consoleText: ConsoleText) => void;
   clearConsole: () => void;
 
   displayText: boolean;
@@ -28,8 +28,8 @@ const ConsoleContextProvider = ({ children }: Props) => {
   const [displayText, setDisplayText] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
-  const addConsoleText = (type: "in" | "out" | "err", text: string) =>
-    setConsoleText(prev => [...prev, { type, text }]);
+  const addConsoleText = (consoleText: ConsoleText) =>
+    setConsoleText(prev => [...prev, consoleText]);
   const clearConsole = () => setConsoleText([]);
 
   return (

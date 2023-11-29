@@ -8,6 +8,8 @@ import {
 } from "@/components/blocks/utils/code-block";
 import PythonConverter from "./PythonConverter";
 import { IfBlockModel } from "@/components/blocks/IfBlock";
+import { WhileBlockModel } from "@/components/blocks/WhileBlock";
+import { ConsoleText } from "@/context/console";
 
 type Operator = (typeof SUPPORTED_OPERATORS)[number];
 
@@ -48,8 +50,7 @@ type VariableMap = Map<string, number>;
 
 export default class Interpreter {
   private variables: VariableMap = new Map();
-  private addConsoleText: (type: "in" | "out" | "err", text: string) => void =
-    () => {};
+  private addConsoleText: (consoleText: ConsoleText) => void = () => {};
   private clearConsole: () => void = () => {};
 
   private runStatements(statements: ConcreteModel[]): string {
@@ -80,7 +81,7 @@ export default class Interpreter {
   }
 
   async start(
-    addConsoleText: (type: "in" | "out" | "err", text: string) => void,
+    addConsoleText: (consoleText: ConsoleText) => void,
     clearConsole: () => void,
   ) {
     this.addConsoleText = addConsoleText;
@@ -91,7 +92,7 @@ export default class Interpreter {
 
     if (result !== "") {
       this.clearConsole();
-      this.addConsoleText("err", result);
+      this.addConsoleText({ type: "err", text: result });
     }
   }
 
@@ -172,10 +173,13 @@ export default class Interpreter {
     if (error !== undefined) return error;
 
     this.variables.set(variable, value);
-    this.addConsoleText("in", PythonConverter.toPython.assignment(model));
+    this.addConsoleText({
+      type: "in",
+      text: PythonConverter.toPython.assignment(model),
+    });
 
     // TODO: add print statements (only for variables)
-    this.addConsoleText("out", `${variable}=${value}`);
+    this.addConsoleText({ type: "out", text: `${variable}=${value}` });
 
     return "";
   }

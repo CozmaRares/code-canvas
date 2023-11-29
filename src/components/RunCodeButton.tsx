@@ -8,11 +8,6 @@ type Props = {
   className?: string;
 };
 
-// TODO: remove me
-async function sleep(s: number) {
-  return new Promise(resolve => setTimeout(resolve, s * 1000));
-}
-
 const RunCodeButton = ({ className }: Props) => {
   const { addConsoleText, clearConsole, setDisplayText, setIsOpen } =
     useConsoleContext();
@@ -21,7 +16,6 @@ const RunCodeButton = ({ className }: Props) => {
     setIsOpen(true);
     setDisplayText(false);
     clearConsole();
-    await sleep(1);
     await new Interpreter().start(addConsoleText, clearConsole);
     setDisplayText(true);
   };

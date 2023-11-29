@@ -174,7 +174,6 @@ const CodeBlockWrapper = ({ id, type }: CodeBlockInfo) => {
 
   const CodeBlock = codeBlocks[type].block;
 
-  // TODO: also add remove button
   return (
     <div className="relative w-fit">
       <div

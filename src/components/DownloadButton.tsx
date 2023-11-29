@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { HardDriveDownload } from "lucide-react";
-// import { saveAs } from "file-saver";
 import PythonConverter from "@/lib/PythonConverter";
 
 type Props = {
@@ -10,7 +9,7 @@ type Props = {
 
 function download() {
   //TODO: error handling
-  const program = PythonConverter.toPython.program();
+  const program = PythonConverter.program();
 
   const file = new File([program], "codeCanvas.py", {
     type: "text/plain",

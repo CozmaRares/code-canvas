@@ -179,7 +179,7 @@ export default class Interpreter {
     this.variables.set(variable, value);
     this.addConsoleText({
       type: "in",
-      text: PythonConverter.toPython.assignment(model),
+      text: PythonConverter.assignment(model),
     });
 
     // TODO: add print statements (only for variables)

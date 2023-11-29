@@ -10,6 +10,7 @@ import PythonConverter from "./PythonConverter";
 import { IfBlockModel } from "@/components/blocks/IfBlock";
 import { WhileBlockModel } from "@/components/blocks/WhileBlock";
 import { ConsoleText } from "@/context/console";
+import { OperatorBlockModel } from "@/components/blocks/OperatorBlock";
 
 type Operator = (typeof SUPPORTED_OPERATORS)[number];
 
@@ -116,8 +117,9 @@ export default class Interpreter {
     if (model.children.length < 1)
       return { error: "Error: Could not compute value." };
 
-    // HACK: used type of children array before definition
-    const getValue = (model: (typeof children)[number]) =>
+    const getValue = (
+      model: NumberBlockModel | VariableNameBlockModel | OperatorBlockModel,
+    ) =>
       model.type == "number"
         ? this.getNumber(model)
         : model.type == "variable name"
@@ -126,7 +128,9 @@ export default class Interpreter {
             error: "Error: Assignment must begin with a number of variable.",
           };
 
-    const children = model.children.map(child => store.getModel(child.id));
+    const children = model.children.map(child =>
+      store.getModel(child.id),
+    ) as Array<NumberBlockModel | VariableNameBlockModel | OperatorBlockModel>;
     const firstChild = children.shift()!;
     let result = getValue(firstChild);
 

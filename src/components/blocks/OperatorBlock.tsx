@@ -1,4 +1,4 @@
-import { valueBlockColor } from "@/lib/block-colors";
+import { operatorBlockColor } from "@/lib/block-colors";
 import CodeBlock from "@/components/blocks/utils/CodeBlock";
 import BlockInput from "@/components/blocks/utils/BlockInput";
 import type {
@@ -29,7 +29,7 @@ const OperatorBlock = ({ id, blockProps }: CodeBlockProps) => {
 
   return (
     <CodeBlock
-      bg={valueBlockColor}
+      bg={operatorBlockColor}
       leftSlot
       rightSlot
       {...blockProps}

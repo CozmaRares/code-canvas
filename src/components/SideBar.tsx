@@ -3,12 +3,12 @@ import { CodeBlockType } from "./blocks/utils/code-block";
 
 const items: CodeBlockType[] = [
   "variable assign",
-  "variable name",
-  "number",
-  "operator",
   "if",
   "while",
   "print",
+  "variable name",
+  "operator",
+  "number",
 ];
 
 const SideBar = () => (

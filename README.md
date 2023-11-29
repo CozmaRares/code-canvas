@@ -33,5 +33,6 @@
 <!-- TODO: cypress -->
 <!-- TODO: vitest -> python converter -->
 <!-- TODO: vitest -> interpreter -->
+<!-- TODO: vitest -> store -->
 
 ## Conclusions

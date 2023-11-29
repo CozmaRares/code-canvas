@@ -1,4 +1,4 @@
-import { valueBlockColor } from "@/lib/block-colors";
+import { variableNameBlockColor } from "@/lib/block-colors";
 import CodeBlock from "@/components/blocks/utils/CodeBlock";
 import BlockInput from "@/components/blocks/utils/BlockInput";
 import type {
@@ -29,7 +29,7 @@ const VariableNameBlock = ({ id, blockProps }: CodeBlockProps) => {
 
   return (
     <CodeBlock
-      bg={valueBlockColor}
+      bg={variableNameBlockColor}
       leftSlot
       rightSlot
       {...blockProps}

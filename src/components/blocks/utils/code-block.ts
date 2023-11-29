@@ -8,7 +8,15 @@ import VariableNameBlock, {
   variableNameBlockType,
 } from "../VariableNameBlock";
 import { CodeBlockPreviewProps } from "../CodeBlockPreview";
-import { valueBlockColor, variableAssignBlockColor } from "@/lib/block-colors";
+import {
+  ifBlockColor,
+  numberBlockColor,
+  operatorBlockColor,
+  printBlockColor,
+  variableAssignBlockColor,
+  variableNameBlockColor,
+  whileBlockColor,
+} from "@/lib/block-colors";
 import NumberBlock, { NumberBlockModel, numberBlockType } from "../NumberBlock";
 import OperatorBlock, {
   OperatorBlockModel,
@@ -66,7 +74,7 @@ export const codeBlocks = Object.freeze({
     block: VariableNameBlock,
     previewProps: {
       text: "variable",
-      bg: valueBlockColor,
+      bg: variableNameBlockColor,
     },
     model: VariableNameBlockModel,
     orientation: "horizontal",
@@ -75,7 +83,7 @@ export const codeBlocks = Object.freeze({
     block: NumberBlock,
     previewProps: {
       text: "number",
-      bg: valueBlockColor,
+      bg: numberBlockColor,
     },
     model: NumberBlockModel,
     orientation: "horizontal",
@@ -84,7 +92,7 @@ export const codeBlocks = Object.freeze({
     block: OperatorBlock,
     previewProps: {
       text: "operator",
-      bg: valueBlockColor,
+      bg: operatorBlockColor,
     },
     model: OperatorBlockModel,
     orientation: "horizontal",
@@ -93,7 +101,7 @@ export const codeBlocks = Object.freeze({
     block: IfBlock,
     previewProps: {
       text: "if",
-      bg: valueBlockColor,
+      bg: ifBlockColor,
     },
     model: IfBlockModel,
     orientation: "vertical",
@@ -102,7 +110,7 @@ export const codeBlocks = Object.freeze({
     block: WhileBlock,
     previewProps: {
       text: "while",
-      bg: valueBlockColor,
+      bg: whileBlockColor,
     },
     model: WhileBlockModel,
     orientation: "vertical",
@@ -111,7 +119,7 @@ export const codeBlocks = Object.freeze({
     block: PrintBlock,
     previewProps: {
       text: "print",
-      bg: valueBlockColor,
+      bg: printBlockColor,
     },
     model: PrintBlockModel,
     orientation: "vertical",

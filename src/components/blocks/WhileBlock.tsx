@@ -1,4 +1,4 @@
-import { variableAssignBlockColor } from "@/lib/block-colors";
+import { whileBlockColor } from "@/lib/block-colors";
 import CodeBlock from "@/components/blocks/utils/CodeBlock";
 import {
   type CodeBlockProps,
@@ -60,7 +60,7 @@ const WhileBlock = ({ id, blockProps }: CodeBlockProps) => {
           className="bottom-0 right-0 top-0 w-4 rounded-r-lg"
         />
         <CodeBlock
-          bg={variableAssignBlockColor}
+          bg={whileBlockColor}
           topSlot
           rightSlot
           {...blockProps}
@@ -76,8 +76,8 @@ const WhileBlock = ({ id, blockProps }: CodeBlockProps) => {
         className="bg-block col-span-1 -my-[10px] w-[15px]"
         style={
           {
-            "--bg-light": variableAssignBlockColor.light,
-            "--bg-dark": variableAssignBlockColor.dark,
+            "--bg-light": whileBlockColor.light,
+            "--bg-dark": whileBlockColor.dark,
           } as React.CSSProperties
         }
       />
@@ -96,7 +96,7 @@ const WhileBlock = ({ id, blockProps }: CodeBlockProps) => {
       </div>
       <div className="col-span-full">
         <CodeBlock
-          bg={variableAssignBlockColor}
+          bg={whileBlockColor}
           bottomSlot
           minHeight={5}
           {...blockProps}

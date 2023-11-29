@@ -1,4 +1,4 @@
-import { variableAssignBlockColor } from "@/lib/block-colors";
+import { printBlockColor } from "@/lib/block-colors";
 import CodeBlock from "@/components/blocks/utils/CodeBlock";
 import {
   type CodeBlockProps,
@@ -52,7 +52,7 @@ const PrintBlock = ({ id, blockProps }: CodeBlockProps) => {
         className="bottom-0 right-0 top-0 w-4 rounded-r-lg"
       />
       <CodeBlock
-        bg={variableAssignBlockColor}
+        bg={printBlockColor}
         topSlot
         bottomSlot
         rightSlot

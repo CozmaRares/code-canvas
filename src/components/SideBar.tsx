@@ -8,6 +8,7 @@ const items: CodeBlockType[] = [
   "operator",
   "if",
   "while",
+  "print",
 ];
 
 const SideBar = () => (

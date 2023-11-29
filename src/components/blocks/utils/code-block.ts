@@ -16,6 +16,7 @@ import OperatorBlock, {
 } from "../OperatorBlock";
 import IfBlock, { IfBlockModel, ifBlockType } from "../IfBlock";
 import WhileBlock, { WhileBlockModel, whileBlockType } from "../WhileBlock";
+import PrintBlock, { PrintBlockModel, printBlockType } from "../PrintBlock";
 
 export type CodeBlockProps = {
   id: string;
@@ -46,7 +47,8 @@ export type Model =
   | typeof NumberBlockModel
   | typeof OperatorBlockModel
   | typeof IfBlockModel
-  | typeof WhileBlockModel;
+  | typeof WhileBlockModel
+  | typeof PrintBlockModel;
 
 export type ConcreteModel = Model["prototype"];
 
@@ -103,6 +105,15 @@ export const codeBlocks = Object.freeze({
       bg: valueBlockColor,
     },
     model: WhileBlockModel,
+    orientation: "vertical",
+  },
+  [printBlockType]: {
+    block: PrintBlock,
+    previewProps: {
+      text: "print",
+      bg: valueBlockColor,
+    },
+    model: PrintBlockModel,
     orientation: "vertical",
   },
 } satisfies Record<

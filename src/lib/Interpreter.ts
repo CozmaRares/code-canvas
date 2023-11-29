@@ -11,6 +11,7 @@ import { IfBlockModel } from "@/components/blocks/IfBlock";
 import { WhileBlockModel } from "@/components/blocks/WhileBlock";
 import { ConsoleText } from "@/context/console";
 import { OperatorBlockModel } from "@/components/blocks/OperatorBlock";
+import { PrintBlockModel } from "@/components/blocks/PrintBlock";
 
 type Operator = (typeof SUPPORTED_OPERATORS)[number];
 
@@ -67,6 +68,9 @@ export default class Interpreter {
           break;
         case "while":
           result = this.handleWhileStatement(statement);
+          break;
+        case "print":
+          result = this.handlePrintStatement(statement);
           break;
         default:
           throw new Error(
@@ -182,15 +186,12 @@ export default class Interpreter {
       text: PythonConverter.assignment(model),
     });
 
-    // TODO: add print statements (only for variables)
-    this.addConsoleText({ type: "out", text: `${variable}=${value}` });
-
     return "";
   }
 
   private handleIfStatement(model: IfBlockModel): string {
     if (model.children.length < 1)
-      return "Error: Cannot assign anything to an empty variable.";
+      return "Error: Expected to check a variable's value.";
 
     const variable = model.children[0];
     const result = this.getVariableValue(
@@ -208,7 +209,7 @@ export default class Interpreter {
 
   private handleWhileStatement(model: WhileBlockModel): string {
     if (model.children.length < 1)
-      return "Error: Cannot assign anything to an empty variable.";
+      return "Error: Expected to check a variable's value.";
 
     const variable = model.children[0];
 
@@ -226,6 +227,23 @@ export default class Interpreter {
 
       if (statementsResult != "") return statementsResult;
     }
+
+    return "";
+  }
+
+  private handlePrintStatement(model: PrintBlockModel): string {
+    if (model.children.length < 1)
+      return "Error: Expected to print a variable's value.";
+
+    const variable = model.children[0];
+    const variableModel = store.getModel(variable.id) as VariableNameBlockModel;
+    const result = this.getVariableValue(variableModel);
+    if (result.error !== undefined) return result.error;
+
+    this.addConsoleText({
+      type: "out",
+      text: `${variableModel.props.variable} = ${result.value}`,
+    });
 
     return "";
   }

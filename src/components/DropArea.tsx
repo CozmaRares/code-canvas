@@ -1,3 +1,4 @@
+import { ComponentJSX } from "@/lib/helper-types";
 import { cn } from "@/lib/utils";
 import { useDroppable } from "@dnd-kit/core";
 
@@ -7,7 +8,7 @@ type Props = {
   className?: string;
 };
 
-const DropArea = ({ id, data, className }: Props) => {
+const DropArea: ComponentJSX<Props> = ({ id, data, className }) => {
   const droppable = useDroppable({ id, data });
 
   return (

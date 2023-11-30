@@ -2,29 +2,28 @@ import { Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useConsoleContext } from "@/context/console";
-import Interpreter from "@/lib/Interpreter";
+import Interpreter from "@/lib/interpreter";
+import { ComponentJSX } from "@/lib/helper-types";
 
 type Props = {
   className?: string;
 };
 
-const RunCodeButton = ({ className }: Props) => {
+const RunCodeButton: ComponentJSX<Props> = ({ className }) => {
   const { addConsoleText, clearConsole, setDisplayText, setIsOpen } =
     useConsoleContext();
-
-  const onClick = async () => {
-    setIsOpen(true);
-    setDisplayText(false);
-    clearConsole();
-    await new Interpreter().start(addConsoleText, clearConsole);
-    setDisplayText(true);
-  };
 
   return (
     <Button
       variant="outline"
       className={cn("flex items-center gap-3", className)}
-      onClick={onClick}
+      onClick={async () => {
+        setIsOpen(true);
+        setDisplayText(false);
+        clearConsole();
+        await new Interpreter().start(addConsoleText);
+        setDisplayText(true);
+      }}
     >
       Run Code
       <Play className="scale-[0.8]" />

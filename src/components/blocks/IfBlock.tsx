@@ -1,15 +1,16 @@
-import { ifBlockColor } from "@/lib/block-colors";
+import { ifBlockColor } from "./utils/colors";
 import CodeBlock from "@/components/blocks/utils/CodeBlock";
 import {
-  type CodeBlockProps,
   GenericCodeBlockModelWithStatements,
-  CodeBlockType,
-} from "@/components/blocks/utils/code-block";
+  CodeBlockInfoGeneric,
+  VerticalBlockInfo,
+  CodeBlockComponent,
+} from "@/lib/code-block";
 import store from "@/lib/store";
 import { variableNameBlockType } from "./VariableNameBlock";
-import ChildrenBlockList from "./utils/ChildrenBlockList";
 import StatementList from "./utils/StatementList";
 import DropArea from "../DropArea";
+import Expression from "./utils/Expression";
 
 export const ifBlockType = "if" as const;
 export type IfBlockProps = Record<string, unknown>;
@@ -25,15 +26,9 @@ export class IfBlockModel
   childrenTypes = Object.freeze([
     variableNameBlockType,
   ] satisfies ChildrenTypes[]);
-  children: Array<{
-    id: string;
-    type: ChildrenTypes;
-  }> = [];
+  children: Array<CodeBlockInfoGeneric<ChildrenTypes>> = [];
   maxChildrenLength = 1;
-  statements: Array<{
-    id: string;
-    type: CodeBlockType;
-  }> = [];
+  statements: Array<VerticalBlockInfo> = [];
 
   constructor(id: string) {
     this.id = id;
@@ -41,14 +36,14 @@ export class IfBlockModel
   }
 }
 
-const IfBlock = ({ id, blockProps }: CodeBlockProps) => {
+const IfBlock: CodeBlockComponent = ({ id }) => {
   const model = store.getModel(id) as IfBlockModel;
   const children = model.children;
   const statements = model.statements;
 
   return (
-    <div className="grid auto-rows-auto grid-cols-[auto,minmax(0,1fr)] gap-x-2 gap-y-1">
-      <div className="relative col-span-full flex w-fit flex-row">
+    <div className="grid auto-rows-auto grid-cols-[auto,minmax(0,1fr)] gap-2">
+      <div className="relative col-span-full flex w-fit flex-row gap-1">
         <DropArea
           id={`${id}-right`}
           data={{
@@ -61,19 +56,14 @@ const IfBlock = ({ id, blockProps }: CodeBlockProps) => {
         />
         <CodeBlock
           bg={ifBlockColor}
-          topSlot
-          rightSlot
-          {...blockProps}
+          className="min-w-fit pr-8"
         >
           if
         </CodeBlock>
-        <ChildrenBlockList
-          parent={model}
-          list={children}
-        />
+        <Expression list={children} />
       </div>
       <div
-        className="bg-block col-span-1 -my-[10px] w-[15px]"
+        className="bg-block col-span-1 -my-4 w-[15px]"
         style={
           {
             "--bg-light": ifBlockColor.light,
@@ -96,12 +86,7 @@ const IfBlock = ({ id, blockProps }: CodeBlockProps) => {
         <StatementList statements={statements} />
       </div>
       <div className="col-span-full">
-        <CodeBlock
-          bg={ifBlockColor}
-          bottomSlot
-          minHeight={5}
-          {...blockProps}
-        ></CodeBlock>
+        <CodeBlock bg={ifBlockColor}></CodeBlock>
       </div>
     </div>
   );

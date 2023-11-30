@@ -1,24 +1,20 @@
 import { useDraggable } from "@dnd-kit/core";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { CodeBlockType } from "@/components/blocks/utils/code-block";
-import {
-  codeBlocks,
-  computePreviewProps,
-} from "@/components/blocks/utils/code-block";
+import { CodeBlockType, codeBlocks } from "@/lib/code-block";
 import CodeBlockPreview from "./blocks/CodeBlockPreview";
+import { ComponentJSX } from "@/lib/helper-types";
 
 type Props = {
   type: CodeBlockType;
 };
 
-const SideBarButton = ({ type }: Props) => {
+const SideBarButton: ComponentJSX<Props> = ({ type }) => {
   const draggable = useDraggable({
     id: `code-block-${type}`,
     data: {
       type,
       isSideBarButton: true,
-      orientation: codeBlocks[type].orientation,
     },
   });
 
@@ -33,7 +29,10 @@ const SideBarButton = ({ type }: Props) => {
       {...draggable.attributes}
     >
       <div className={cn({ "opacity-0": draggable.isDragging })}>
-        <CodeBlockPreview {...computePreviewProps(type)} />
+        <CodeBlockPreview
+          orientation={codeBlocks[type].orientation}
+          {...codeBlocks[type].previewProps}
+        />
       </div>
     </Button>
   );

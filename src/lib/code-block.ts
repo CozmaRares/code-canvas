@@ -2,12 +2,11 @@ import VariableAssignBlock, {
   VariableAssignBlockModel,
   variableAssignBlockType,
 } from "@/components/blocks/VariableAssignBlock";
-import { BaseCodeBlockProps } from "./CodeBlock";
 import VariableNameBlock, {
   VariableNameBlockModel,
   variableNameBlockType,
-} from "../VariableNameBlock";
-import { CodeBlockPreviewProps } from "../CodeBlockPreview";
+} from "@/components/blocks/VariableNameBlock";
+import type { CodeBlockPreviewProps } from "@/components/blocks/CodeBlockPreview";
 import {
   ifBlockColor,
   numberBlockColor,
@@ -16,20 +15,32 @@ import {
   variableAssignBlockColor,
   variableNameBlockColor,
   whileBlockColor,
-} from "@/lib/block-colors";
-import NumberBlock, { NumberBlockModel, numberBlockType } from "../NumberBlock";
+} from "@/components/blocks/utils/colors";
+import NumberBlock, {
+  NumberBlockModel,
+  numberBlockType,
+} from "@/components/blocks/NumberBlock";
 import OperatorBlock, {
   OperatorBlockModel,
   operatorBlockType,
-} from "../OperatorBlock";
-import IfBlock, { IfBlockModel, ifBlockType } from "../IfBlock";
-import WhileBlock, { WhileBlockModel, whileBlockType } from "../WhileBlock";
-import PrintBlock, { PrintBlockModel, printBlockType } from "../PrintBlock";
+} from "@/components/blocks/OperatorBlock";
+import IfBlock, {
+  IfBlockModel,
+  ifBlockType,
+} from "@/components/blocks/IfBlock";
+import WhileBlock, {
+  WhileBlockModel,
+  whileBlockType,
+} from "@/components/blocks/WhileBlock";
+import PrintBlock, {
+  PrintBlockModel,
+  printBlockType,
+} from "@/components/blocks/PrintBlock";
+import { ComponentJSX } from "./helper-types";
 
-export type CodeBlockProps = {
+export type CodeBlockComponent = ComponentJSX<{
   id: string;
-  blockProps?: BaseCodeBlockProps;
-};
+}>;
 
 export interface GenericCodeBlockModel<T> {
   id: string;
@@ -37,16 +48,16 @@ export interface GenericCodeBlockModel<T> {
   props: T;
 }
 
-export interface GenericCodeBlockModelWithChildren<T>
+export interface GenericCodeBlockModelWithExpression<T>
   extends GenericCodeBlockModel<T> {
-  children: Array<{ id: string; type: CodeBlockType }>;
+  children: Array<HorizontalBlockInfo>;
   maxChildrenLength: number;
   childrenTypes: Readonly<CodeBlockType[]>;
 }
 
 export interface GenericCodeBlockModelWithStatements<T>
-  extends GenericCodeBlockModelWithChildren<T> {
-  statements: Array<{ id: string; type: CodeBlockType }>;
+  extends GenericCodeBlockModelWithExpression<T> {
+  statements: Array<VerticalBlockInfo>;
 }
 
 export type Model =
@@ -57,6 +68,8 @@ export type Model =
   | typeof IfBlockModel
   | typeof WhileBlockModel
   | typeof PrintBlockModel;
+
+export type BlockOrientation = "vertical" | "horizontal";
 
 export type ConcreteModel = Model["prototype"];
 
@@ -127,32 +140,43 @@ export const codeBlocks = Object.freeze({
 } satisfies Record<
   string,
   {
-    block: (props: CodeBlockProps) => JSX.Element;
-    previewProps: CodeBlockPreviewProps;
+    block: CodeBlockComponent;
+    previewProps: Omit<CodeBlockPreviewProps, "orientation">;
     model: Model;
-    orientation: "horizontal" | "vertical";
+    orientation: BlockOrientation;
   }
 >);
 
-export type CodeBlockType = keyof typeof codeBlocks;
-
-export function computePreviewProps(type: CodeBlockType) {
-  const slots =
-    codeBlocks[type].orientation == "horizontal"
-      ? { leftSlot: true, rightSlot: true }
-      : { topSlot: true, bottomSlot: true };
-  return { ...codeBlocks[type].previewProps, ...slots };
-}
-
-export type CodeBlockInfo = {
+export type CodeBlockInfoGeneric<T> = {
   id: string;
-  type: CodeBlockType;
+  type: T;
 };
+
+export type CodeBlockType = keyof typeof codeBlocks;
+export type CodeBlockInfo = CodeBlockInfoGeneric<CodeBlockType>;
+
+type FilteredBlockType<T, Orientation extends BlockOrientation> = {
+  [K in keyof T]: T[K] extends { orientation: Orientation } ? K : never;
+}[keyof T];
+
+export type HorizontalBlockType = FilteredBlockType<
+  typeof codeBlocks,
+  "horizontal"
+>;
+export type HorizontalBlockInfo = CodeBlockInfoGeneric<HorizontalBlockType>;
+
+export type VerticalBlockType = FilteredBlockType<
+  typeof codeBlocks,
+  "vertical"
+>;
+export type VerticalBlockInfo = CodeBlockInfoGeneric<VerticalBlockType>;
 
 export const SUPPORTED_OPERATORS = Object.freeze([
   "+",
   "-",
   "/",
+  "//",
+  "%",
   "*",
   "^",
   "=",

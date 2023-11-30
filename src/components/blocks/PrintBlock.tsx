@@ -1,13 +1,13 @@
-import { printBlockColor } from "@/lib/block-colors";
+import { printBlockColor } from "./utils/colors";
 import CodeBlock from "@/components/blocks/utils/CodeBlock";
 import {
-  type CodeBlockProps,
-  GenericCodeBlockModelWithChildren,
-} from "@/components/blocks/utils/code-block";
+  CodeBlockComponent,
+  GenericCodeBlockModelWithExpression,
+} from "@/lib/code-block";
 import store from "@/lib/store";
 import { variableNameBlockType } from "./VariableNameBlock";
-import ChildrenBlockList from "./utils/ChildrenBlockList";
 import DropArea from "../DropArea";
+import Expression from "./utils/Expression";
 
 export const printBlockType = "print" as const;
 export type PrintBlockProps = Record<string, unknown>;
@@ -15,7 +15,7 @@ export type PrintBlockProps = Record<string, unknown>;
 type ChildrenTypes = typeof variableNameBlockType;
 
 export class PrintBlockModel
-  implements GenericCodeBlockModelWithChildren<PrintBlockProps>
+  implements GenericCodeBlockModelWithExpression<PrintBlockProps>
 {
   id: string;
   type = printBlockType;
@@ -35,12 +35,12 @@ export class PrintBlockModel
   }
 }
 
-const PrintBlock = ({ id, blockProps }: CodeBlockProps) => {
+const PrintBlock: CodeBlockComponent = ({ id }) => {
   const model = store.getModel(id) as PrintBlockModel;
   const children = model.children;
 
   return (
-    <div className="flex flex-row">
+    <div className="relative flex w-fit flex-row gap-1">
       <DropArea
         id={`${id}-right`}
         data={{
@@ -53,17 +53,11 @@ const PrintBlock = ({ id, blockProps }: CodeBlockProps) => {
       />
       <CodeBlock
         bg={printBlockColor}
-        topSlot
-        bottomSlot
-        rightSlot
-        {...blockProps}
+        className="min-w-fit pr-8"
       >
         print
       </CodeBlock>
-      <ChildrenBlockList
-        parent={model}
-        list={children}
-      />
+      <Expression list={children} />
     </div>
   );
 };

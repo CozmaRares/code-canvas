@@ -1,16 +1,16 @@
-import { variableAssignBlockColor } from "@/lib/block-colors";
+import { variableAssignBlockColor } from "./utils/colors";
 import CodeBlock from "@/components/blocks/utils/CodeBlock";
 import BlockInput from "@/components/blocks/utils/BlockInput";
 import {
-  type CodeBlockProps,
-  GenericCodeBlockModelWithChildren,
-} from "@/components/blocks/utils/code-block";
+  CodeBlockComponent,
+  GenericCodeBlockModelWithExpression,
+} from "@/lib/code-block";
 import store from "@/lib/store";
 import { numberBlockType } from "./NumberBlock";
 import { variableNameBlockType } from "./VariableNameBlock";
-import ChildrenBlockList from "./utils/ChildrenBlockList";
 import { operatorBlockType } from "./OperatorBlock";
 import DropArea from "../DropArea";
+import Expression from "./utils/Expression";
 
 export const variableAssignBlockType = "variable assign" as const;
 export type VariableAssignBlockProps = {
@@ -23,7 +23,7 @@ type ChildrenTypes =
   | typeof operatorBlockType;
 
 export class VariableAssignBlockModel
-  implements GenericCodeBlockModelWithChildren<VariableAssignBlockProps>
+  implements GenericCodeBlockModelWithExpression<VariableAssignBlockProps>
 {
   id: string;
   type = variableAssignBlockType;
@@ -45,13 +45,13 @@ export class VariableAssignBlockModel
   }
 }
 
-const VariableAssignBlock = ({ id, blockProps }: CodeBlockProps) => {
+const VariableAssignBlock: CodeBlockComponent = ({ id }) => {
   const model = store.getModel(id) as VariableAssignBlockModel;
   const variable = model.props.variable;
   const children = model.children;
 
   return (
-    <div className="flex flex-row">
+    <div className="relative flex w-fit flex-row gap-1">
       <DropArea
         id={`${id}-right`}
         data={{
@@ -62,27 +62,17 @@ const VariableAssignBlock = ({ id, blockProps }: CodeBlockProps) => {
         }}
         className="bottom-0 right-0 top-0 w-4 rounded-r-lg"
       />
-      <CodeBlock
-        bg={variableAssignBlockColor}
-        topSlot
-        bottomSlot
-        rightSlot
-        {...blockProps}
-      >
+      <CodeBlock bg={variableAssignBlockColor}>
         let
         <BlockInput
           text={variable ?? ""}
           setText={variable => store.setProps(id, { variable })}
           placeholder="variable"
           pattern="identifier"
-          className="w-[15ch]"
         />
         be
       </CodeBlock>
-      <ChildrenBlockList
-        parent={model}
-        list={children}
-      />
+      <Expression list={children} />
     </div>
   );
 };

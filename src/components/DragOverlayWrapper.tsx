@@ -1,12 +1,10 @@
-import { DragOverlay, useDndMonitor, type Active } from "@dnd-kit/core";
+import { DragOverlay, useDndMonitor, Active } from "@dnd-kit/core";
 import { useState } from "react";
-import {
-  type CodeBlockType,
-  computePreviewProps,
-} from "@/components/blocks/utils/code-block";
+import { codeBlocks, CodeBlockType } from "@/lib/code-block";
 import CodeBlockPreview from "./blocks/CodeBlockPreview";
+import { ComponentJSX } from "@/lib/helper-types";
 
-const DragOverlayWrapper = () => {
+const DragOverlayWrapper: ComponentJSX<unknown> = () => {
   const [draggedItem, setDraggedItem] = useState<Active | null>(null);
 
   useDndMonitor({
@@ -25,10 +23,14 @@ const DragOverlayWrapper = () => {
   const isSideBarButton = draggedItem?.data.current?.isSideBarButton;
 
   if (isSideBarButton) {
+    console.log("mata");
     const type = draggedItem.data.current!.type as CodeBlockType;
     node = (
-      <div className="cursor-grabbing opacity-50">
-        <CodeBlockPreview {...computePreviewProps(type)} />;
+      <div className="z-10 cursor-grabbing opacity-50">
+        <CodeBlockPreview
+          orientation={codeBlocks[type].orientation}
+          {...codeBlocks[type].previewProps}
+        />
       </div>
     );
   }

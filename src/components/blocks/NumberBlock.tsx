@@ -1,10 +1,7 @@
-import { numberBlockColor } from "@/lib/block-colors";
+import { numberBlockColor } from "./utils/colors";
 import CodeBlock from "@/components/blocks/utils/CodeBlock";
 import BlockInput from "@/components/blocks/utils/BlockInput";
-import type {
-  CodeBlockProps,
-  GenericCodeBlockModel,
-} from "@/components/blocks/utils/code-block";
+import { CodeBlockComponent, GenericCodeBlockModel } from "@/lib/code-block";
 import store from "@/lib/store";
 
 export const numberBlockType = "number" as const;
@@ -23,23 +20,17 @@ export class NumberBlockModel
   }
 }
 
-const NumberBlock = ({ id, blockProps }: CodeBlockProps) => {
+const NumberBlock: CodeBlockComponent = ({ id }) => {
   const model = store.getModel(id) as NumberBlockModel;
   const number = model.props.number;
 
   return (
-    <CodeBlock
-      bg={numberBlockColor}
-      leftSlot
-      rightSlot
-      {...blockProps}
-    >
+    <CodeBlock bg={numberBlockColor}>
       <BlockInput
         text={number}
         setText={number => store.setProps(id, { number })}
         placeholder="number"
         pattern="number"
-        className="text-center"
       />
     </CodeBlock>
   );

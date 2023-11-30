@@ -3,11 +3,11 @@ export type BlockColor = {
   dark: string;
 };
 
+// TODO: altele
 function makeColor(light: string, dark: string): Readonly<BlockColor> {
   return Object.freeze({ light, dark });
 }
 
-export const anchorBlockColor = makeColor("#fb7185", "#6c0001");
 export const emptyBlockColor = makeColor("#0f172a33", "#334155f0");
 
 export const variableAssignBlockColor = makeColor("#ef4444", "#6366f1");

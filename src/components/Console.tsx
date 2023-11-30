@@ -1,8 +1,9 @@
 import { useConsoleContext } from "@/context/console";
+import { ComponentJSX } from "@/lib/helper-types";
 import { cn } from "@/lib/utils";
 import { Cog } from "lucide-react";
 
-const Console = () => {
+const Console: ComponentJSX<unknown> = () => {
   const { consoleText, displayText, isOpen } = useConsoleContext();
 
   let inRows = 0;
@@ -64,7 +65,7 @@ type RowProps = {
   text: string;
 };
 
-const Row = ({ line, type, text }: RowProps) => (
+const Row: ComponentJSX<RowProps> = ({ line, type, text }) => (
   <div className={cn("contents", type == "err" && "font-bold text-red-600")}>
     {type != "err" && (
       <>

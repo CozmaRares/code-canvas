@@ -5,12 +5,18 @@ import { OperatorBlockModel } from "@/components/blocks/OperatorBlock";
 import store from "@/lib/store";
 
 export default class PythonConverter {
-  static program() {
+  static program(): string {
     return store.blocks
-      .map(model => {
-        switch (model.type) {
+      .map(({ type, id }) => {
+        switch (type) {
           case "variable assign":
-            return PythonConverter.assignment(model);
+            return PythonConverter.assignment(id);
+          case "if":
+            return PythonConverter.if(id);
+          case "while":
+            return PythonConverter.while(id);
+          case "print":
+            return PythonConverter.print(id);
           default:
             throw new Error(
               "UNREACHABLE CODE IN PythonConverter.toPython.program()",
@@ -20,21 +26,20 @@ export default class PythonConverter {
       .join("\n");
   }
 
-  static number(model: NumberBlockModel) {
+  static number(model: NumberBlockModel): string {
     return model.props.number;
   }
 
-  static variableName(model: VariableNameBlockModel) {
+  static variableName(model: VariableNameBlockModel): string {
     return model.props.variable;
   }
 
-  static operator(model: OperatorBlockModel) {
+  static operator(model: OperatorBlockModel): string {
     return model.props.operator;
   }
 
-  // FIXME: assumes assignment is syntactically correct
-  // mabye add a flag to disable checking
-  static assignment(model: VariableAssignBlockModel) {
+  static assignment(id: string): string {
+    const model = store.getModel(id) as VariableAssignBlockModel;
     const output = [`${model.props.variable} =`];
 
     model.children.forEach(child => {
@@ -54,5 +59,18 @@ export default class PythonConverter {
     });
 
     return output.join(" ");
+  }
+
+  // TODO:
+  static if(id: string): string {
+    return "if";
+  }
+
+  static while(id: string): string {
+    return "while";
+  }
+
+  static print(id: string): string {
+    return "print";
   }
 }

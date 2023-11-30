@@ -8,6 +8,10 @@ module.exports = {
   ],
   rules: {
     "no-constant-condition": "off",
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      { allowExpressions: true },
+    ],
   },
   ignorePatterns: ["dist", ".eslintrc.cjs", "src/components/ui"],
   parser: "@typescript-eslint/parser",

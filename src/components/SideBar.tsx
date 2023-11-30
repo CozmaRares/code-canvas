@@ -1,5 +1,6 @@
 import SideBarButton from "@/components/SideBarButton";
-import { CodeBlockType } from "./blocks/utils/code-block";
+import { CodeBlockType } from "@/lib/code-block";
+import { ComponentJSX } from "@/lib/helper-types";
 
 const items: CodeBlockType[] = [
   "variable assign",
@@ -11,9 +12,9 @@ const items: CodeBlockType[] = [
   "number",
 ];
 
-const SideBar = () => (
-  <aside className="w-[300px] border-r border-black p-8 dark:border-white">
-    <ul>
+const SideBar: ComponentJSX<unknown> = () => (
+  <aside className="w-fit border-r border-black p-8 dark:border-white">
+    <ul className="flex w-fit flex-col items-center justify-center gap-1">
       {items.map(type => (
         <li key={type}>
           <SideBarButton type={type} />

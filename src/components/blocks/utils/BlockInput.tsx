@@ -1,10 +1,10 @@
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import { ComponentJSX } from "@/lib/helper-types";
 
 const patterns = Object.freeze({
   identifier: /^([_a-zA-Z][_a-zA-Z0-9]{0,9}){0,1}$/,
   number: /^\d*$/,
-  operator: /^(\+|-|\*|\/|\^|<|>|=|<=|>=|!=){0,1}$/,
+  operator: /^(\+|-|\*|\/|\/\/|%|\^|<|>|=|<=|>=|!=){0,1}$/,
 } satisfies Record<string, RegExp>);
 
 type Props = {
@@ -12,16 +12,14 @@ type Props = {
   setText: (text: string) => void;
   placeholder: string;
   pattern?: keyof typeof patterns;
-  className?: string;
 };
 
-const BlockInput = ({
+const BlockInput: ComponentJSX<Props> = ({
   text,
   setText,
   placeholder,
   pattern,
-  className,
-}: Props) => {
+}) => {
   const onChange: React.ChangeEventHandler<HTMLInputElement> = e => {
     const text = e.target.value;
     if (pattern == undefined) return setText(text);
@@ -34,7 +32,7 @@ const BlockInput = ({
       placeholder={placeholder}
       value={text}
       onChange={onChange}
-      className={cn("h-[2.3em] w-[100px] font-mono", className)}
+      className="mx-auto h-[2.3em] w-[100px] text-center font-mono"
     />
   );
 };

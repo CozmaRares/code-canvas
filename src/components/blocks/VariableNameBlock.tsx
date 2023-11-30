@@ -1,10 +1,7 @@
-import { variableNameBlockColor } from "@/lib/block-colors";
+import { variableNameBlockColor } from "./utils/colors";
 import CodeBlock from "@/components/blocks/utils/CodeBlock";
 import BlockInput from "@/components/blocks/utils/BlockInput";
-import type {
-  CodeBlockProps,
-  GenericCodeBlockModel,
-} from "@/components/blocks/utils/code-block";
+import { CodeBlockComponent, GenericCodeBlockModel } from "@/lib/code-block";
 import store from "@/lib/store";
 
 export const variableNameBlockType = "variable name" as const;
@@ -23,23 +20,17 @@ export class VariableNameBlockModel
   }
 }
 
-const VariableNameBlock = ({ id, blockProps }: CodeBlockProps) => {
+const VariableNameBlock: CodeBlockComponent = ({ id }) => {
   const model = store.getModel(id) as VariableNameBlockModel;
   const variable = model.props["variable"];
 
   return (
-    <CodeBlock
-      bg={variableNameBlockColor}
-      leftSlot
-      rightSlot
-      {...blockProps}
-    >
+    <CodeBlock bg={variableNameBlockColor}>
       <BlockInput
         text={variable ?? ""}
         setText={variable => store.setProps(id, { variable })}
         placeholder="variable"
         pattern="identifier"
-        className="w-[15ch] text-center"
       />
     </CodeBlock>
   );

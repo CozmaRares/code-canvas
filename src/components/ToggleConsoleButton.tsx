@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { useConsoleContext } from "@/context/console";
+import { ComponentJSX } from "@/lib/helper-types";
 
 type Props = {
   className?: string;
 };
 
-const ToggleConsoleButton = ({ className }: Props) => {
+const ToggleConsoleButton: ComponentJSX<Props> = ({ className }) => {
   const { isOpen, setIsOpen } = useConsoleContext();
 
   return (

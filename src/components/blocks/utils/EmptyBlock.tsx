@@ -1,12 +1,12 @@
-import { emptyBlockColor } from "@/lib/block-colors";
-import CodeBlock from "@/components/blocks/utils/CodeBlock";
+import { ComponentJSX } from "@/lib/helper-types";
+import { emptyBlockColor } from "./colors";
+import CodeBlock from "./CodeBlock";
 
-const EmptyCodeBlock = () => (
+const EmptyCodeBlock: ComponentJSX<unknown> = () => (
   <CodeBlock
     bg={emptyBlockColor}
-    topSlot
-    bottomSlot
-  />
+    className="h-[60px]"
+  ></CodeBlock>
 );
 
 export default EmptyCodeBlock;

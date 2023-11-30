@@ -9,8 +9,9 @@ import Console from "@/components/Console";
 import ConsoleContextProvider from "./context/console";
 import { Toaster } from "./components/ui/toaster";
 import ToggleConsoleButton from "./components/ToggleConsoleButton";
+import { ComponentJSX } from "./lib/helper-types";
 
-const App = () => {
+const App: ComponentJSX<unknown> = () => {
   return (
     <>
       <ConsoleContextProvider>

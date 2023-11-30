@@ -1,11 +1,12 @@
-import { CodeBlockInfo, codeBlocks } from "./code-block";
+import { VerticalBlockInfo, codeBlocks } from "@/lib/code-block";
+import { ComponentJSX } from "@/lib/helper-types";
 
 type Props = {
-  statements: CodeBlockInfo[];
+  statements: VerticalBlockInfo[];
 };
 
-const StatementList = ({ statements }: Props) => (
-  <ul className="space-y-1">
+const StatementList: ComponentJSX<Props> = ({ statements }) => (
+  <ul className="space-y-2">
     {statements.map(({ id, type }) => (
       <li key={id}>
         <StatementBlock
@@ -17,16 +18,11 @@ const StatementList = ({ statements }: Props) => (
   </ul>
 );
 
-type StatementBlockProps = CodeBlockInfo;
-
-const StatementBlock = ({ id, type }: StatementBlockProps) => {
-  const CodeBlock = codeBlocks[type].block;
-  return (
-    <CodeBlock
-      id={id}
-      blockProps={{ topSlot: false, bottomSlot: false }}
-    />
-  );
-};
-
 export default StatementList;
+
+type StatementBlockProps = VerticalBlockInfo;
+
+const StatementBlock: ComponentJSX<StatementBlockProps> = ({ id, type }) => {
+  const CodeBlock = codeBlocks[type].block;
+  return <CodeBlock id={id} />;
+};

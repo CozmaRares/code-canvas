@@ -1,14 +1,19 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { HardDriveDownload } from "lucide-react";
-import PythonConverter from "@/lib/PythonConverter";
+import PythonConverter from "@/lib/python-converter";
+import { ComponentJSX } from "@/lib/helper-types";
+import Interpreter from "@/lib/interpreter";
 
 type Props = {
   className?: string;
 };
 
-function download() {
-  //TODO: error handling
+async function download(): Promise<void> {
+  const isProgramCorrect = await new Interpreter().start();
+
+  if (!isProgramCorrect) return;
+
   const program = PythonConverter.program();
 
   const file = new File([program], "codeCanvas.py", {
@@ -27,7 +32,7 @@ function download() {
   window.URL.revokeObjectURL(url);
 }
 
-const DownloadButton = ({ className }: Props) => (
+const DownloadButton: ComponentJSX<Props> = ({ className }) => (
   <Button
     variant="outline"
     className={cn("flex items-center gap-3", className)}

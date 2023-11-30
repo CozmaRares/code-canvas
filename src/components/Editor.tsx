@@ -1,23 +1,14 @@
-import {
-  type Active,
-  useDndMonitor,
-  useDroppable,
-  type Over,
-} from "@dnd-kit/core";
+import { Active, useDndMonitor, useDroppable, Over } from "@dnd-kit/core";
 import { cn } from "@/lib/utils";
-import AnchorBlock from "@/components/blocks/utils/AnchorBlock";
-import {
-  type CodeBlockType,
-  CodeBlockInfo,
-  codeBlocks,
-} from "@/components/blocks/utils/code-block";
+import { CodeBlockType, codeBlocks, CodeBlockInfo } from "@/lib/code-block";
 import EmptyCodeBlock from "@/components/blocks/utils/EmptyBlock";
 import { useEffect, useState } from "react";
 import store from "@/lib/store";
 import { useToast } from "@/components/ui/use-toast";
 import DropArea from "./DropArea";
+import { ComponentJSX } from "@/lib/helper-types";
 
-const Editor = () => {
+const Editor: ComponentJSX<unknown> = () => {
   const [, setRender] = useState(false);
   const [active, setActive] = useState<Active | null>(null);
   const [over, setOver] = useState<Over | null>(null);
@@ -44,23 +35,20 @@ const Editor = () => {
     onDragEnd: () => {
       if (!active || !over) return;
 
-      const isSideBarButton = active.data.current?.isSideBarButton;
-      const isVertical = active.data.current?.orientation == "vertical";
       const isEditor = over.data.current?.isEditor;
 
-      // TODO: REFACTOR: delete isVertical, have store check that
+      // drop over editor
+      if (isEditor) {
+        const type = active.data.current!.type as CodeBlockType;
 
-      // vertical block from sidebar over editor
-      if (isEditor && isSideBarButton)
-        if (isVertical) {
-          const type = active.data.current!.type as CodeBlockType;
-          return store.addBlock(type);
-        } else
-          return toast({
-            title: "Editor error",
-            description: "Cannot drop horizontal blocks in Editor",
-            variant: "destructive",
-          });
+        return store.tryToAddBlock(type)
+          ? null
+          : toast({
+              title: "Editor error",
+              description: "Cannot drop horizontal blocks in Editor",
+              variant: "destructive",
+            });
+      }
 
       const isCodeBlock = over.data.current?.isCodeBlock;
       const isTopDrop = over.data.current?.isTopDrop;
@@ -68,56 +56,57 @@ const Editor = () => {
       const isRightDrop = over.data.current?.isRightDrop;
       const isInnerDrop = over.data.current?.isInnerDrop;
 
-      // block from sidebar above dropped block
-      if (isCodeBlock && isTopDrop && isVertical)
-        if (isVertical) {
-          const dropIdx = store.indexOf(over.data.current!.id);
-          const type = active.data.current!.type as CodeBlockType;
-          return store.addBlock(type, dropIdx);
-        } else
-          return toast({
-            title: "Editor error",
-            description: "Cannot drop horizontal blocks in Editor",
-            variant: "destructive",
-          });
+      // drop above block
+      if (isCodeBlock && isTopDrop) {
+        const dropIdx = store.indexOf(over.data.current!.id);
+        const type = active.data.current!.type as CodeBlockType;
+        return store.tryToAddBlock(type, dropIdx)
+          ? null
+          : toast({
+              title: "Editor error",
+              description: "Cannot drop horizontal blocks in Editor",
+              variant: "destructive",
+            });
+      }
 
-      // block from sidebar below dropped block
-      if (isCodeBlock && isBottomDrop)
-        if (isVertical) {
-          const dropIdx = store.indexOf(over.data.current!.id);
-          const type = active.data.current!.type as CodeBlockType;
-          return store.addBlock(type, dropIdx + 1);
-        } else
-          return toast({
-            title: "Editor error",
-            description: "Cannot drop horizontal blocks in Editor",
-            variant: "destructive",
-          });
+      // drop below block
+      if (isCodeBlock && isBottomDrop) {
+        const dropIdx = store.indexOf(over.data.current!.id);
+        const type = active.data.current!.type as CodeBlockType;
+        return store.tryToAddBlock(type, dropIdx + 1)
+          ? null
+          : toast({
+              title: "Editor error",
+              description: "Cannot drop horizontal blocks in Editor",
+              variant: "destructive",
+            });
+      }
 
-      // block from sidebar over block with children
+      // drop over block with expression
       if (isCodeBlock && isRightDrop) {
         const type = active.data.current!.type as CodeBlockType;
         const parentID = over.data.current!.id as string;
-
-        if (store.addChild(parentID, type) == false)
-          return toast({
-            title: "Editor erorr",
-            description: "Could not add child",
-            variant: "destructive",
-          });
+        return store.tryToAddToExpression(parentID, type)
+          ? null
+          : toast({
+              title: "Editor erorr",
+              description: "Could not add child",
+              variant: "destructive",
+            });
       }
 
-      // block from sidebar over block with statements
+      // drop over block with statements
       if (isCodeBlock && isInnerDrop) {
         const type = active.data.current!.type as CodeBlockType;
         const parentID = over.data.current!.id as string;
 
-        if (store.addStatement(parentID, type) == false)
-          return toast({
-            title: "Editor erorr",
-            description: "Could not add statement",
-            variant: "destructive",
-          });
+        return store.tryToAddStatement(parentID, type)
+          ? null
+          : toast({
+              title: "Editor erorr",
+              description: "Could not add statement",
+              variant: "destructive",
+            });
       }
     },
   });
@@ -126,11 +115,10 @@ const Editor = () => {
     <ul
       ref={droppable.setNodeRef}
       className={cn(
-        "relative h-fit min-h-full min-w-[350px] rounded-md bg-background p-4 pb-8 [--shadow-col:#02061780] [box-shadow:_0px_0px_20px_10px_var(--shadow-col)] dark:[--shadow-col:#f8fafc3d]",
+        "relative h-fit min-h-full min-w-[350px] space-y-2 rounded-md bg-background p-4 pb-8 [--shadow-col:#02061780] [box-shadow:_0px_0px_20px_10px_var(--shadow-col)] dark:[--shadow-col:#f8fafc3d]",
         droppable.isOver && "ring-2 ring-primary/40",
       )}
     >
-      <AnchorBlock text="Main Program" />
       {!droppable.isOver && store.blocks.length === 0 && (
         <p className="absolute left-0 right-0 top-1/2 mt-12 -translate-y-1/2 text-center text-xl text-muted-foreground">
           Drop here
@@ -143,19 +131,17 @@ const Editor = () => {
           type={block.type}
         />
       ))}
-      {droppable.isOver && active?.data.current?.orientation == "vertical" && (
-        <EmptyCodeBlock />
-      )}
+      {droppable.isOver && <EmptyCodeBlock />}
     </ul>
   );
 };
 
 export default Editor;
 
-// TODO: refactor code blocks, remove puzzle pieces
-
-const CodeBlockWrapper = ({ id, type }: CodeBlockInfo) => {
+const CodeBlockWrapper: ComponentJSX<CodeBlockInfo> = ({ id, type }) => {
   const CodeBlock = codeBlocks[type].block;
+
+  // TODO: make dropareas lines
 
   return (
     <div className="relative w-fit">

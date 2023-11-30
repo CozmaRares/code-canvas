@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ComponentJSX } from "@/lib/helper-types";
 
 type Theme = "light" | "dark";
 
@@ -8,10 +9,10 @@ type Props = {
   className?: string;
 };
 
-const ThemeSwitch = ({ className }: Props) => {
+const ThemeSwitch: ComponentJSX<Props> = ({ className }) => {
   const [theme, setTheme] = useState<Theme>("light");
 
-  const toggleTheme = () => {
+  const toggleTheme = (): void => {
     if (theme === "light") {
       setTheme("dark");
       window.localStorage.setItem("theme", "dark");

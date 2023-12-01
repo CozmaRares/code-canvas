@@ -1,15 +1,22 @@
 import SideBarButton from "@/components/SideBarButton";
 import { CodeBlockType } from "@/lib/code-block";
 import { ComponentJSX } from "@/lib/helper-types";
+import { ifBlockType } from "@/lib/models/if-model";
+import { numberBlockType } from "@/lib/models/number-model";
+import { operatorBlockType } from "@/lib/models/operator-model";
+import { printBlockType } from "@/lib/models/print-model";
+import { variableAssignBlockType } from "@/lib/models/variable-assignment-model";
+import { variableNameBlockType } from "@/lib/models/variable-name-model";
+import { whileBlockType } from "@/lib/models/while-model";
 
 const items: CodeBlockType[] = [
-  "variable assign",
-  "if",
-  "while",
-  "print",
-  "variable name",
-  "operator",
-  "number",
+  variableAssignBlockType,
+  ifBlockType,
+  whileBlockType,
+  printBlockType,
+  variableNameBlockType,
+  operatorBlockType,
+  numberBlockType,
 ];
 
 const SideBar: ComponentJSX<unknown> = () => (

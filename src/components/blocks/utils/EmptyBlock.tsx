@@ -4,6 +4,7 @@ import CodeBlock from "./CodeBlock";
 
 const EmptyCodeBlock: ComponentJSX<unknown> = () => (
   <CodeBlock
+    id=""
     bg={emptyBlockColor}
     className="h-[60px]"
   ></CodeBlock>

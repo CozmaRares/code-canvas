@@ -1,12 +1,6 @@
-import VariableAssignBlock, {
-  VariableAssignBlockModel,
-  variableAssignBlockType,
-} from "@/components/blocks/VariableAssignBlock";
-import VariableNameBlock, {
-  VariableNameBlockModel,
-  variableNameBlockType,
-} from "@/components/blocks/VariableNameBlock";
-import type { CodeBlockPreviewProps } from "@/components/blocks/CodeBlockPreview";
+import VariableAssignBlock from "@/components/blocks/VariableAssignBlock";
+import VariableNameBlock from "@/components/blocks/VariableNameBlock";
+import { CodeBlockPreviewProps } from "@/components/blocks/CodeBlockPreview";
 import {
   ifBlockColor,
   numberBlockColor,
@@ -16,62 +10,32 @@ import {
   variableNameBlockColor,
   whileBlockColor,
 } from "@/components/blocks/utils/colors";
-import NumberBlock, {
-  NumberBlockModel,
-  numberBlockType,
-} from "@/components/blocks/NumberBlock";
-import OperatorBlock, {
-  OperatorBlockModel,
-  operatorBlockType,
-} from "@/components/blocks/OperatorBlock";
-import IfBlock, {
-  IfBlockModel,
-  ifBlockType,
-} from "@/components/blocks/IfBlock";
-import WhileBlock, {
-  WhileBlockModel,
-  whileBlockType,
-} from "@/components/blocks/WhileBlock";
-import PrintBlock, {
-  PrintBlockModel,
-  printBlockType,
-} from "@/components/blocks/PrintBlock";
+import NumberBlock from "@/components/blocks/NumberBlock";
+import OperatorBlock from "@/components/blocks/OperatorBlock";
+import IfBlock from "@/components/blocks/IfBlock";
+import WhileBlock from "@/components/blocks/WhileBlock";
+import PrintBlock from "@/components/blocks/PrintBlock";
 import { ComponentJSX } from "./helper-types";
+import { Model } from "./code-block-models";
+import {
+  VariableAssignBlockModel,
+  variableAssignBlockType,
+} from "./models/variable-assignment-model";
+import {
+  VariableNameBlockModel,
+  variableNameBlockType,
+} from "./models/variable-name-model";
+import { NumberBlockModel, numberBlockType } from "./models/number-model";
+import { OperatorBlockModel, operatorBlockType } from "./models/operator-model";
+import { IfBlockModel, ifBlockType } from "./models/if-model";
+import { WhileBlockModel, whileBlockType } from "./models/while-model";
+import { PrintBlockModel, printBlockType } from "./models/print-model";
 
 export type CodeBlockComponent = ComponentJSX<{
   id: string;
 }>;
 
-export interface GenericCodeBlockModel<T> {
-  id: string;
-  type: string;
-  props: T;
-}
-
-export interface GenericCodeBlockModelWithExpression<T>
-  extends GenericCodeBlockModel<T> {
-  children: Array<HorizontalBlockInfo>;
-  maxChildrenLength: number;
-  childrenTypes: Readonly<CodeBlockType[]>;
-}
-
-export interface GenericCodeBlockModelWithStatements<T>
-  extends GenericCodeBlockModelWithExpression<T> {
-  statements: Array<VerticalBlockInfo>;
-}
-
-export type Model =
-  | typeof VariableAssignBlockModel
-  | typeof VariableNameBlockModel
-  | typeof NumberBlockModel
-  | typeof OperatorBlockModel
-  | typeof IfBlockModel
-  | typeof WhileBlockModel
-  | typeof PrintBlockModel;
-
 export type BlockOrientation = "vertical" | "horizontal";
-
-export type ConcreteModel = Model["prototype"];
 
 export const codeBlocks = Object.freeze({
   [variableAssignBlockType]: {

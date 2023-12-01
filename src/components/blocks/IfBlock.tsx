@@ -1,44 +1,15 @@
 import { ifBlockColor } from "./utils/colors";
 import CodeBlock from "@/components/blocks/utils/CodeBlock";
-import {
-  GenericCodeBlockModelWithStatements,
-  CodeBlockInfoGeneric,
-  VerticalBlockInfo,
-  CodeBlockComponent,
-} from "@/lib/code-block";
+import { CodeBlockComponent } from "@/lib/code-block";
 import store from "@/lib/store";
-import { variableNameBlockType } from "./VariableNameBlock";
 import StatementList from "./utils/StatementList";
 import DropArea from "../DropArea";
 import Expression from "./utils/Expression";
-
-export const ifBlockType = "if" as const;
-export type IfBlockProps = Record<string, unknown>;
-
-type ChildrenTypes = typeof variableNameBlockType;
-
-export class IfBlockModel
-  implements GenericCodeBlockModelWithStatements<IfBlockProps>
-{
-  id: string;
-  type = ifBlockType;
-  props: IfBlockProps;
-  childrenTypes = Object.freeze([
-    variableNameBlockType,
-  ] satisfies ChildrenTypes[]);
-  children: Array<CodeBlockInfoGeneric<ChildrenTypes>> = [];
-  maxChildrenLength = 1;
-  statements: Array<VerticalBlockInfo> = [];
-
-  constructor(id: string) {
-    this.id = id;
-    this.props = {};
-  }
-}
+import { IfBlockModel, ifBlockType } from "@/lib/models/if-model";
 
 const IfBlock: CodeBlockComponent = ({ id }) => {
   const model = store.getModel(id) as IfBlockModel;
-  const children = model.children;
+  const expressionList = model.expressionList;
   const statements = model.statements;
 
   return (
@@ -52,15 +23,16 @@ const IfBlock: CodeBlockComponent = ({ id }) => {
             isCodeBlock: true,
             isRightDrop: true,
           }}
-          className="bottom-0 right-0 top-0 w-4 rounded-r-lg"
+          className="-right-2 bottom-0 top-0 w-2 rounded-lg"
         />
         <CodeBlock
+          id={id}
           bg={ifBlockColor}
           className="min-w-fit pr-8"
         >
           if
         </CodeBlock>
-        <Expression list={children} />
+        <Expression list={expressionList} />
       </div>
       <div
         className="bg-block col-span-1 -my-4 w-[15px]"
@@ -70,7 +42,8 @@ const IfBlock: CodeBlockComponent = ({ id }) => {
             "--bg-dark": ifBlockColor.dark,
           } as React.CSSProperties
         }
-      >
+      />
+      <div className="relative min-h-[60px] w-full">
         <DropArea
           id={`${id}-inner`}
           data={{
@@ -79,15 +52,19 @@ const IfBlock: CodeBlockComponent = ({ id }) => {
             isCodeBlock: true,
             isInnerDrop: true,
           }}
-          className="inset-0 w-4 rounded-lg"
+          className="-left-2 bottom-0 top-0 w-2 rounded-lg"
         />
-      </div>
-      <div className="relative min-h-[60px] w-full">
         <StatementList statements={statements} />
       </div>
-      <div className="col-span-full">
-        <CodeBlock bg={ifBlockColor}></CodeBlock>
-      </div>
+      <div
+        className="bg-block col-span-full h-[32px] w-[150px] rounded-lg"
+        style={
+          {
+            "--bg-light": ifBlockColor.light,
+            "--bg-dark": ifBlockColor.dark,
+          } as React.CSSProperties
+        }
+      />
     </div>
   );
 };

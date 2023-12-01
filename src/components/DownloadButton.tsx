@@ -1,22 +1,29 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { HardDriveDownload } from "lucide-react";
-import PythonConverter from "@/lib/python-converter";
 import { ComponentJSX } from "@/lib/helper-types";
 import Interpreter from "@/lib/interpreter";
+import { toast } from "./ui/use-toast";
+import PythonConverter from "@/lib/python-converter";
 
 type Props = {
   className?: string;
 };
 
-async function download(): Promise<void> {
+async function download(): Promise<void | ReturnType<typeof toast>> {
   const isProgramCorrect = await new Interpreter().start();
 
-  if (!isProgramCorrect) return;
+  if (!isProgramCorrect)
+    return toast({
+      title: "Syntax error",
+      description:
+        "The code contains errors. Run the code in the interpreter to see the errors.",
+      variant: "destructive",
+    });
 
   const program = PythonConverter.program();
 
-  const file = new File([program], "codeCanvas.py", {
+  const file = new File([program.join("\n")], "codeCanvas.py", {
     type: "text/plain",
   });
 
@@ -32,15 +39,17 @@ async function download(): Promise<void> {
   window.URL.revokeObjectURL(url);
 }
 
-const DownloadButton: ComponentJSX<Props> = ({ className }) => (
-  <Button
-    variant="outline"
-    className={cn("flex items-center gap-3", className)}
-    onClick={download}
-  >
-    Download Code
-    <HardDriveDownload className="scale-[0.8]" />
-  </Button>
-);
+const DownloadButton: ComponentJSX<Props> = ({ className }) => {
+  return (
+    <Button
+      variant="outline"
+      className={cn("flex items-center gap-3", className)}
+      onClick={download}
+    >
+      Download Code
+      <HardDriveDownload className="scale-[0.8]" />
+    </Button>
+  );
+};
 
 export default DownloadButton;

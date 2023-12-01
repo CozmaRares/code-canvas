@@ -23,7 +23,6 @@ const DragOverlayWrapper: ComponentJSX<unknown> = () => {
   const isSideBarButton = draggedItem?.data.current?.isSideBarButton;
 
   if (isSideBarButton) {
-    console.log("mata");
     const type = draggedItem.data.current!.type as CodeBlockType;
     node = (
       <div className="z-10 cursor-grabbing opacity-50">

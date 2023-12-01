@@ -17,15 +17,11 @@ const CodeBlockPreview: ComponentJSX<CodeBlockPreviewProps> = ({
   let top = false;
   let bottom = false;
   let left = false;
-  let right = false;
 
   if (orientation == "vertical") {
     top = true;
     bottom = true;
-  } else {
-    left = true;
-    right = true;
-  }
+  } else left = true;
 
   return (
     <div
@@ -53,19 +49,13 @@ const CodeBlockPreview: ComponentJSX<CodeBlockPreviewProps> = ({
         <div className="col-start-2 row-span-full row-start-2" />
         <div className="col-start-3 row-span-full" />
         <div className="col-start-4 row-span-2 row-start-1" />
-        {!right && <div className="col-start-4 row-start-3" />}
         <div className="col-start-4 row-span-2 row-start-4" />
         {bottom && <div className="absolute left-3 top-full h-3 w-6" />}
         {left && (
           <div className="absolute right-full top-1/2 h-6 w-3 -translate-y-1/2" />
         )}
       </div>
-      <div
-        className={
-          "z-[1] flex flex-row items-center gap-2 whitespace-nowrap p-4" +
-          (right ? " mr-3" : "")
-        }
-      >
+      <div className="z-[1] flex flex-row items-center gap-2 whitespace-nowrap p-4">
         {text}
       </div>
     </div>

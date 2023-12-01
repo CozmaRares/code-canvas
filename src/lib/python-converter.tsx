@@ -1,29 +1,48 @@
-import { VariableAssignBlockModel } from "@/components/blocks/VariableAssignBlock";
-import { NumberBlockModel } from "@/components/blocks/NumberBlock";
-import { VariableNameBlockModel } from "@/components/blocks/VariableNameBlock";
-import { OperatorBlockModel } from "@/components/blocks/OperatorBlock";
 import store from "@/lib/store";
+import { NumberBlockModel, numberBlockType } from "./models/number-model";
+import {
+  VariableNameBlockModel,
+  variableNameBlockType,
+} from "./models/variable-name-model";
+import { OperatorBlockModel, operatorBlockType } from "./models/operator-model";
+import {
+  VariableAssignBlockModel,
+  variableAssignBlockType,
+} from "./models/variable-assignment-model";
+import { WhileBlockModel, whileBlockType } from "./models/while-model";
+import { IfBlockModel, ifBlockType } from "./models/if-model";
+import { PrintBlockModel, printBlockType } from "./models/print-model";
+import { VerticalBlockInfo } from "./code-block";
+
+function addIndent(str: string, indent: number): string {
+  return str.padStart(indent * 4 + str.length, " ");
+}
 
 export default class PythonConverter {
-  static program(): string {
-    return store.blocks
-      .map(({ type, id }) => {
-        switch (type) {
-          case "variable assign":
-            return PythonConverter.assignment(id);
-          case "if":
-            return PythonConverter.if(id);
-          case "while":
-            return PythonConverter.while(id);
-          case "print":
-            return PythonConverter.print(id);
+  private static statements(
+    statements: VerticalBlockInfo[],
+    indent = 0,
+  ): string[] {
+    return statements
+      .map(({ id }) => store.getModel(id))
+      .flatMap(model => {
+        switch (model.type) {
+          case variableAssignBlockType:
+            return PythonConverter.assignment(model, indent);
+          case ifBlockType:
+            return PythonConverter.if(model, indent);
+          case whileBlockType:
+            return PythonConverter.while(model, indent);
+          case printBlockType:
+            return PythonConverter.print(model, indent);
           default:
-            throw new Error(
-              "UNREACHABLE CODE IN PythonConverter.toPython.program()",
-            );
+            throw new Error("UNREACHABLE CODE IN PythonConverter.program()");
         }
-      })
-      .join("\n");
+      });
+  }
+
+  static program(): string[] {
+    return this.statements(store.blocks, 0);
   }
 
   static number(model: NumberBlockModel): string {
@@ -38,39 +57,69 @@ export default class PythonConverter {
     return model.props.operator;
   }
 
-  static assignment(id: string): string {
-    const model = store.getModel(id) as VariableAssignBlockModel;
-    const output = [`${model.props.variable} =`];
+  static assignment(model: VariableAssignBlockModel, indent = 0): string[] {
+    const output = [`${model.props.variable} = int(`];
 
-    model.children.forEach(child => {
-      const childModel = store.getModel(child.id);
+    model.expressionList.forEach(expr => {
+      const exprModel = store.getModel(expr.id);
 
-      switch (childModel.type) {
-        case "number":
-          output.push(PythonConverter.number(childModel));
+      switch (exprModel.type) {
+        case numberBlockType:
+          output.push(PythonConverter.number(exprModel));
           break;
-        case "operator":
-          output.push(PythonConverter.operator(childModel));
+        case operatorBlockType:
+          output.push(PythonConverter.operator(exprModel));
           break;
-        case "variable name":
-          output.push(PythonConverter.variableName(childModel));
+        case variableNameBlockType:
+          output.push(PythonConverter.variableName(exprModel));
           break;
       }
     });
 
-    return output.join(" ");
+    output.push(")");
+    return [addIndent(output.join(" "), indent)];
   }
 
-  // TODO:
-  static if(id: string): string {
-    return "if";
+  static if(model: IfBlockModel, indent = 0): string[] {
+    const variableModel = store.getModel(
+      model.expressionList[0].id,
+    ) as VariableNameBlockModel;
+
+    return [
+      addIndent(
+        `if ${PythonConverter.variableName(variableModel)} != 0 :`,
+        indent,
+      ),
+      ...this.statements(model.statements, indent + 1),
+    ];
   }
 
-  static while(id: string): string {
-    return "while";
+  static while(model: WhileBlockModel, indent = 0): string[] {
+    const variableModel = store.getModel(
+      model.expressionList[0].id,
+    ) as VariableNameBlockModel;
+
+    return [
+      addIndent(
+        `while ${PythonConverter.variableName(variableModel)} != 0 :`,
+        indent,
+      ),
+      ...this.statements(model.statements, indent + 1),
+    ];
   }
 
-  static print(id: string): string {
-    return "print";
+  static print(model: PrintBlockModel, indent = 0): string[] {
+    const variableModel = store.getModel(
+      model.expressionList[0].id,
+    ) as VariableNameBlockModel;
+
+    const variableName = PythonConverter.variableName(variableModel);
+
+    return [
+      addIndent(
+        `print("Value of '${variableName}' is", ${variableName})`,
+        indent,
+      ),
+    ];
   }
 }

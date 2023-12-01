@@ -17,7 +17,7 @@ const DropArea: ComponentJSX<Props> = ({ id, data, className }) => {
       className={cn(
         "absolute z-10",
         className,
-        droppable.isOver && "bg-black/30 dark:bg-white/30",
+        droppable.isOver && "bg-black/50 dark:bg-white/50",
       )}
     />
   );

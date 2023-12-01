@@ -66,12 +66,12 @@ type RowProps = {
 };
 
 const Row: ComponentJSX<RowProps> = ({ line, type, text }) => (
-  <div className={cn("contents", type == "err" && "font-bold text-red-600")}>
+  <div className="contents">
     {type != "err" && (
       <>
         {type == "in" ? (
           <>
-            <span className="mr-3 border-r border-black py-1 pr-2 opacity-60 dark:border-white">
+            <span className="mr-3 border-r border-black py-1 pr-2 text-right opacity-60 dark:border-white">
               {line}
             </span>
             <span className="mr-3 font-bold text-sky-400">{">"}</span>
@@ -91,7 +91,13 @@ const Row: ComponentJSX<RowProps> = ({ line, type, text }) => (
         )}
       </>
     )}
-    <span>{text}</span>
+    <span
+      className={cn(
+        type == "err" && "col-span-full mt-2 font-bold text-red-600",
+      )}
+    >
+      {type != "err" ? <pre>{text}</pre> : text}
+    </span>
   </div>
 );
 

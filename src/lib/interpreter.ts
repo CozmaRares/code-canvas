@@ -1,14 +1,20 @@
-import { VariableAssignBlockModel } from "@/components/blocks/VariableAssignBlock";
 import store from "./store";
-import { NumberBlockModel } from "@/components/blocks/NumberBlock";
-import { VariableNameBlockModel } from "@/components/blocks/VariableNameBlock";
 import { SUPPORTED_OPERATORS, VerticalBlockInfo } from "./code-block";
-import PythonConverter from "./python-converter";
-import { IfBlockModel } from "@/components/blocks/IfBlock";
-import { WhileBlockModel } from "@/components/blocks/WhileBlock";
 import { ConsoleText } from "@/context/console";
-import { OperatorBlockModel } from "@/components/blocks/OperatorBlock";
-import { PrintBlockModel } from "@/components/blocks/PrintBlock";
+import { NumberBlockModel, numberBlockType } from "./models/number-model";
+import {
+  VariableNameBlockModel,
+  variableNameBlockType,
+} from "./models/variable-name-model";
+import {
+  VariableAssignBlockModel,
+  variableAssignBlockType,
+} from "./models/variable-assignment-model";
+import { OperatorBlockModel } from "./models/operator-model";
+import { IfBlockModel, ifBlockType } from "./models/if-model";
+import { WhileBlockModel, whileBlockType } from "./models/while-model";
+import { PrintBlockModel, printBlockType } from "./models/print-model";
+import PythonConverter from "./python-converter";
 
 type Operator = (typeof SUPPORTED_OPERATORS)[number];
 
@@ -58,6 +64,7 @@ type InterpreterResult =
 export default class Interpreter {
   private variables: VariableMap = new Map();
   private addConsoleText: (consoleText: ConsoleText) => void = () => {};
+  private printQueue: ConsoleText[] = [];
 
   private runStatements(
     statements: VerticalBlockInfo[],
@@ -67,16 +74,16 @@ export default class Interpreter {
       let result: string;
 
       switch (statement.type) {
-        case "variable assign":
+        case variableAssignBlockType:
           result = this.handleVariableAssign(statement.id, firstLevel);
           break;
-        case "if":
+        case ifBlockType:
           result = this.handleIfStatement(statement.id, firstLevel);
           break;
-        case "while":
+        case whileBlockType:
           result = this.handleWhileStatement(statement.id, firstLevel);
           break;
-        case "print":
+        case printBlockType:
           result = this.handlePrintStatement(statement.id, firstLevel);
           break;
         default:
@@ -97,6 +104,7 @@ export default class Interpreter {
   ): Promise<boolean> {
     this.addConsoleText = addConsoleText;
     this.variables = new Map();
+    this.printQueue = [];
 
     const result = this.runStatements(store.blocks, true);
 
@@ -125,24 +133,24 @@ export default class Interpreter {
   }
 
   private parseExpression(model: VariableAssignBlockModel): InterpreterResult {
-    if (model.children.length < 1)
+    if (model.expressionList.length < 1)
       return { error: "Error: Could not compute value." };
 
     const getValue = (
       model: NumberBlockModel | VariableNameBlockModel | OperatorBlockModel,
     ): InterpreterResult =>
-      model.type == "number"
+      model.type == numberBlockType
         ? this.getNumber(model)
-        : model.type == "variable name"
+        : model.type == variableNameBlockType
         ? this.getVariableValue(model as VariableNameBlockModel)
         : {
             error: "Error: Assignment must begin with a number of variable.",
           };
 
-    const children = model.children.map(child =>
+    const expressionList = model.expressionList.map(child =>
       store.getModel(child.id),
     ) as Array<NumberBlockModel | VariableNameBlockModel | OperatorBlockModel>;
-    const firstChild = children.shift()!;
+    const firstChild = expressionList.shift()!;
     let result = getValue(firstChild);
 
     if (result.error !== undefined) return { error: result.error };
@@ -151,12 +159,12 @@ export default class Interpreter {
 
     let operator: Operator | null = null;
 
-    for (const child of children) {
+    for (const expr of expressionList) {
       if (operator == null)
-        if (child.type != "operator")
+        if (expr.type != "operator")
           return { error: "Error: Was expecting an operator." };
         else {
-          operator = child.props.operator as Operator;
+          operator = expr.props.operator as Operator;
 
           if (!SUPPORTED_OPERATORS.includes(operator))
             return {
@@ -166,7 +174,7 @@ export default class Interpreter {
           continue;
         }
       else {
-        result = getValue(child);
+        result = getValue(expr);
         if (result.error !== undefined) return { error: result.error };
 
         value = executeOperation(value, result.value, operator);
@@ -191,7 +199,7 @@ export default class Interpreter {
     if (firstLevel)
       this.addConsoleText({
         type: "in",
-        text: PythonConverter.assignment(id),
+        text: PythonConverter.assignment(model).join(""),
       });
 
     this.variables.set(variable, value);
@@ -201,10 +209,10 @@ export default class Interpreter {
 
   private handleIfStatement(id: string, firstLevel: boolean): string {
     const model = store.getModel(id) as IfBlockModel;
-    if (model.children.length < 1)
+    if (model.expressionList.length < 1)
       return "Error: Expected to check a variable's value.";
 
-    const variable = model.children[0];
+    const variable = model.expressionList[0];
     const result = this.getVariableValue(
       store.getModel(variable.id) as VariableNameBlockModel,
     );
@@ -215,21 +223,27 @@ export default class Interpreter {
     if (result.value != 0)
       statementsResult = this.runStatements(model.statements);
 
-    if (firstLevel && statementsResult == "")
-      this.addConsoleText({
-        type: "in",
-        text: PythonConverter.if(id),
-      });
+    if (firstLevel && statementsResult == "") {
+      PythonConverter.if(model).forEach(line =>
+        this.addConsoleText({
+          type: "in",
+          text: line,
+        }),
+      );
+
+      this.printQueue.forEach(print => this.addConsoleText(print));
+      this.printQueue = [];
+    }
 
     return statementsResult;
   }
 
   private handleWhileStatement(id: string, firstLevel: boolean): string {
     const model = store.getModel(id) as WhileBlockModel;
-    if (model.children.length < 1)
+    if (model.expressionList.length < 1)
       return "Error: Expected to check a variable's value.";
 
-    const variable = model.children[0];
+    const variable = model.expressionList[0];
 
     while (true) {
       const result = this.getVariableValue(
@@ -244,34 +258,44 @@ export default class Interpreter {
       if (statementsResult != "") return statementsResult;
     }
 
-    if (firstLevel)
-      this.addConsoleText({
-        type: "in",
-        text: PythonConverter.while(id),
-      });
+    if (firstLevel) {
+      PythonConverter.while(model).forEach(line =>
+        this.addConsoleText({
+          type: "in",
+          text: line,
+        }),
+      );
+
+      this.printQueue.forEach(print => this.addConsoleText(print));
+      this.printQueue = [];
+    }
 
     return "";
   }
 
   private handlePrintStatement(id: string, firstLevel: boolean): string {
     const model = store.getModel(id) as PrintBlockModel;
-    if (model.children.length < 1)
+    if (model.expressionList.length < 1)
       return "Error: Expected to print a variable's value.";
 
-    const variable = model.children[0];
+    const variable = model.expressionList[0];
     const variableModel = store.getModel(variable.id) as VariableNameBlockModel;
     const result = this.getVariableValue(variableModel);
     if (result.error !== undefined) return result.error;
 
-    this.addConsoleText({
-      type: "out",
-      text: `Value of '${variableModel.props.variable}' is ${result.value}`,
-    });
-
-    if (firstLevel)
+    if (firstLevel) {
       this.addConsoleText({
         type: "in",
-        text: PythonConverter.print(id),
+        text: PythonConverter.print(model).join(""),
+      });
+      this.addConsoleText({
+        type: "out",
+        text: `Value of '${variableModel.props.variable}' is ${result.value}`,
+      });
+    } else
+      this.printQueue.push({
+        type: "out",
+        text: `Value of '${variableModel.props.variable}' is ${result.value}`,
       });
 
     return "";

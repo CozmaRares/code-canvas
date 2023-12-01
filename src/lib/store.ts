@@ -1,17 +1,20 @@
 import {
   type CodeBlockType,
   codeBlocks,
-  ConcreteModel,
-  GenericCodeBlockModelWithStatements,
   VerticalBlockType,
   VerticalBlockInfo,
-  GenericCodeBlockModelWithExpression,
   HorizontalBlockType,
 } from "./code-block";
 import { nanoid } from "nanoid/non-secure";
+import {
+  ConcreteModel,
+  GenericCodeBlockModelWithExpression,
+  GenericCodeBlockModelWithStatements,
+} from "./code-block-models";
 
 class Store {
   blockMap: Map<string, ConcreteModel> = new Map();
+  blockBackLinks: Map<string, string> = new Map();
   blocks: VerticalBlockInfo[] = [];
   rerender: () => void = () => {};
 
@@ -32,6 +35,7 @@ class Store {
       id: newBlockID,
       type,
     });
+
     this.rerender();
   }
 
@@ -50,6 +54,7 @@ class Store {
     const oldProps = block.props;
     block.props = { ...oldProps, ...props };
     this.blockMap.set(id, block);
+
     this.rerender();
   }
 
@@ -61,8 +66,11 @@ class Store {
     parentModel: GenericCodeBlockModelWithExpression<unknown>,
     type: HorizontalBlockType,
   ): void {
-    const childBlockID = this.createBlock(type);
-    parentModel.children.push({ id: childBlockID, type });
+    const exprBlockID = this.createBlock(type);
+    parentModel.expressionList.push({ id: exprBlockID, type });
+    this.blockBackLinks.set(exprBlockID, parentModel.id);
+
+    this.rerender();
   }
 
   tryToAddToExpression(parentID: string, type: CodeBlockType): boolean {
@@ -72,8 +80,8 @@ class Store {
       parentID,
     ) as GenericCodeBlockModelWithExpression<unknown>;
 
-    if (parentModel.childrenTypes.indexOf(type) == -1) return false;
-    if (parentModel.children.length >= parentModel.maxChildrenLength)
+    if (parentModel.expressionAccpetedTypes.indexOf(type) == -1) return false;
+    if (parentModel.expressionList.length >= parentModel.maxExpressionLength)
       return false;
 
     this.addToExpression(parentModel, type);
@@ -85,15 +93,56 @@ class Store {
       parentID,
     ) as GenericCodeBlockModelWithStatements<unknown>;
 
-    const childBlockID = this.createBlock(type);
+    const ststementBlockID = this.createBlock(type);
 
-    parentModel.statements.push({ id: childBlockID, type });
+    parentModel.statements.push({ id: ststementBlockID, type });
+    this.blockBackLinks.set(ststementBlockID, parentModel.id);
+
+    this.rerender();
   }
 
   tryToAddStatement(parentID: string, type: CodeBlockType): boolean {
     if (!this.isVerticalBlockType(type)) return false;
     this.addStatement(parentID, type);
     return true;
+  }
+
+  deleteBlock(id: string, firstLevel = false): void {
+    const model = this.getModel(id);
+
+    // delete expression
+    if ("expressionList" in model)
+      model.expressionList.forEach(expr => store.deleteBlock(expr.id));
+
+    // delete statements
+    if ("statements" in model)
+      model.statements.forEach(expr => store.deleteBlock(expr.id));
+
+    // delete from parent
+    const parentID = this.blockBackLinks.get(id);
+    if (parentID != undefined) {
+      const parentModel = this.getModel(parentID);
+
+      if ("expressionList" in parentModel)
+        parentModel.expressionList = parentModel.expressionList.filter(
+          ({ id: objID }) => objID !== id,
+        );
+
+      if ("statements" in parentModel)
+        parentModel.statements = parentModel.statements.filter(
+          ({ id: objID }) => objID !== id,
+        );
+
+      this.blockBackLinks.delete(id);
+    }
+
+    // delete from map
+    this.blockMap.delete(id);
+
+    // delete from arr
+    this.blocks = this.blocks.filter(({ id: objID }) => objID !== id);
+
+    if (firstLevel) this.rerender();
   }
 }
 

@@ -1,46 +1,15 @@
 import { whileBlockColor } from "./utils/colors";
 import CodeBlock from "@/components/blocks/utils/CodeBlock";
-import {
-  CodeBlockComponent,
-  GenericCodeBlockModelWithStatements,
-  VerticalBlockInfo,
-} from "@/lib/code-block";
+import { CodeBlockComponent } from "@/lib/code-block";
 import store from "@/lib/store";
-import { variableNameBlockType } from "./VariableNameBlock";
 import StatementList from "./utils/StatementList";
 import DropArea from "../DropArea";
 import Expression from "./utils/Expression";
-
-export const whileBlockType = "while" as const;
-export type WhileBlockProps = Record<string, unknown>;
-
-type ChildrenTypes = typeof variableNameBlockType;
-
-export class WhileBlockModel
-  implements GenericCodeBlockModelWithStatements<WhileBlockProps>
-{
-  id: string;
-  type = whileBlockType;
-  props: WhileBlockProps;
-  childrenTypes = Object.freeze([
-    variableNameBlockType,
-  ] satisfies ChildrenTypes[]);
-  children: Array<{
-    id: string;
-    type: ChildrenTypes;
-  }> = [];
-  maxChildrenLength = 1;
-  statements: Array<VerticalBlockInfo> = [];
-
-  constructor(id: string) {
-    this.id = id;
-    this.props = {};
-  }
-}
+import { WhileBlockModel, whileBlockType } from "@/lib/models/while-model";
 
 const WhileBlock: CodeBlockComponent = ({ id }) => {
   const model = store.getModel(id) as WhileBlockModel;
-  const children = model.children;
+  const expressionList = model.expressionList;
   const statements = model.statements;
 
   return (
@@ -54,15 +23,16 @@ const WhileBlock: CodeBlockComponent = ({ id }) => {
             isCodeBlock: true,
             isRightDrop: true,
           }}
-          className="bottom-0 right-0 top-0 w-4 rounded-r-lg"
+          className="-right-2 bottom-0 top-0 w-2 rounded-lg"
         />
         <CodeBlock
+          id={id}
           bg={whileBlockColor}
           className="min-w-fit pr-8"
         >
           while
         </CodeBlock>
-        <Expression list={children} />
+        <Expression list={expressionList} />
       </div>
       <div
         className="bg-block col-span-1 -my-4 w-[15px]"
@@ -72,7 +42,8 @@ const WhileBlock: CodeBlockComponent = ({ id }) => {
             "--bg-dark": whileBlockColor.dark,
           } as React.CSSProperties
         }
-      >
+      />
+      <div className="relative min-h-[60px]">
         <DropArea
           id={`${id}-inner`}
           data={{
@@ -81,15 +52,19 @@ const WhileBlock: CodeBlockComponent = ({ id }) => {
             isCodeBlock: true,
             isInnerDrop: true,
           }}
-          className="inset-0 w-4 rounded-lg"
+          className="-left-2 bottom-0 top-0 w-2 rounded-lg"
         />
-      </div>
-      <div className="relative min-h-[60px]">
         <StatementList statements={statements} />
       </div>
-      <div className="col-span-full">
-        <CodeBlock bg={whileBlockColor}></CodeBlock>
-      </div>
+      <div
+        className="bg-block col-span-full h-[32px] w-[150px] rounded-lg"
+        style={
+          {
+            "--bg-light": whileBlockColor.light,
+            "--bg-dark": whileBlockColor.dark,
+          } as React.CSSProperties
+        }
+      />
     </div>
   );
 };

@@ -76,7 +76,7 @@ dictated the architecture and functionality of the visual coding environment.
 
 #### 2.1.1. TypeScript
 
-_TypeScript_, a superset of _JavaScript_, was chosen as the primary programming
+_TypeScript_, a superset of JavaScript, was chosen as the primary programming
 language. Its static typing apabilities provide enhanced code quality and
 improved developer productivity. The strong type-checking helps catch errors
 during development, ensuring a robust and maintainable codebase.
@@ -145,7 +145,54 @@ of the application's behavior in a simulated user environment.
 
 ### 5.1. Prerequisites
 
+- nodejs
+
+  Debian/Ubuntu:
+
+  ```sh
+  sudo apt install nodejs
+  ```
+
+- npm
+
+  Debian/Ubuntu:
+
+  ```sh
+  sudo apt install npm
+  ```
+
 ### 5.2. Installation
+
+1. Clone the repo
+
+   ```sh
+   git clone https://github.com/CozmaRares/code-canvas.git
+   cd code-canvas
+   ```
+
+2. Install the dependencies
+
+   ```sh
+   npm install
+   ```
+
+3. Start the development server
+
+   ```sh
+   npm run dev
+   ```
+
+4. Run the test suite
+
+   ```sh
+   npm run test
+   ```
+
+5. Build for production
+
+   ```sh
+   npm run build
+   ```
 
 ## 6. Testing
 

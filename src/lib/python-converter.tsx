@@ -58,7 +58,7 @@ export default class PythonConverter {
   }
 
   static assignment(model: VariableAssignBlockModel, indent = 0): string[] {
-    const output = [`${model.props.variable} = int(`];
+    const output = [`${model.props.variable} =`];
 
     model.expressionList.forEach(expr => {
       const exprModel = store.getModel(expr.id);
@@ -76,7 +76,6 @@ export default class PythonConverter {
       }
     });
 
-    output.push(")");
     return [addIndent(output.join(" "), indent)];
   }
 

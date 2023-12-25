@@ -1,10 +1,15 @@
 import { Input } from "@/components/ui/input";
+import { SUPPORTED_OPERATORS } from "@/lib/code-block";
 import { ComponentJSX } from "@/lib/helper-types";
 
 const patterns = Object.freeze({
   identifier: /^([_a-zA-Z][_a-zA-Z0-9]{0,9}){0,1}$/,
   number: /^\d*$/,
-  operator: /^(\+|-|\*|\/|\/\/|%|\^|<|>|=|<=|>=|!=){0,1}$/,
+  operator: new RegExp(
+    `^(${Object.keys(SUPPORTED_OPERATORS)
+      .map(key => "\\" + key)
+      .join("|")}){0,1}$`,
+  ),
 } satisfies Record<string, RegExp>);
 
 type Props = {

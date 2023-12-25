@@ -16,44 +16,7 @@ import { WhileBlockModel, whileBlockType } from "./models/while-model";
 import { PrintBlockModel, printBlockType } from "./models/print-model";
 import PythonConverter from "./python-converter";
 
-type Operator = (typeof SUPPORTED_OPERATORS)[number];
-
-function executeOperation(
-  left: number,
-  right: number,
-  operator: Operator,
-): number {
-  switch (operator) {
-    case "+":
-      return left + right;
-    case "-":
-      return left - right;
-    case "*":
-      return left * right;
-    case "/":
-      return left / right;
-    case "//":
-      return Math.floor(left / right);
-    case "%":
-      return left % right;
-    case "^":
-      return left ** right;
-    case "=":
-      return Number(left == right);
-    case "<":
-      return Number(left < right);
-    case ">":
-      return Number(left > right);
-    case "<=":
-      return Number(left <= right);
-    case ">=":
-      return Number(left >= right);
-    case "!=":
-      return Number(left >= right);
-    default:
-      throw new Error("Unknown operator: " + operator);
-  }
-}
+type Operator = keyof typeof SUPPORTED_OPERATORS;
 
 type VariableMap = Map<string, number>;
 
@@ -166,9 +129,9 @@ export default class Interpreter {
         else {
           operator = expr.props.operator as Operator;
 
-          if (!SUPPORTED_OPERATORS.includes(operator))
+          if (!(operator in SUPPORTED_OPERATORS))
             return {
-              error: `Error: Operator '${operator}' is not mathematical.`,
+              error: `Error: Unknown operator '${operator}'.`,
             };
 
           continue;
@@ -177,7 +140,7 @@ export default class Interpreter {
         result = getValue(expr);
         if (result.error !== undefined) return { error: result.error };
 
-        value = executeOperation(value, result.value, operator);
+        value = SUPPORTED_OPERATORS[operator](value, result.value);
 
         operator = null;
       }

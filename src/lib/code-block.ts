@@ -135,18 +135,18 @@ export type VerticalBlockType = FilteredBlockType<
 >;
 export type VerticalBlockInfo = CodeBlockInfoGeneric<VerticalBlockType>;
 
-export const SUPPORTED_OPERATORS = Object.freeze([
-  "+",
-  "-",
-  "/",
-  "//",
-  "%",
-  "*",
-  "^",
-  "=",
-  "<",
-  ">",
-  "<=",
-  ">=",
-  "!=",
-] as const);
+export const SUPPORTED_OPERATORS = Object.freeze({
+  "+": (left: number, right: number) => left + right,
+  "-": (left: number, right: number) => left - right,
+  "*": (left: number, right: number) => left * right,
+  "/": (left: number, right: number) => left / right,
+  "//": (left: number, right: number) => Math.floor(left / right),
+  "%": (left: number, right: number) => left % right,
+  "^": (left: number, right: number) => left ** right,
+  "=": (left: number, right: number) => Number(left == right),
+  "<": (left: number, right: number) => Number(left < right),
+  ">": (left: number, right: number) => Number(left > right),
+  "<=": (left: number, right: number) => Number(left <= right),
+  ">=": (left: number, right: number) => Number(left >= right),
+  "!=": (left: number, right: number) => Number(left >= right),
+} as const);

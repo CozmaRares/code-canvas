@@ -1,4 +1,4 @@
-import { GenericCodeBlockModelWithStatements } from "../code-block-models";
+import { GenericCodeBlockModelWithStatements } from "./code-block-models";
 import { CodeBlockInfoGeneric, VerticalBlockInfo } from "../code-block";
 import { variableNameBlockType } from "./variable-name-model";
 

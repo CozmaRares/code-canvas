@@ -1,4 +1,4 @@
-import { GenericCodeBlockModel } from "../code-block-models";
+import { GenericCodeBlockModel } from "./code-block-models";
 
 export const variableNameBlockType = "variable name" as const;
 

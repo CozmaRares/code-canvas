@@ -1,5 +1,5 @@
 import { CodeBlockInfoGeneric } from "../code-block";
-import { GenericCodeBlockModelWithExpression } from "../code-block-models";
+import { GenericCodeBlockModelWithExpression } from "./code-block-models";
 import { variableNameBlockType } from "./variable-name-model";
 
 export const printBlockType = "print" as const;

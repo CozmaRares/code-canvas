@@ -16,7 +16,7 @@ import IfBlock from "@/components/blocks/IfBlock";
 import WhileBlock from "@/components/blocks/WhileBlock";
 import PrintBlock from "@/components/blocks/PrintBlock";
 import { ComponentJSX } from "./helper-types";
-import { Model } from "./code-block-models";
+import { Model } from "./models/code-block-models";
 import {
   VariableAssignBlockModel,
   variableAssignBlockType,
@@ -134,19 +134,3 @@ export type VerticalBlockType = FilteredBlockType<
   "vertical"
 >;
 export type VerticalBlockInfo = CodeBlockInfoGeneric<VerticalBlockType>;
-
-export const SUPPORTED_OPERATORS = Object.freeze({
-  "+": (left: number, right: number) => left + right,
-  "-": (left: number, right: number) => left - right,
-  "*": (left: number, right: number) => left * right,
-  "/": (left: number, right: number) => left / right,
-  "//": (left: number, right: number) => Math.floor(left / right),
-  "%": (left: number, right: number) => left % right,
-  "^": (left: number, right: number) => left ** right,
-  "=": (left: number, right: number) => Number(left == right),
-  "<": (left: number, right: number) => Number(left < right),
-  ">": (left: number, right: number) => Number(left > right),
-  "<=": (left: number, right: number) => Number(left <= right),
-  ">=": (left: number, right: number) => Number(left >= right),
-  "!=": (left: number, right: number) => Number(left >= right),
-} as const);

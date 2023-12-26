@@ -1,5 +1,5 @@
 import store from "./store";
-import { SUPPORTED_OPERATORS, VerticalBlockInfo } from "./code-block";
+import { VerticalBlockInfo } from "./code-block";
 import { ConsoleText } from "@/context/console";
 import { NumberBlockModel, numberBlockType } from "./models/number-model";
 import {
@@ -15,6 +15,7 @@ import { IfBlockModel, ifBlockType } from "./models/if-model";
 import { WhileBlockModel, whileBlockType } from "./models/while-model";
 import { PrintBlockModel, printBlockType } from "./models/print-model";
 import PythonConverter from "./python-converter";
+import { SUPPORTED_OPERATORS } from "./operators";
 
 type Operator = keyof typeof SUPPORTED_OPERATORS;
 

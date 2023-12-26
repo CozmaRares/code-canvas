@@ -1,5 +1,5 @@
 import { CodeBlockInfoGeneric } from "../code-block";
-import { GenericCodeBlockModelWithExpression } from "../code-block-models";
+import { GenericCodeBlockModelWithExpression } from "./code-block-models";
 import { numberBlockType } from "./number-model";
 import { operatorBlockType } from "./operator-model";
 import { variableNameBlockType } from "./variable-name-model";

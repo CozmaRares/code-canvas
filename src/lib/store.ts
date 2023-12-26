@@ -10,7 +10,7 @@ import {
   ConcreteModel,
   GenericCodeBlockModelWithExpression,
   GenericCodeBlockModelWithStatements,
-} from "./code-block-models";
+} from "./models/code-block-models";
 
 class Store {
   blockMap: Map<string, ConcreteModel> = new Map();

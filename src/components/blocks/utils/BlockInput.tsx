@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
-import { SUPPORTED_OPERATORS } from "@/lib/code-block";
 import { ComponentJSX } from "@/lib/helper-types";
+import { SUPPORTED_OPERATORS } from "@/lib/operators";
 
 const patterns = Object.freeze({
   identifier: /^([_a-zA-Z][_a-zA-Z0-9]{0,9}){0,1}$/,

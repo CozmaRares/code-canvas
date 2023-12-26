@@ -2,14 +2,14 @@ import {
   HorizontalBlockInfo,
   HorizontalBlockType,
   VerticalBlockInfo,
-} from "./code-block";
-import { VariableNameBlockModel } from "./models/variable-name-model";
-import { NumberBlockModel } from "./models/number-model";
-import { OperatorBlockModel } from "./models/operator-model";
-import { IfBlockModel } from "./models/if-model";
-import { WhileBlockModel } from "./models/while-model";
-import { PrintBlockModel } from "./models/print-model";
-import { VariableAssignBlockModel } from "./models/variable-assignment-model";
+} from "../code-block";
+import { VariableNameBlockModel } from "./variable-name-model";
+import { NumberBlockModel } from "./number-model";
+import { OperatorBlockModel } from "./operator-model";
+import { IfBlockModel } from "./if-model";
+import { WhileBlockModel } from "./while-model";
+import { PrintBlockModel } from "./print-model";
+import { VariableAssignBlockModel } from "./variable-assignment-model";
 
 export interface GenericCodeBlockModel<T> {
   id: string;

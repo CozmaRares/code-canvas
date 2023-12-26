@@ -20,14 +20,14 @@ pronounced. Visual editing environments, with their graphical interfaces and
 interactive components, have greatly lowered the barrier of entry to the field
 of programming.
 
-Platforms like _Scratch_ and _Blockly_ provide a thoughtful abstraction of classic
+Platforms like `Scratch` and `Blockly` provide a thoughtful abstraction of classic
 programming concepts. These environments offer an alternative to traditional
 text-based coding, providing a more intuitive approach to programming concepts.
 The graphical representation of code structures and the drag-and-drop
 functionality make it easier for beginners to grasp fundamental programming
 concepts without the immediate need to memorize syntax. This evolution aligns
 with the broader trend observed in contemporary design and development tools.
-Great examples of such tools would be _Web Flow_, _Framer_, and _Figma_, which
+Great examples of such tools would be `Web Flow`, `Framer`, and `Figma`, which
 exemplify how visual editors have become a part of the workflows of professionals.
 
 The context in with which **Code Canvas** alligns is characterized by an understanding
@@ -36,11 +36,11 @@ that programming should be a skill accessible to all.
 ### 1.2. Motivation
 
 The motivation behind the **Code Canvas** project is rooted the recreation of
-_Blockly_ with a handful features. While _Blockly_ has made more significant
+`Blockly` with a handful features. While `Blockly` has made more significant
 strides in simplifying programming concepts, **Code Canvas** seeks to refine
 this approach further by offering a focused subset of features.
 
-The decision to recreate _Blocky_ with a smaller set of features is driven by a
+The decision to recreate `Blocky` with a smaller set of features is driven by a
 commitment to providing a more approachable entry point into programming for users.
 By including the essential components of programming languages, including if
 statements, while loops, variables, and print statements, **Code Canvas** aims
@@ -52,7 +52,7 @@ them to build a solid foundation before delving into more advanced programming c
 
 1. **Streamlined Recreation of Blockly:**
 
-   - _Description:_ **Code Canvas** aims to recreate the simplicity of _Blockly_
+   - _Description:_ **Code Canvas** aims to recreate the simplicity of `Blockly`
      with a refined and focused set of features.
 
 2. **Accessible Programming Education:**
@@ -76,15 +76,15 @@ dictated the architecture and functionality of the visual coding environment.
 
 #### 2.1.1. TypeScript
 
-_TypeScript_, a superset of JavaScript, was chosen as the primary programming
+`TypeScript`, a superset of _JavaScript_, was chosen as the primary programming
 language. Its static typing apabilities provide enhanced code quality and
 improved developer productivity. The strong type-checking helps catch errors
 during development, ensuring a robust and maintainable codebase.
 
 #### 2.1.2. React
 
-The project leverages _React_, a widely adopted JavaScript library for building
-user interfaces. React's component-based architecture allows for the creation of
+The project leverages `React`, a widely adopted _JavaScript_ library for building
+user interfaces. `React`'s component-based architecture allows for the creation of
 modular and reusable UI elements, facilitating the development of a dynamic
 and responsive visual coding environment.
 
@@ -92,13 +92,13 @@ and responsive visual coding environment.
 
 #### 2.2.1. TailwindCSS
 
-_TailwindCSS_ was employed for styling in **Code Canvas**. Its utility-first
+`TailwindCSS` was employed for styling in **Code Canvas**. Its utility-first
 approach and flexibility allowed for rapid styling and a consistent design
 language throughout the application.
 
 #### 2.2.2. shadcn/ui
 
-The _shadcn/ui_ component library played a crucial role in enhancing the user
+The `shadcn/ui` component library played a crucial role in enhancing the user
 interface of **Code Canvas**. Leveraging pre-built components from this library
 not only sped-up development but also contributed to a cohesive and aesthetically
 pleasing design.
@@ -107,33 +107,33 @@ pleasing design.
 
 #### 2.3.1. Vite
 
-_Vite_ was chosen as the build tool. Its speed and efficiency in module
+`Vite` was chosen as the build tool. Its speed and efficiency in module
 bundling, coupled with features like hot module replacement (HMR), significantly
-expedited the development workflow. Vite's seamless integration with _TypeScript_
-and _React_ contributed to a smooth and optimized development experience.
+expedited the development workflow. Vite's seamless integration with `TypeScript`
+and `React` contributed to a smooth and optimized development experience.
 
 #### 2.3.2. ESLint
 
-_ESLint_ is employed for static code analysis in **Code Canvas**. Its configurable
+`ESLint` is employed for static code analysis in **Code Canvas**. Its configurable
 rules and automatic code fixing contribute to identifying potential issues early
 in the development process.
 
 #### 2.3.3. Prettier
 
-_Prettier_ is utilized for code formatting. Its opinionated approach to code
+`Prettier` is utilized for code formatting. Its opinionated approach to code
 styling ensures a standardized and visually appealing codebase.
 
 ### 2.4. Testing Frameworks
 
 #### 2.4.1. Vitest
 
-_Vitest_ is utilized for unit testing. Its simplicity and integration with the
-_Vite_ ecosystem make it a suitable choice for validating the functionality of
+`Vitest` is utilized for unit testing. Its simplicity and integration with the
+`Vite` ecosystem make it a suitable choice for validating the functionality of
 individual units of code.
 
 #### 2.4.2. Cypress
 
-_Cypress_ is employed for end-to-end testing. Its comprehensive testing capabilities,
+`Cypress` is employed for end-to-end testing. Its comprehensive testing capabilities,
 including real-time interaction with the application, ensure a robust evaluation
 of the application's behavior in a simulated user environment.
 
@@ -185,7 +185,7 @@ the visual representation of code structures in real-time, providing immediate
 feedback as users interact with the intuitive components. A minimal set of code
 blocks, encompassing if statements, loops, variables, and print statements, forms
 the foundation of the visual coding environment. The user interface also integrates
-elements from the _shadcn/ui_ library, ensuring a cohesive and aesthetically
+elements from the `shadcn/ui` library, ensuring a cohesive and aesthetically
 pleasing design. Throughout the interface, visual cues, user prompts, and
 drag-and-drop functionality work in harmony, empowering users to effortlessly
 experiment with programming concepts.
@@ -193,7 +193,7 @@ experiment with programming concepts.
 Visual Elements:
 
 - Color Palette:
-  - Adopting a thoughtfully curated theme from the _shadcn/ui_ library, the light
+  - Adopting a thoughtfully curated theme from the `shadcn/ui` library, the light
     mode features a slightly blue-tinged white background. In contrast, the dark
     mode introduces a subtly blue-tinted gray background, providing an overall
     visually comfortable environment.
@@ -230,7 +230,8 @@ and user-friendly. The steps illustrate a typical user workflow within the appli
 3. **Constructing Programs:**
 
    - Users construct programs by arranging and connecting code blocks on the canvas.
-     The visual representation allows for a clear understanding of the program's structure.
+     The visual representation allows for a clear understanding of the program's
+     structure.
 
 4. **Configuring Code Blocks:**
 
@@ -254,9 +255,9 @@ and user-friendly. The steps illustrate a typical user workflow within the appli
    - Users have the option to convert their code to Python and download the file
      locally.
 
-By following this user workflow, individuals can easily navigate the Code Canvas
-environment, experiment with programming concepts, and create visually expressive
-code structures in an accessible and engaging manner.
+By following this user workflow, individuals can easily navigate the environment,
+experiment with programming concepts, and create visually expressive code structures
+in an accessible and engaging manner.
 
 ## 4. Implementation
 
@@ -340,7 +341,7 @@ with its extensions, outlines essential attributes such as a unique identifier
 block. Additionally, some blocks may include an 'expression list' or 'statements
 list' to enhance their functionality.
 
-```TypeScript
+```typescript
 export interface GenericCodeBlockModel<T> {
   id: string;
   type: string;
@@ -362,14 +363,14 @@ export interface GenericCodeBlockModelWithStatements<T>
 
 #### 4.2.2. The 'CodeBlock' component
 
-The 'CodeBlock' component dictates the structure of each code block, acting as a
+The `CodeBlock` component dictates the structure of each code block, acting as a
 wrapper for child nodes and featuring a delete button for user interaction. This
 structure is modular and consistent across all code blocks, simplifying the
 addition of new blocks and ensuring a consistent structures of each code block.
 
 Here is an example of how it is used:
 
-```TypeScript
+```typescript
 // in 'CodeBlock.tsx'
 const CodeBlock = (props) => {
   return (
@@ -405,14 +406,14 @@ different types of blocks.
 
 #### 4.2.4. The 'codeBlocks' object
 
-All code blocks are organized within the 'codeBlocks' object in the 'lib/code-block.tsx'
+All code blocks are organized within the `codeBlocks` object in the 'lib/code-block.tsx'
 file. This object plays a crucial role in managing the various types of code
 blocks and incorporates essential information for each block, including the
 React component, preview properties, model, and orientation. The keys of the
 object are uniquely defined strings chosen by the developer, representing the
 type of each block.
 
-```TypeScript
+```typescript
 type CodeBlockRecord = Record<
   string,
   {
@@ -428,101 +429,326 @@ type CodeBlockRecord = Record<
 
 To introduce a new code block, several modifications are required:
 
-1.  Define a new model file in the 'lib/models' directory describing the new block.
+1. Define a new model file in the `lib/models` directory describing the new block.
 
-    ```TypeScript
-    export const newBlockType = "new block" as const;
+   ```typescript
+   export const newBlockType = "new block" as const;
 
-    type NewBlockProps = Record<string, any>;
+   type NewBlockProps = Record<string, any>;
 
-    export class NewBlockModel
-      implements GenericCodeBlockModel<NewBlockProps>
-    {
-      id: string;
-      type = newBlockType;
-      props: NewBlockProps;
+   export class NewBlockModel implements GenericCodeBlockModel<NewBlockProps> {
+     id: string;
+     type = newBlockType;
+     props: NewBlockProps;
 
-      constructor(id: string) {
-        this.id = id;
-        this.props = {};
-      }
-    }
-    ```
+     constructor(id: string) {
+       this.id = id;
+       this.props = {};
+     }
+   }
+   ```
 
-2.  Create a new UI component in the 'components/blocks' directory for the new block.
+2. Create a new UI component in the `components/blocks` directory for the new block.
 
-    ```TypeScript
-    const NewBlock: CodeBlockComponent = ({ id }) => {
-      return (
-        <CodeBlock
-          id={id}
-        >
-          New Block
-        </CodeBlock>
-      );
-    };
-    ```
+   ```typescript
+   const NewBlock: CodeBlockComponent = ({ id }) => {
+     return (
+       <CodeBlock
+         id={id}
+       >
+         New Block
+       </CodeBlock>
+     );
+   };
+   ```
 
-    > **Note**: there are helper components such as _BlockInput_, ExpressionList*,
-    > and \_StatementList* defined in the 'components/blocks/utils' dir
+   > **Note**: there are helper components such as _BlockInput_, ExpressionList*,
+   > and \_StatementList* defined in the 'components/blocks/utils' dir
 
-3.  Optionally, add new colors in the 'components/blocks/utils/colors.tsx' file.
+3. Optionally, add new colors in the `components/blocks/utils/colors.tsx` file.
 
-    ```TypeScript
-    export const newBlockColor = makeColor("#ffffff", "#000000");
-    ```
+   ```typescript
+   export const newBlockColor = makeColor("#ffffff", "#000000");
+   ```
 
-    > **Note**: if the color is not defined, it defaults to _pink_ for light mode
-    > and _indigo_ for dark mode.
+   > **Note**: if the color is not defined, it defaults to _pink_ for light mode
+   > and _indigo_ for dark mode.
 
-4.  Define the syntactically equivalent Python code for the new block.
+4. Define the syntactically equivalent Python code for the new block.
 
-    ```TypeScript
-    static statementName(model: NewBlockModel, indent = 0): string[] {
-        return " ''' new python statment ''' ";
-    }
-    ```
+   ```typescript
+   class Interpreter {
+     static statementName(model: NewBlockModel, indent = 0): string[] {
+       return " ''' new python statment ''' ";
+     }
+   }
+   ```
 
-5.  Implement the logic needed to interpret the new block within the 'Interpreter'
-    class.
+5. Implement the logic needed to interpret the new block within the `Interpreter`
+   class.
 
-        ```TypeScript
-          private handleStatement(id: string, firstLevel: boolean): string {
-            const model = store.getModel(id) as NewBlockModel;
+   ```typescript
+     private handleStatement(id: string, firstLevel: boolean): string {
+       const model = store.getModel(id) as NewBlockModel;
 
-            ...
+       ...
 
-            if(error)
-              return "Error: an error occured";
+       if(error)
+         return "Error: an error occured";
 
-            if (firstLevel)
-              this.addConsoleText({
-                type: "in",
-                text: PythonConverter.newStatement(model),
-              });
+       if (firstLevel)
+         this.addConsoleText({
+           type: "in",
+           text: PythonConverter.newStatement(model),
+         });
 
-            // empty string means no error
-            return "";
-          }
-        ```
+       // empty string means no error
+       return "";
+     }
+   ```
 
 ### 4.4. Business Logic
 
 #### 4.4.1. State Manager
 
+##### 4.4.1.1. Custom Store Implementation
+
+After careful evaluation, a decision was made to implement a custom state management
+solution using a class named `Store`. This custom class serves as a dedicated
+container for the state related to code blocks, offering the necessary flexibility
+without introducing excessive complexity.
+
+The key considerations that led to this decision were:
+
+1. **Mutable State Requirement:**
+
+   - The core requirement for mutable state led to the exploration of alternatives
+     beyond React's built-in state management solutions. The need for a custom solution
+     emerged to fulfill the specific requirements of **Code Canvas**.
+
+2. **Simplicity vs. Complexity:**
+   - While existing state managers were considered, their integration introduced
+     additional complexities that were deemed unnecessary for the project's scope.
+     The aim was to strike a balance between simplicity and functionality.
+
+##### 4.4.1.2. Accessibility Across Components
+
+To ensure access to the state management capabilities, a `store` object is
+instantiated and made available to all components of the application. This
+global access facilitates efficient communication between different parts of the
+application, enabling components to interact with the 'store' object to retrieve
+or modify the state related to code blocks.
+
+##### 4.4.1.3. The Store Class
+
+The 'Store' class encapsulates the state management logic for code blocks within
+**Code Canvas**. It exposes well-defined methods that facilitate changes to the
+state, ensuring a clean and maintainable codebase.
+
+```typescript
+class Store {
+  // used to store all the created blocks
+  blockMap: Map<string, ConcreteModel> = new Map();
+
+  // used to store link back the child block with its parent
+  // an example would be the following
+  // child: variable access block
+  // parent: print block
+  blockBackLinks: Map<string, string> = new Map();
+
+  // a list of the statements present in the editor area
+  blocks: VerticalBlockInfo[] = [];
+
+  // function that is colled to force React to rerender the page
+  rerender: () => void = () => {};
+
+  addBlock(type: VerticalBlockType, index?: number): void {}
+
+  tryToAddBlock(type: CodeBlockType, index?: number): boolean {}
+
+  indexOf(id: string): number {}
+
+  setProps(id: string, props: Record<string, unknown>): void {}
+
+  getModel(id: string): ConcreteModel {}
+
+  addToExpression(
+    parentModel: GenericCodeBlockModelWithExpression<unknown>,
+    type: HorizontalBlockType,
+  ): void {}
+
+  tryToAddToExpression(parentID: string, type: CodeBlockType): boolean {}
+
+  addStatement(parentID: string, type: VerticalBlockType): void {}
+
+  tryToAddStatement(parentID: string, type: CodeBlockType): boolean {}
+
+  deleteBlock(id: string, firstLevel = false): void {}
+}
+
+// instantiate the state manager
+const store = new Store();
+
+// make it available to all components
+export default store;
+```
+
+##### 4.4.1.4. Benefits of Custom Store
+
+1. **Flexibility:**
+
+   - The custom `Store` class provides the required flexibility for managing
+     mutable state specific to code blocks without unnecessary constraints.
+
+2. **Maintainability:**
+
+   - The simplicity of the custom solution contributes to a maintainable codebase,
+     reducing the likelihood of introducing errors and easing future updates.
+
+3. **Tailored Functionality:**
+   - The `Store` class is designed to cater specifically to the needs of **Code Canvas**,
+     offering tailored functionality for efficient state management.
+
 #### 4.4.2. Interpreter
+
+The heart of **Code Canvas** lies in its interpreter, a crucial component
+responsible for executing the user-created visual code. The `Interpreter` class,
+brings the code to life by translating it into syntactically equivalent Python
+code.
+
+##### 4.4.2.1. Interpretation Logic
+
+The `Interpreter` class is designed to traverse the syntax tree of the visual code,
+handling each code block based on its type and properties. As it navigates through
+the tree, it constructs the corresponding Python code representation, capturing
+the logic and structure defined by the user within the visual environment.
+
+##### 4.4.2.2. Execution and Console Output
+
+As the interpreter traverses the syntax tree, it dynamically interprets and
+executes the code. This execution process allows for the real-time evaluation of
+the user's visual code. Subsequently, the console component promptly displays the
+output, presenting the syntactically equivalent Python code, along with any
+program outputs or potential errors. This immediate feedback mechanism significantly
+enriches the user experience, providing instant insights into the interpreted
+execution of their visual code during the traversal of the syntax tree.
+
+##### 4.4.2.3. Integration with the 'Store'
+
+The `Interpreter` class is tightly integrated with the `store`, allowing it to
+access and modify the state related to code blocks. This seamless interaction
+ensures that the interpreter operates on the latest state, reflecting any changes
+made by the user during the coding process.
+
+##### 4.4.2.4. Error Handling
+
+To enhance the robustness of the interpreter, error are handled gracefully. The
+`Interpreter` class identifies and communicates errors, providing clear and
+informative messages to the user through the console. This proactive approach
+aids users in identifying and addressing issues within their code, contributing
+to a smoother coding experience.
 
 #### 4.4.3. Python Converter
 
+The `Python Converter` class within **Code Canvas** serves as a link between the
+visual and textual representations of code. Its structured methods handle the
+conversion of user-created visual code, represented as a syntax tree, into
+syntactically equivalent Python snippets. One key aspect is the `statements`
+method, adept at generating Python code for vertical blocks like conditionals
+and loops, ensuring proper indentation and structure. The `program` method
+orchestrates the overall conversion process, providing a cohesive representation
+of the entire Python program.
+
+```typescript
+export default class PythonConverter {
+  private static statements(
+    statements: VerticalBlockInfo[],
+    indent = 0,
+  ): string[] {}
+
+  static program(): string[] {}
+
+  static number(model: NumberBlockModel): string {}
+
+  static variableName(model: VariableNameBlockModel): string {}
+
+  static operator(model: OperatorBlockModel): string {}
+
+  static assignment(model: VariableAssignBlockModel, indent = 0): string[] {}
+
+  static if(model: IfBlockModel, indent = 0): string[] {}
+
+  static while(model: WhileBlockModel, indent = 0): string[] {}
+
+  static print(model: PrintBlockModel, indent = 0): string[] {}
+}
+```
+
 ### 4.5. Drag and Drop Functionality
 
-#### 4.5.1. DnD Kit
+Drag and drop functionality is a fundamental feature in **Code Canvas**, enabling
+users to interact with the visual coding environment. Leveraging the power of the
+`DnD Kit` library, this section explores the implementation and features that
+enhance the user's ability to seamlessly manipulate and organize code blocks
+within the canvas.
 
-#### 4.5.2.
+#### 4.5.1. DnD Kit Library
+
+`DnD Kit` is a versatile and lightweight _JavaScript_ library specifically designed
+for building drag-and-drop interfaces. Its simplicity and efficiency make it an
+ideal choice for **Code Canvas**, providing a smooth and responsive experience
+for users engaging with the visual coding elements.
+
+Key Features of DnD Kit:
+
+- **Draggable Components:**
+  - `DnD Kit` allows code blocks to be designated as draggable elements, enabling
+    users to initiate drag operations effortlessly.
+- **Drop Zones:**
+  - The library facilitates the creation of drop zones within the canvas, where
+    users can release the dragged code blocks. This feature ensures precise
+    placement and organization of code elements.
+
+#### 4.5.2. Implementation in Code Canvas
+
+The integration of `DnD Kit` into **Code Canvas** brings forth an intuitive and
+dynamic drag-and-drop experience for users. The implementation is structured to
+address specific aspects of the visual coding environment.
+
+##### 4.5.2.1. Draggable Code Blocks
+
+Each code block is configured as a draggable component, allowing users to initiate
+drag operations by interacting with designated drag handles.
+
+##### 4.5.2.2. Drop Zones
+
+The _Editor Area_ serves as a designated drop zone, allowing
+users to release code blocks.
+
+To enhance the drag-and-drop interactions within the _Editor Area_, `DnD Kit`
+introduces a robust collision detection algorithm. The library intelligently
+detects the spatial relationships between code blocks and the drop zones. This
+ensures that code blocks are accurately dropped within the _Editor Area_.
+
+Moreover, each code block in the editor is equipped with additional drop zones,
+positioned at the top and bottom. These additional zones empower users to
+seamlessly add new blocks either above or below an existing one, contributing to
+a flexible and dynamic coding experience.
 
 ### 4.7. User Feedback
 
+User feedback in **Code Canvas** is facilitated through the toast system provided
+by `shadcn/ui`. This dedicated system ensures that users receive timely and clear
+notifications, especially when errors occur during application usage. The toast
+notifications serve as succinct messages, specifically addressing user-related
+issues, such as erroneously dropping blocks, e.g., variable access, operators,
+or numbers in the editor area.
+
 ### 4.8. Accessibility
+
+The application supports keyboard navigation, allowing users to guide the draggable
+items, using arrow keys, to their intended drop area. Additionally, tab navigation
+is optimized to enhance the overall accessibility of the platform.
 
 ## 5. Getting started
 

@@ -123,19 +123,11 @@ in the development process.
 `Prettier` is utilized for code formatting. Its opinionated approach to code
 styling ensures a standardized and visually appealing codebase.
 
-### 2.4. Testing Frameworks
-
-#### 2.4.1. Vitest
+#### 2.3.4. Vitest
 
 `Vitest` is utilized for unit testing. Its simplicity and integration with the
 `Vite` ecosystem make it a suitable choice for validating the functionality of
 individual units of code.
-
-#### 2.4.2. Cypress
-
-`Cypress` is employed for end-to-end testing. Its comprehensive testing capabilities,
-including real-time interaction with the application, ensure a robust evaluation
-of the application's behavior in a simulated user environment.
 
 ## 3. Design & Analysis
 
@@ -363,7 +355,7 @@ and control flow:
 
   - _Purpose:_ Represents the assignment of values to variables.
   - _Expression:_ Accepts a combination of up to 1 or 3 horizontal blocks,
-  including variable access, operators, and numbers.
+    including variable access, operators, and numbers.
 
 - **If Statement Block:**
 
@@ -859,11 +851,98 @@ is optimized to enhance the overall accessibility of the platform.
 
 ## 6. Testing
 
-Unit testing:
+### 6.1. Units Tested
 
-- units tested: interpreter and python converter, there was no need to test the state manager since it is tightly coupled with the other 2 and if the state manager doesn't work, so do the other 2
-- difficulty in letting assuming the interpreter getting the correct input that is handled by the ui
-- had to replicate, by hand external checking - so much fuckery with types
--
+1. **Interpreter and Python Converter:**
+   - _Rationale:_ Given their pivotal roles, the `Interpreter` and `PythonConverter`
+     were subjected to meticulous unit testing. These tests aimed to verify their
+     individual functionalities and ensure accurate code execution and conversion.
+2. **State Manager Integration:**
+   - _Consideration:_ The State Manager, tightly integrated with the UI, posed a
+     unique challenge for testing in isolation.
+   - _Decision:_ It was deemed unnecessary to conduct independent tests for the
+     State Manager, as its functionality is inherently linked with the `Interpreter`
+     and `PythonConverter`. Any issues with the State Manager would inevitably impact
+     the overall system.
+
+### 6.2. Testing Challenges
+
+1. **User Input Replication:**
+   - _Challenge:_ Replicating user input proved challenging, particularly due to
+     the intricate coupling of the State Manager with the UI. Creating relevant input
+     proved to be difficult, as it heavily relies on user actions within the UI.
+     To combat this, a significant amount of TypeScript type magic was employed.
+2. **Adding New Code Blocks:**
+   - _Challenge:_ The mechanism of adding new code blocks complicated the testing
+     scenario. To overcome this, a dedicated testing structure was crafted from scratch
+     to simulate the process of adding code blocks and ensure the system's responsiveness.
+
+### 6.3. Testing Methodology
+
+#### 6.3.1. Interpreter
+
+1. **Variable Assignment:**
+   - **Tests:**
+     - Assign Integer
+     - Assign Float
+     - Assign to Another Variable
+     - Operator Addition
+     - Operator Subtraction
+     - Operator Multiplication
+     - Operator Division
+     - Operator Integer Division
+     - Operator Modulus
+     - Operator Exponentiation
+     - Operator Equals (a = b)
+     - Operator Equals (a != b)
+     - Operator Not Equals (a != b)
+     - Operator Not Equals (a = b)
+     - Operator Greater Than (a > b)
+     - Operator Greater Than (a < b)
+     - Operator Less Than (a < b)
+     - Operator Less Than (a = b)
+     - Operator Greater Than or Equal (a > b)
+     - Operator Greater Than or Equal (a < b)
+     - Operator Less Than or Equal (a = b)
+     - Operator Less Than or Equal (a > b)
+     - Malformed Expression
+2. **If Statement:**
+   - **Tests:**
+     - If with Variable Non-Zero
+     - If with Variable Zero
+     - If with Variable Not Defined (should error)
+3. **While Statement:**
+   - **Tests:**
+     - Compute 1+2+...+10
+     - While with Variable Zero
+     - While with Variable Not Defined (should error)
+4. **Regular Programs:**
+   - **Tests:**
+     - Verify if Number is Prime
+
+#### 6.3.2. PythonConverter
+
+The same test cases, as for the `Interpreter`, were used. The shared test suite
+guarantees that both components produce expected results across various scenarios.
 
 ## 7. Conclusions
+
+We have delved into the details of design, architecture, and the underlying
+principles that govern **Code Canvas**'s functionality. The implementation
+showcases a thoughtful approach to visual programming, providing users with an
+intuitive environment to create Python code through drag-and-drop interactions.
+
+The choice of technologies, including `TypeScript`, `React`, `TailwindCSS`, and
+the `shadcn/ui` component library, reflects a commitment to a modern and efficient
+development stack. The integration of `Vite` as a build tool, `Vitest` for testing,
+and the use of `ESLint` and `Prettier` for code quality contribute to a robust
+and maintainable codebase.
+
+The detailed exploration of the system's architecture, component design, and user
+interface design provides a comprehensive understanding of how different elements
+come together to deliver a seamless user experience. The color palette, typography
+choices, and the visual syntax for code blocks all contribute to the aesthetic
+appeal and usability of the application.
+
+Overall, the flexible architecture, user-friendly interface, and extensive testing
+ensure a reliable and enjoyable platform for users.

@@ -1,6 +1,5 @@
 import { useConsoleContext } from "@/context/console";
-import { ComponentJSX } from "@/lib/helper-types";
-import { cn } from "@/lib/utils";
+import { ComponentJSX, cn } from "@/lib/utils";
 import { Cog } from "lucide-react";
 
 const Console: ComponentJSX<unknown> = () => {

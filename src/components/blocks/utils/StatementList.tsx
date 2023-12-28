@@ -1,5 +1,5 @@
 import { VerticalBlockInfo, codeBlocks } from "@/lib/code-block";
-import { ComponentJSX } from "@/lib/helper-types";
+import { ComponentJSX } from "@/lib/utils";
 
 type Props = {
   statements: VerticalBlockInfo[];

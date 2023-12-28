@@ -1,9 +1,8 @@
 import { useDraggable } from "@dnd-kit/core";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { ComponentJSX, cn } from "@/lib/utils";
 import { CodeBlockType, codeBlocks } from "@/lib/code-block";
 import CodeBlockPreview from "./blocks/CodeBlockPreview";
-import { ComponentJSX } from "@/lib/helper-types";
 
 type Props = {
   type: CodeBlockType;

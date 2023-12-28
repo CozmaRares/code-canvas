@@ -1,7 +1,6 @@
 import { BlockOrientation } from "@/lib/code-block";
 import { BlockColor } from "./utils/colors";
-import { cn } from "@/lib/utils";
-import { ComponentJSX } from "@/lib/helper-types";
+import { ComponentJSX, cn } from "@/lib/utils";
 
 export type CodeBlockPreviewProps = {
   text: string;

@@ -13,8 +13,8 @@ import {
 } from "./models/code-block-models";
 
 class Store {
-  blockMap: Map<string, ConcreteModel> = new Map();
-  blockBackLinks: Map<string, string> = new Map();
+  private blockMap: Map<string, ConcreteModel> = new Map();
+  private blockBackLinks: Map<string, string> = new Map();
   blocks: VerticalBlockInfo[] = [];
   rerender: () => void = () => {};
 
@@ -29,7 +29,7 @@ class Store {
     return codeBlocks[type].orientation == "vertical";
   }
 
-  addBlock(type: VerticalBlockType, index?: number): void {
+  addBlock(type: VerticalBlockType, index?: number): string {
     const newBlockID = this.createBlock(type);
     this.blocks.splice(index ?? this.blocks.length, 0, {
       id: newBlockID,
@@ -37,6 +37,8 @@ class Store {
     });
 
     this.rerender();
+
+    return newBlockID;
   }
 
   tryToAddBlock(type: CodeBlockType, index?: number): boolean {
@@ -65,12 +67,14 @@ class Store {
   addToExpression(
     parentModel: GenericCodeBlockModelWithExpression<unknown>,
     type: HorizontalBlockType,
-  ): void {
+  ): string {
     const exprBlockID = this.createBlock(type);
     parentModel.expressionList.push({ id: exprBlockID, type });
     this.blockBackLinks.set(exprBlockID, parentModel.id);
 
     this.rerender();
+
+    return exprBlockID;
   }
 
   tryToAddToExpression(parentID: string, type: CodeBlockType): boolean {
@@ -88,7 +92,7 @@ class Store {
     return true;
   }
 
-  addStatement(parentID: string, type: VerticalBlockType): void {
+  addStatement(parentID: string, type: VerticalBlockType): string {
     const parentModel = this.getModel(
       parentID,
     ) as GenericCodeBlockModelWithStatements<unknown>;
@@ -99,6 +103,8 @@ class Store {
     this.blockBackLinks.set(ststementBlockID, parentModel.id);
 
     this.rerender();
+
+    return ststementBlockID;
   }
 
   tryToAddStatement(parentID: string, type: CodeBlockType): boolean {
@@ -143,6 +149,12 @@ class Store {
     this.blocks = this.blocks.filter(({ id: objID }) => objID !== id);
 
     if (firstLevel) this.rerender();
+  }
+
+  clearBlocks(): void {
+    this.blockMap = new Map();
+    this.blockBackLinks = new Map();
+    this.blocks = [];
   }
 }
 

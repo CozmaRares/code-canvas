@@ -13,7 +13,12 @@ module.exports = {
       { allowExpressions: true },
     ],
   },
-  ignorePatterns: ["dist", ".eslintrc.cjs", "src/components/ui"],
+  ignorePatterns: [
+    "dist",
+    ".eslintrc.cjs",
+    "src/components/ui",
+    "vitest.config.js",
+  ],
   parser: "@typescript-eslint/parser",
   plugins: ["react-refresh"],
 };

@@ -12,5 +12,5 @@ export const SUPPORTED_OPERATORS = Object.freeze({
   ">": (left: number, right: number) => Number(left > right),
   "<=": (left: number, right: number) => Number(left <= right),
   ">=": (left: number, right: number) => Number(left >= right),
-  "!=": (left: number, right: number) => Number(left >= right),
+  "<>": (left: number, right: number) => Number(left != right),
 } as const);

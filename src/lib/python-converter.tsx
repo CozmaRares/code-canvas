@@ -36,7 +36,9 @@ export default class PythonConverter {
           case printBlockType:
             return PythonConverter.print(model, indent);
           default:
-            throw new Error("UNREACHABLE CODE IN PythonConverter.program()");
+            throw new Error(
+              `PythonConverter erorr: unknown vertical block type ${model.type}`,
+            );
         }
       });
   }
@@ -54,29 +56,57 @@ export default class PythonConverter {
   }
 
   static operator(model: OperatorBlockModel): string {
-    return model.props.operator;
+    const SUPPORTED_OPERATORS = {
+      "+": "+",
+      "-": "-",
+      "*": "*",
+      "/": "/",
+      "//": "//",
+      "%": "%",
+      "^": "**",
+      "=": "==",
+      "<": "<",
+      ">": ">",
+      "<=": "<=",
+      ">=": ">=",
+      "<>": "!=",
+    };
+
+    const op = model.props.operator;
+
+    if (op in SUPPORTED_OPERATORS)
+      return SUPPORTED_OPERATORS[op as keyof typeof SUPPORTED_OPERATORS];
+
+    throw new Error(
+      `PythonConverter erorr: unknown operator ${model.props.operator}`,
+    );
   }
 
   static assignment(model: VariableAssignBlockModel, indent = 0): string[] {
-    const output = [`${model.props.variable} =`];
+    const expression: string[] = [];
 
     model.expressionList.forEach(expr => {
       const exprModel = store.getModel(expr.id);
 
       switch (exprModel.type) {
         case numberBlockType:
-          output.push(PythonConverter.number(exprModel));
+          expression.push(PythonConverter.number(exprModel));
           break;
         case operatorBlockType:
-          output.push(PythonConverter.operator(exprModel));
+          expression.push(PythonConverter.operator(exprModel));
           break;
         case variableNameBlockType:
-          output.push(PythonConverter.variableName(exprModel));
+          expression.push(PythonConverter.variableName(exprModel));
           break;
       }
     });
 
-    return [addIndent(output.join(" "), indent)];
+    return [
+      addIndent(
+        `${model.props.variable} = round(${expression.join(" ")}, 3)`,
+        indent,
+      ),
+    ];
   }
 
   static if(model: IfBlockModel, indent = 0): string[] {

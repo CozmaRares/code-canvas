@@ -26,7 +26,7 @@ type InterpreterResult =
   | { error: string; value?: undefined };
 
 export default class Interpreter {
-  private variables: VariableMap = new Map();
+  variables: VariableMap = new Map();
   private addConsoleText: (consoleText: ConsoleText) => void = () => {};
   private printQueue: ConsoleText[] = [];
 
@@ -81,7 +81,7 @@ export default class Interpreter {
   }
 
   private getNumber(model: NumberBlockModel): InterpreterResult {
-    const value = parseInt(model.props.number);
+    const value = parseFloat(model.props.number);
     return isNaN(value)
       ? { error: "Error: Value is not a number." }
       : { value };
@@ -158,6 +158,7 @@ export default class Interpreter {
       return "Error: Cannot assign anything to an empty variable.";
 
     const { error, value } = this.parseExpression(model);
+
     if (error !== undefined) return error;
 
     if (firstLevel)
@@ -166,7 +167,7 @@ export default class Interpreter {
         text: PythonConverter.assignment(model).join(""),
       });
 
-    this.variables.set(variable, value);
+    this.variables.set(variable, parseFloat(value.toFixed(3)));
 
     return "";
   }

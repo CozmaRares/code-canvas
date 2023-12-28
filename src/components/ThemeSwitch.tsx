@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ComponentJSX } from "@/lib/helper-types";
+import { ComponentJSX } from "@/lib/utils";
 
 type Theme = "light" | "dark";
 

@@ -1,7 +1,6 @@
-import { cn } from "@/lib/utils";
+import { ComponentJSX, cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { HardDriveDownload } from "lucide-react";
-import { ComponentJSX } from "@/lib/helper-types";
 import Interpreter from "@/lib/interpreter";
 import { toast } from "./ui/use-toast";
 import PythonConverter from "@/lib/python-converter";

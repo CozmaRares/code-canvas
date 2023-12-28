@@ -1,9 +1,8 @@
 import { Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { ComponentJSX, cn } from "@/lib/utils";
 import { useConsoleContext } from "@/context/console";
 import Interpreter from "@/lib/interpreter";
-import { ComponentJSX } from "@/lib/helper-types";
 
 type Props = {
   className?: string;

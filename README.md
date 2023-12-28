@@ -332,6 +332,60 @@ the print statements.
 
 ### 4.2. Code Blocks
 
+#### 4.2.1. Visual Code Syntax
+
+##### 4.2.1.1. Horizontal Blocks
+
+Horizontal blocks constitute the expressions within code structures:
+
+- **Variable Access Block:**
+  - _Purpose:_ Represents the access of a variable.
+  - _Input Field:_ Accepts characters forming a valid identifier.
+- **Operator Block:**
+
+  - _Purpose:_ Represents various operators for building expressions.
+  - _Input Field:_ Accepts one of the supported operators.
+
+- **Number Block:**
+  - _Purpose:_ Represents numerical values.
+  - _Input Field:_ Accepts positive or negative numbers.
+
+These blocks are typically arranged side by side to form expressions within code,
+akin to traditional mathematical expressions. They contribute to the logical
+flow and calculation aspects of the code.
+
+##### 4.2.1.2. Vertical Blocks
+
+Vertical blocks, on the other hand, are employed for higher-level code structures
+and control flow:
+
+- **Variable Assignment Block:**
+
+  - _Purpose:_ Represents the assignment of values to variables.
+  - _Expression:_ Accepts a combination of up to 1 or 3 horizontal blocks,
+  including variable access, operators, and numbers.
+
+- **If Statement Block:**
+
+  - _Purpose:_ Implements conditional statements.
+  - _Expression:_ Accepts only 1 variable access block.
+  - _Child Statements:_ Allows the inclusion of other vertical blocks as child statements.
+
+- **While Statement Block:**
+
+  - _Purpose:_ Functions similarly to an if statement.
+  - _Expression:_ Accepts only 1 variable access block.
+  - _Child Statements:_ Permits the inclusion of other vertical blocks as child statements.
+
+- **Print Statement Block:**
+  - _Purpose:_ Displays output in the console.
+  - _Expression:_ Accepts only 1 variable access block.
+
+Vertical blocks provide the overarching structure of the code, facilitating the
+representation of control flow and logical conditions. The combination of horizontal
+and vertical blocks offers users a versatile and intuitive environment for visually
+constructing their code.
+
 #### 4.2.1. Model Definition
 
 The definition of each code block begins with a 'model', represented as a node
@@ -804,5 +858,12 @@ is optimized to enhance the overall accessibility of the platform.
    ```
 
 ## 6. Testing
+
+Unit testing:
+
+- units tested: interpreter and python converter, there was no need to test the state manager since it is tightly coupled with the other 2 and if the state manager doesn't work, so do the other 2
+- difficulty in letting assuming the interpreter getting the correct input that is handled by the ui
+- had to replicate, by hand external checking - so much fuckery with types
+-
 
 ## 7. Conclusions

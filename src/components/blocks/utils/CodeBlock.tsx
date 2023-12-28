@@ -1,6 +1,5 @@
-import { cn } from "@/lib/utils";
+import { ComponentJSX, cn } from "@/lib/utils";
 import { BlockColor } from "./colors";
-import { ComponentJSX } from "@/lib/helper-types";
 import { X } from "lucide-react";
 import store from "@/lib/store";
 

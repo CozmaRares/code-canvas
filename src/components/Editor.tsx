@@ -1,11 +1,10 @@
 import { useDroppable } from "@dnd-kit/core";
-import { cn } from "@/lib/utils";
+import { ComponentJSX, cn } from "@/lib/utils";
 import { codeBlocks, CodeBlockInfo } from "@/lib/code-block";
 import EmptyCodeBlock from "@/components/blocks/utils/EmptyBlock";
 import { useEffect, useState } from "react";
 import store from "@/lib/store";
 import DropArea from "./DropArea";
-import { ComponentJSX } from "@/lib/helper-types";
 
 const Editor: ComponentJSX<unknown> = () => {
   const [, setRender] = useState(false);

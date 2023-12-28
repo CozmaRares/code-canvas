@@ -1,5 +1,4 @@
-import { ComponentJSX } from "@/lib/helper-types";
-import { cn } from "@/lib/utils";
+import { ComponentJSX, cn } from "@/lib/utils";
 import { useDroppable } from "@dnd-kit/core";
 
 type Props = {

@@ -1,9 +1,14 @@
 /// <reference types="vitest" />
 import { defineConfig } from "vite";
+import path from "path";
 
 export default defineConfig({
   test: {
-    globals: true,
-    include: ["test/vitest/*.{test,spec}.?(c|m)[jt]s?(x)"],
+    include: ["**/__test__/*.{test,spec}.?(c|m)[jt]s?(x)"],
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
   },
 });

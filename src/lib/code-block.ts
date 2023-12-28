@@ -15,7 +15,6 @@ import OperatorBlock from "@/components/blocks/OperatorBlock";
 import IfBlock from "@/components/blocks/IfBlock";
 import WhileBlock from "@/components/blocks/WhileBlock";
 import PrintBlock from "@/components/blocks/PrintBlock";
-import { ComponentJSX } from "./helper-types";
 import { Model } from "./models/code-block-models";
 import {
   VariableAssignBlockModel,
@@ -30,6 +29,7 @@ import { OperatorBlockModel, operatorBlockType } from "./models/operator-model";
 import { IfBlockModel, ifBlockType } from "./models/if-model";
 import { WhileBlockModel, whileBlockType } from "./models/while-model";
 import { PrintBlockModel, printBlockType } from "./models/print-model";
+import { ComponentJSX } from "./utils";
 
 export type CodeBlockComponent = ComponentJSX<{
   id: string;

@@ -1,9 +1,9 @@
 import { Active, Over, useDndMonitor } from "@dnd-kit/core";
 import { useState } from "react";
 import { useToast } from "./ui/use-toast";
-import { ComponentJSX } from "@/lib/helper-types";
 import store from "@/lib/store";
 import { CodeBlockType } from "@/lib/code-block";
+import { ComponentJSX } from "@/lib/utils";
 
 const DnDHandler: ComponentJSX<unknown> = () => {
   const [active, setActive] = useState<Active | null>(null);

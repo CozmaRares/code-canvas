@@ -1,6 +1,6 @@
-import { ComponentJSX } from "@/lib/helper-types";
 import { emptyBlockColor } from "./colors";
 import CodeBlock from "./CodeBlock";
+import { ComponentJSX } from "@/lib/utils";
 
 const EmptyCodeBlock: ComponentJSX<unknown> = () => (
   <CodeBlock

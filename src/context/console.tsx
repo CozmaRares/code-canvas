@@ -1,4 +1,4 @@
-import { ComponentJSX } from "@/lib/helper-types";
+import { ComponentJSX } from "@/lib/utils";
 import React, { createContext, useContext, useState } from "react";
 
 export type ConsoleText = { type: "in" | "out" | "err"; text: string };

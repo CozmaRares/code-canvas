@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useConsoleContext } from "@/context/console";
-import { ComponentJSX } from "@/lib/helper-types";
+import { ComponentJSX } from "@/lib/utils";
 
 type Props = {
   className?: string;

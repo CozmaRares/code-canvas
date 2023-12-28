@@ -1,14 +1,14 @@
 import { Input } from "@/components/ui/input";
-import { ComponentJSX } from "@/lib/helper-types";
 import { SUPPORTED_OPERATORS } from "@/lib/operators";
+import { ComponentJSX } from "@/lib/utils";
 
 const patterns = Object.freeze({
-  identifier: /^([_a-zA-Z][_a-zA-Z0-9]{0,9}){0,1}$/,
-  number: /^\d*$/,
+  identifier: /^([_a-zA-Z][_a-zA-Z0-9]{0,9})?$/,
+  number: /^-?(\d+(\.\d*)?)?$/,
   operator: new RegExp(
     `^(${Object.keys(SUPPORTED_OPERATORS)
       .map(key => "\\" + key)
-      .join("|")}){0,1}$`,
+      .join("|")})?$`,
   ),
 } satisfies Record<string, RegExp>);
 

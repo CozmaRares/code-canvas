@@ -4,6 +4,71 @@
 
 ## Table of Contents
 
+- [1. Introduction](#1-introduction)
+  - [1.1. Context](#11-context)
+  - [1.2. Motivation](#12-motivation)
+  - [1.3. Objectives](#13-objectives)
+- [2. Bibliographic Study](#2-bibliographic-study)
+  - [2.1. Programming Languages and Frameworks](#21-programming-languages-and-frameworks)
+    - [2.1.1. TypeScript](#211-typescript)
+    - [2.1.2. React](#212-react)
+  - [2.2. Styling](#22-styling)
+    - [2.2.1. TailwindCSS](#221-tailwindcss)
+    - [2.2.2. shadcn/ui](#222-shadcnui)
+  - [2.3. Tools](#23-tools)
+    - [2.3.1. Vite](#231-vite)
+    - [2.3.2. ESLint](#232-eslint)
+    - [2.3.3. Prettier](#233-prettier)
+    - [2.3.4. Vitest](#234-vitest)
+- [3. Design & Analysis](#3-design--analysis)
+  - [3.1. System Architecture](#31-system-architecture)
+  - [3.2. User Interface Design](#32-user-interface-design)
+  - [3.3. User Workflow](#33-user-workflow)
+- [4. Implementation](#4-implementation)
+  - [4.1. Structure of the Web Application](#41-structure-of-the-web-application)
+    - [4.1.1. Header Component](#411-header-component)
+    - [4.1.2. Sidebar Component](#412-sidebar-component)
+    - [4.1.3. Editor Area](#413-editor-area)
+    - [4.1.4. Console Component](#414-console-component)
+  - [4.2. Code Blocks](#42-code-blocks)
+    - [4.2.1. Visual Code Syntax](#421-visual-code-syntax)
+      - [4.2.1.1. Horizontal Blocks](#4211-horizontal-blocks)
+      - [4.2.1.2. Vertical Blocks](#4212-vertical-blocks)
+    - [4.2.2. Model Definition](#422-model-definition)
+    - [4.2.3. The 'CodeBlock' Component](#423-the-codeblock-component)
+    - [4.2.4. The Preview Component](#424-the-preview-component)
+    - [4.2.5. The 'codeBlocks' Object](#425-the-codeblocks-object)
+    - [4.2.6. Extending the Syntax](#426-extending-the-syntax)
+  - [4.4. Business Logic](#44-business-logic)
+    - [4.4.1. State Manager](#441-state-manager)
+      - [4.4.1.1. Custom Store Implementation](#4411-custom-store-implementation)
+      - [4.4.1.2. Accessibility Across Components](#4412-accessibility-across-components)
+      - [4.4.1.3. The Store Class](#4413-the-store-class)
+      - [4.4.1.4. Benefits of Custom Store](#4414-benefits-of-custom-store)
+    - [4.4.2. Interpreter](#442-interpreter)
+      - [4.4.2.1. Interpretation Logic](#4421-interpretation-logic)
+      - [4.4.2.2. Execution and Console Output](#4422-execution-and-console-output)
+      - [4.4.2.3. Integration with the 'Store'](#4423-integration-with-the-store)
+      - [4.4.2.4. Error Handling](#4424-error-handling)
+    - [4.4.3. Python Converter](#443-python-converter)
+  - [4.5. Drag and Drop Functionality](#45-drag-and-drop-functionality)
+    - [4.5.1. DnD Kit Library](#451-dnd-kit-library)
+    - [4.5.2. Implementation in Code Canvas](#452-implementation-in-code-canvas)
+      - [4.5.2.1. Draggable Code Blocks](#4521-draggable-code-blocks)
+      - [4.5.2.2. Drop Zones](#4522-drop-zones)
+  - [4.7. User Feedback](#47-user-feedback)
+  - [4.8. Accessibility](#48-accessibility)
+- [5. Getting Started](#5-getting-started)
+  - [5.1. Prerequisites](#51-prerequisites)
+  - [5.2. Installation](#52-installation)
+- [6. Testing](#6-testing)
+  - [6.1. Units Tested](#61-units-tested)
+  - [6.2. Testing Challenges](#62-testing-challenges)
+  - [6.3. Testing Methodology](#63-testing-methodology)
+    - [6.3.1. Interpreter](#631-interpreter)
+    - [6.3.2. Python Converter](#632-pythonconverter)
+- [7. Conclusions](#7-conclusions)
+
 ## 1. Introduction
 
 Welcome to **Code Canvas**, a project included in the SCS (Structure of Computer
@@ -378,7 +443,7 @@ representation of control flow and logical conditions. The combination of horizo
 and vertical blocks offers users a versatile and intuitive environment for visually
 constructing their code.
 
-#### 4.2.1. Model Definition
+#### 4.2.2. Model Definition
 
 The definition of each code block begins with a 'model', represented as a node
 in the syntax tree of the program. The 'GenericCodeBlockModel' interface, along
@@ -407,7 +472,7 @@ export interface GenericCodeBlockModelWithStatements<T>
 }
 ```
 
-#### 4.2.2. The 'CodeBlock' component
+#### 4.2.3. The 'CodeBlock' component
 
 The `CodeBlock` component dictates the structure of each code block, acting as a
 wrapper for child nodes and featuring a delete button for user interaction. This
@@ -443,14 +508,14 @@ const NumberBlock = (props) => {
 
 > **Note** For the implementation details, look into the files.
 
-#### 4.2.3. The Preview Component
+#### 4.2.4. The Preview Component
 
 Every draggable code block in the _Sidebar_ serves as a preview component. These
 components resemble puzzle pieces, providing a visual representation of their
 orientation. Additionally, they include text crucial for distinguishing between
 different types of blocks.
 
-#### 4.2.4. The 'codeBlocks' object
+#### 4.2.5. The 'codeBlocks' object
 
 All code blocks are organized within the `codeBlocks` object in the 'lib/code-block.tsx'
 file. This object plays a crucial role in managing the various types of code
@@ -471,7 +536,7 @@ type CodeBlockRecord = Record<
 >;
 ```
 
-#### 4.2.5. Extending the Syntax
+#### 4.2.6. Extending the Syntax
 
 To introduce a new code block, several modifications are required:
 
